@@ -1,5 +1,7 @@
 <script lang="ts">
   import { Howl } from 'howler'
+  import { get } from 'svelte/store'
+  import { store, test } from '../src/scripts/store'
 
   let url
   let data: any = {}
@@ -9,8 +11,14 @@
 
   const play = async () => {
     data = await window.electron.ipcRenderer.invoke('download-song', url)
-
+    console.log(store.playlist)
     path = await window.electron.ipcRenderer.invoke('get-path')
+
+    test.update(() => {
+      return 'bbbbbbb'
+    })
+
+    console.log(get(test), test)
 
     setTimeout(() => {
       sound = new Howl({
@@ -25,7 +33,7 @@
   const pause = () => sound.pause()
 </script>
 
-<style>
+<style lang="scss">
   * {
     padding: 10px;
     margin: 10px;
@@ -43,5 +51,4 @@
 <button on:click={pause}> Pause </button>
 <button on:click={() => sound.play()}> Resume </button>
 
-<h3>{`${path}${data.title}.mp3`}</h3>
-<h2>{path}</h2>
+<h2>{$test}</h2>
