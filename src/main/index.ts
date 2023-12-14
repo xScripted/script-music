@@ -2,56 +2,13 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { downloadVideo, getVideoTitle } from 'yt-get'
-import NodeID3 from 'node-id3'
-
-ipcMain.handle('download-song', async (_event, arg) => {
-  arg ? await downloadVideo(arg) : ''
-
-  const title = arg ? await getVideoTitle(arg) : ''
-
-  const tags = {
-    title: 'aaaa',
-    artist: 'bbbb',
-    album: 'cccccc',
-    APIC: 'https://i.pinimg.com/736x/ea/1f/64/ea1f64668a0af149a3277db9e9e54824.jpg',
-    comment: {
-      language: 'eng',
-      text: 'Some comment',
-
-      shortText: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-    },
-  }
-
-  const path = await process.cwd()
-
-  const filePath = path + '/music/' + title + '.mp3'
-  setTimeout(async () => {
-    await NodeID3.write(tags, filePath, function (err) {
-      if (err) throw err
-      console.log('Metadata written to file!')
-
-      const tags = NodeID3.read(filePath)
-
-      console.log(tags)
-    })
-  }, 2000)
-
-  return { title, path: process.cwd() }
-})
-
-ipcMain.handle('get-path', async () => {
-  const path = await process.cwd()
-  const fstext = process.env.NODE_ENV === 'development' ? '/@fs/' : ''
-
-  return fstext + path + '/music/'
-})
+import { downloadSong, writeMetaData, readMetaData, getSongFileNames } from './scripts'
 
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1400,
+    height: 800,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -115,3 +72,14 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+ipcMain.handle('download-song', async (_, youtubeUrl): Promise<string> => downloadSong(youtubeUrl))
+ipcMain.handle('write-meta-data', async (_, args) => writeMetaData(args))
+ipcMain.handle('read-meta-data', async (_, fileName) => readMetaData(fileName))
+ipcMain.handle('get-song-file-names', getSongFileNames)
+
+ipcMain.handle('get-path', async () => {
+  const path = await process.cwd()
+  const fstext = process.env.NODE_ENV === 'development' ? '/@fs/' : ''
+
+  return fstext + path + '/music/'
+})
