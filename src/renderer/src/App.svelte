@@ -2,6 +2,7 @@
   import { Howl } from 'howler'
   import { get } from 'svelte/store'
   import { store, test } from '../src/scripts/store'
+  import InputTag from './components/InputTag.svelte'
 
   let url
   let data: any = {}
@@ -52,3 +53,5 @@
 <button on:click={() => sound.play()}> Resume </button>
 
 <h2>{$test}</h2>
+
+<InputTag />
