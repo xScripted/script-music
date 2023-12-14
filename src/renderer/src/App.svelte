@@ -2,6 +2,7 @@
   import { Howl } from 'howler'
   import { get } from 'svelte/store'
   import { test } from '../src/scripts/store'
+  import InputTag from './components/InputTag.svelte'
 
   let url
   let title: string = ''
@@ -70,3 +71,4 @@
   <h2>{file}</h2>
   <br />
 {/each}
+<InputTag />
