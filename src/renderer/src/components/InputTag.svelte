@@ -5,7 +5,7 @@
   //square.styles.background-color= (color + "tagName")
 
   let tag: string = ''
-  let color: string = '#da8aff'
+  let color: string = ''
 
   function handleKeydown(e) {
     if (e.key === 'Enter') {
@@ -60,6 +60,10 @@
         height: 24px;
       }
 
+      .square {
+        background: linear-gradient(330deg, #5b0eeb 0%, #6d5dfc 50%, #8abdff 100%);
+      }
+
       .color {
         opacity: 0;
         cursor: pointer;
@@ -75,7 +79,7 @@
   <input type="text" class="tag" placeholder="New tag" bind:value={tag} on:keydown={handleKeydown} />
   <div class="separation" />
   <div class="color-input">
-    <div class="square" style="background-color: {color}" />
+    <div class="square" style="background: {color}" />
     <input type="color" class="color" bind:value={color} />
   </div>
 </div>
