@@ -1,20 +1,22 @@
 <script lang="ts">
   import { Howl } from 'howler'
   import { get } from 'svelte/store'
-  import { test } from '../src/scripts/store'
+  import { playlist } from '../src/scripts/store'
   import InputTag from './components/InputTag.svelte'
+  import { onMount } from 'svelte'
+  import Header from './components/Header.svelte'
+  import Playlist from './components/Playlist.svelte'
+  import Player from './components/Player.svelte'
 
   let url
   let title: string = ''
 
   let sound
   let path
-  let files = []
 
   const play = async () => {
     title = await window.electron.ipcRenderer.invoke('download-song', url)
     path = await window.electron.ipcRenderer.invoke('get-path')
-    files = await window.electron.ipcRenderer.invoke('get-song-file-names')
 
     test.update(() => {
       return 'bbbbbbb'
@@ -45,6 +47,16 @@
   }
 
   const pause = () => sound.pause()
+
+  onMount(async () => {
+    const fileNames = await window.electron.ipcRenderer.invoke('get-song-file-names')
+
+    playlist.update(() =>
+      fileNames.map((fileName: string) => {
+        return fileName
+      })
+    )
+  })
 </script>
 
 <style lang="scss">
@@ -58,17 +70,6 @@
   }
 </style>
 
-<h1>#YOUTUBE TO NIGHTCORE <br /> {title}</h1>
-<input type="text" bind:value={url} placeholder="https://www.youtube.com/watch?v=GmOxB-gXhs4" />
-
-<button on:click={play}> Download song! </button>
-<button on:click={pause}> Pause </button>
-<button on:click={() => sound.play()}> Resume </button>
-
-<h2>{$test}</h2>
-
-{#each files as file}
-  <h2>{file}</h2>
-  <br />
-{/each}
-<InputTag />
+<Header />
+<Playlist />
+<Player />
