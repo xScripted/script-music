@@ -17,7 +17,7 @@
 
 <style lang="scss">
   .new-tag {
-    height: 20px;
+    height: 35px;
     width: fit-content;
     display: flex;
     align-items: center;
@@ -25,9 +25,12 @@
 
     background-color: inherit;
     border-radius: 10px;
-    border: 1px solid gray;
     gap: 10px;
     padding: 8px 10px;
+
+    box-shadow:
+      3px 3px 5px #bebebe,
+      -3px -3px 5px #ffffff;
 
     .tag {
       background-color: inherit;

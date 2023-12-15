@@ -1,75 +1,49 @@
 <script lang="ts">
-  import { Howl } from 'howler'
-  import { get } from 'svelte/store'
-  import { playlist } from '../src/scripts/store'
-  import InputTag from './components/InputTag.svelte'
-  import { onMount } from 'svelte'
-  import Header from './components/Header.svelte'
-  import Playlist from './components/Playlist.svelte'
   import Player from './components/Player.svelte'
-
-  let url
-  let title: string = ''
-
-  let sound
-  let path
-
-  const play = async () => {
-    title = await window.electron.ipcRenderer.invoke('download-song', url)
-    path = await window.electron.ipcRenderer.invoke('get-path')
-
-    test.update(() => {
-      return 'bbbbbbb'
-    })
-
-    console.log(get(test), test)
-
-    await window.electron.ipcRenderer.invoke('write-meta-data', {
-      fileName: title,
-      metaData: {
-        title: 'Tomorrow',
-        artist: 'Kevin Penkin',
-        album: 'xddddd',
-        APIC: './example/mia_cover.jpg',
-        TRCK: '27',
-      },
-    })
-
-    setTimeout(async () => {
-      console.log('Meta-data: ', await window.electron.ipcRenderer.invoke('read-meta-data', title))
-      sound = new Howl({
-        src: [`${path}/${title}.mp3`],
-        rate: 1.2,
-        volume: 0.3,
-      })
-      sound.play()
-    }, 5000)
-  }
-
-  const pause = () => sound.pause()
-
-  onMount(async () => {
-    const fileNames = await window.electron.ipcRenderer.invoke('get-song-file-names')
-
-    playlist.update(() =>
-      fileNames.map((fileName: string) => {
-        return fileName
-      })
-    )
-  })
+  import Viewer from './components/Viewer.svelte'
+  import Menu from './components/Menu.svelte'
+  import Utilities from './components/Utilities.svelte'
 </script>
 
 <style lang="scss">
-  * {
-    padding: 10px;
-    margin: 10px;
-  }
+  .wrapper {
+    height: 100vh;
+    width: 100%;
 
-  h1 {
-    height: 100px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 1fr 100px;
+
+    background-color: #cf6b9b;
+    color: #363636;
+
+    .bottom {
+      grid-column: 1/3;
+      position: relative;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .right {
+      margin: 10px;
+      position: relative;
+    }
+
+    .left {
+      position: relative;
+    }
   }
 </style>
 
-<Header />
-<Playlist />
-<Player />
+<div class="wrapper">
+  <div class="left">
+    <Menu />
+  </div>
+  <div class="right">
+    <Viewer />
+  </div>
+  <div class="bottom">
+    <Player />
+  </div>
+</div>
