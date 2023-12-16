@@ -4,9 +4,14 @@
   import addQueueSVG from './../assets/queue.svg'
   import brushSVG from './../assets/brush.svg'
   import plusSVG from './../assets/plus.svg'
-  import { panel } from './../scripts/store'
+  import { panel, playlist } from './../scripts/store'
+  import type { ISong } from '../../../interfaces/ISong'
 
   let newSong: boolean = false
+
+  let playlistValue: ISong[] = []
+
+  playlist.subscribe((value) => (playlistValue = value))
 
   const toggleNewSong = () => {
     newSong = !newSong
@@ -188,25 +193,23 @@
   </div>
 
   <div class="song-list">
-    <div class="song-row">
-      <img
-        src="https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/d9/8e/ae/d98eaece-2460-1445-384c-e0d6299268d9/artwork.jpg/1200x1200bf-60.jpg"
-        class="cover"
-        alt=""
-      />
-      <div class="details">
-        <span class="song-title">Cherry Blossom Nightmare</span>
-        <span class="singer">Unlike Pluto</span>
+    {#each playlistValue as song}
+      <div class="song-row">
+        <img src={song.cover} class="cover" alt="" />
+        <div class="details">
+          <span class="song-title">{song.title}</span>
+          <span class="singer">{song.artist}</span>
+        </div>
+        <div class="tags">
+          <div class="tag"></div>
+        </div>
+        <div class="more">
+          <img src={brushSVG} alt="" />
+          <img src={addQueueSVG} alt="" />
+          <img src={addSVG} alt="" />
+        </div>
       </div>
-      <div class="tags">
-        <div class="tag"></div>
-      </div>
-      <div class="more">
-        <img src={brushSVG} alt="" />
-        <img src={addQueueSVG} alt="" />
-        <img src={addSVG} alt="" />
-      </div>
-    </div>
+    {/each}
   </div>
 
   <button class="new-song" class:active={newSong} on:click={toggleNewSong}>

@@ -7,8 +7,8 @@ import { downloadSong, writeMetaData, readMetaData, getSongFileNames } from './s
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1400,
-    height: 800,
+    width: 1800,
+    height: 900,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),

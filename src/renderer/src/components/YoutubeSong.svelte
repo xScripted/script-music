@@ -1,16 +1,40 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
-
+  import { playlist } from '../scripts/store.js'
+  import type { ISong } from './../../../interfaces/ISong.ts'
+  import type { IMetaData } from './../../../interfaces/IMetaData.ts'
   let youtubeURL = ''
   let cover = ''
   let title = ''
   let artist = ''
 
-  onMount(async () => {
+  const downloadSong = async () => {
     if (!youtubeURL) return
+    const fileName = await window.electron.ipcRenderer.invoke('download-song', youtubeURL)
 
-    const videoTitle = await window.electron.ipcRenderer.invoke('download-song', youtubeURL)
-  })
+    const metaData: IMetaData = {
+      fileUrl: fileName,
+      title,
+      artist,
+      date: new Date(),
+      image: {
+        description: cover,
+      },
+      genre: [],
+    }
+
+    await window.electron.ipcRenderer.invoke('write-meta-data', { fileName, metaData })
+
+    const newSong: ISong = {
+      fileName,
+      title,
+      artist,
+      tags: [],
+      cover,
+      lyrics: '',
+    }
+
+    playlist.update((p) => [...p, newSong])
+  }
 </script>
 
 <style lang="scss">
@@ -18,10 +42,33 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 10px 0;
+    padding: 12px 0;
+  }
 
-    label {
-      font-weight: bold;
+  label {
+    font-weight: bold;
+  }
+
+  .tags-group {
+    height: 200px;
+  }
+
+  .cover {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    padding: 12px 0;
+    flex: 1;
+
+    .input-group {
+      padding: 0;
+      flex: 1;
+    }
+    img {
+      width: 85px;
+      height: 85px;
+      border-radius: var(--radius);
+      background-color: rgba(0, 0, 0, 0.2);
     }
   }
 </style>
@@ -31,7 +78,14 @@
     <label>Youtube URL</label>
     <input type="text" bind:value={youtubeURL} placeholder="https://www.youtube.com/watch?v=ip10YUcH2BA" />
   </div>
-  <img src={cover} alt="" />
+
+  <div class="cover">
+    <img src={cover} alt="" />
+    <div class="input-group">
+      <label>Cover</label>
+      <input type="text" bind:value={cover} placeholder="Image url" />
+    </div>
+  </div>
   <div class="input-group">
     <label>Title</label>
     <input type="text" bind:value={title} placeholder="Title" />
@@ -42,8 +96,9 @@
     <input type="text" bind:value={artist} placeholder="Artist" />
   </div>
 
-  <div class="input-group">
-    <label>Cover</label>
-    <input type="text" bind:value={cover} placeholder="Image url" />
+  <div class="tags-group">
+    <label>Tags</label>
   </div>
+
+  <button class="g-btn" on:click={downloadSong}> Descargar y guardar canción </button>
 </div>

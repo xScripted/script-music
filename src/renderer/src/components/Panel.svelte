@@ -36,6 +36,7 @@
     h2 {
       font-size: 26px;
       text-align: center;
+      margin-bottom: 30px;
     }
   }
 </style>

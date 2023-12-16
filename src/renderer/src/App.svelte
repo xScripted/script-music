@@ -6,26 +6,29 @@
   import Menu from './components/Menu.svelte'
   import Utilities from './components/Utilities.svelte'
   import { onMount } from 'svelte'
+  import type { ISong } from '../../interfaces/ISong'
 
   const setAllSongs = async () => {
     const fileNames: string[] = await window.electron.ipcRenderer.invoke('get-song-file-names')
 
     let allSongs = []
 
-    await fileNames.map(async (fileName: string) => {
-      let metaSong = await window.electron.ipcRenderer.invoke('read-meta-data', fileName)
+    await Promise.all(
+      fileNames.map(async (fileName: string) => {
+        let metaSong = await window.electron.ipcRenderer.invoke('read-meta-data', fileName)
 
-      const song = {
-        fileName: fileName,
-        title: metaSong.title || fileName,
-        artist: metaSong.artist || '',
-        tags: JSON.parse(metaSong.comment?.text || '[]') || [],
-        cover: metaSong.image?.description || '',
-        lyrics: '',
-      }
+        const song: ISong = {
+          fileName: fileName,
+          title: metaSong.title || fileName,
+          artist: metaSong.artist || '',
+          tags: JSON.parse(metaSong.comment?.text || '[]') || [],
+          cover: metaSong.image?.description || '',
+          lyrics: '',
+        }
 
-      allSongs.push(song)
-    })
+        allSongs.push(song)
+      })
+    )
 
     playlist.set(allSongs)
   }
