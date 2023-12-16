@@ -1,8 +1,38 @@
 <script lang="ts">
+  import { playlist } from './scripts/store'
   import Player from './components/Player.svelte'
   import Viewer from './components/Viewer.svelte'
+  import Panel from './components/Panel.svelte'
   import Menu from './components/Menu.svelte'
   import Utilities from './components/Utilities.svelte'
+  import { onMount } from 'svelte'
+
+  const setAllSongs = async () => {
+    const fileNames: string[] = await window.electron.ipcRenderer.invoke('get-song-file-names')
+
+    let allSongs = []
+
+    await fileNames.map(async (fileName: string) => {
+      let metaSong = await window.electron.ipcRenderer.invoke('read-meta-data', fileName)
+
+      const song = {
+        fileName: fileName,
+        title: metaSong.title || fileName,
+        artist: metaSong.artist || '',
+        tags: JSON.parse(metaSong.comment?.text || '[]') || [],
+        cover: metaSong.image?.description || '',
+        lyrics: '',
+      }
+
+      allSongs.push(song)
+    })
+
+    playlist.set(allSongs)
+  }
+
+  onMount(async () => {
+    await setAllSongs()
+  })
 </script>
 
 <style lang="scss">
@@ -28,6 +58,7 @@
     .right {
       margin: 10px;
       position: relative;
+      display: flex;
     }
 
     .left {
@@ -42,6 +73,7 @@
   </div>
   <div class="right">
     <Viewer />
+    <Panel />
   </div>
   <div class="bottom">
     <Player />
