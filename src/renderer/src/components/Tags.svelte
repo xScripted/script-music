@@ -33,6 +33,8 @@
         border-radius: 50px;
         display: flex;
         align-items: center;
+        border: none;
+        cursor: pointer;
 
         background: #ebebeb;
         box-shadow:
@@ -48,7 +50,6 @@
           border-radius: 50px;
           transition: 0.35s ease;
           background: linear-gradient(330deg, #5b0eeb 0%, #6d5dfc 50%, #8abdff 100%);
-          cursor: pointer;
         }
 
         &.active {
@@ -73,9 +74,9 @@
 <div class="container">
   <div class="upper">
     <label><input type="checkbox" name="select" id="" /> Select all </label>
-    <div class="switch" class:active>
-      <button class="circle" on:click={() => (active = !active)} />
-    </div>
+    <button class="switch" class:active on:click={() => (active = !active)}>
+      <button class="circle" />
+    </button>
   </div>
   <div class="tags">
     <label> <input type="checkbox" id="cbox1" value="first_checkbox" /> Este es mi primer checkbox </label>
