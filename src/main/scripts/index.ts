@@ -18,7 +18,7 @@ export const writeMetaData = async ({ fileName, metaData }) => {
 
 export const readMetaData = async (fileName: string) => {
   const path = await process.cwd()
-  const filePath = `${path}/music/${fileName}.mp3`
+  const filePath = `${path}/music/${fileName}`
 
   return id3.Promise.read(filePath)
 }
