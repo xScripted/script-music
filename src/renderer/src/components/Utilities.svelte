@@ -54,40 +54,21 @@
       overflow: hidden;
       transition: 0.3s ease;
 
+      .search-input {
+        background: none;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid #757575;
+      }
+
       &.active {
         width: 210px;
         transition: 0.3s ease;
-
-        svg {
-          fill: white;
-        }
-      }
-    }
-
-    .filter {
-      &.active {
-        path {
-          fill: white;
-        }
       }
     }
 
     .tags {
       position: relative;
-
-      &.active {
-        path {
-          fill: white;
-        }
-      }
-    }
-
-    .settings {
-      &.active {
-        path {
-          fill: white;
-        }
-      }
     }
   }
 </style>
@@ -97,7 +78,7 @@
     <button on:click={searchClick}>
       <img src={searchSVG} alt="" />
     </button>
-    <label><input type="text" name="" id="" />Search...</label>
+    <input class="search-input" type="text" name="" id="" placeholder="Type to search..." />
   </div>
   <div class="filter" class:active={filterVisible}>
     <button on:click={filterClick}>

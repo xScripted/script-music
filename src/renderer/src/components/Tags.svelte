@@ -43,7 +43,6 @@
 
         .circle {
           border: none;
-
           height: 19px;
           width: 19px;
           margin: 3px;
@@ -75,7 +74,7 @@
   <div class="upper">
     <label><input type="checkbox" name="select" id="" /> Select all </label>
     <button class="switch" class:active on:click={() => (active = !active)}>
-      <button class="circle" />
+      <div class="circle" />
     </button>
   </div>
   <div class="tags">
