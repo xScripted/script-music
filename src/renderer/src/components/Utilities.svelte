@@ -1,5 +1,30 @@
 <script lang="ts">
   import Tags from './Tags.svelte'
+  import searchSVG from './../assets/search.svg'
+  import filterSVG from './../assets/filter.svg'
+  import tagsSVG from './../assets/tags.svg'
+  import settingsSVG from './../assets/settings.svg'
+
+  let tagsVisible: boolean = false
+  let search: boolean = false
+  let settingsVisible: boolean = false
+  let filterVisible: boolean = false
+
+  const tagsClick = () => {
+    tagsVisible = !tagsVisible
+  }
+
+  const searchClick = () => {
+    search = !search
+  }
+
+  const settingsClick = () => {
+    settingsVisible = !settingsVisible
+  }
+
+  const filterClick = () => {
+    filterVisible = !filterVisible
+  }
 </script>
 
 <style lang="scss">
@@ -9,51 +34,88 @@
     width: fit-content;
 
     display: flex;
-    align-items: center;
     justify-content: space-evenly;
     gap: 15px;
 
     top: 15px;
     right: 15px;
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .search {
+      width: 25px;
+      height: 25px;
+      display: flex;
+      gap: 10px;
+      overflow: hidden;
+      transition: 0.3s ease;
+
+      &.active {
+        width: 210px;
+        transition: 0.3s ease;
+
+        svg {
+          fill: white;
+        }
+      }
+    }
+
+    .filter {
+      &.active {
+        path {
+          fill: white;
+        }
+      }
+    }
+
+    .tags {
+      position: relative;
+
+      &.active {
+        path {
+          fill: white;
+        }
+      }
+    }
+
+    .settings {
+      &.active {
+        path {
+          fill: white;
+        }
+      }
+    }
   }
 </style>
 
 <div class="container">
-  <div class="search">
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"
-      ><g fill="none" fill-rule="evenodd"
-        ><path
-          d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"
-        /><path
-          fill="#363636"
-          d="M10.5 2a8.5 8.5 0 1 0 5.262 15.176l3.652 3.652a1 1 0 0 0 1.414-1.414l-3.652-3.652A8.5 8.5 0 0 0 10.5 2ZM4 10.5a6.5 6.5 0 1 1 13 0a6.5 6.5 0 0 1-13 0Z"
-        /></g
-      ></svg
-    >
+  <div class="search" class:active={search}>
+    <button on:click={searchClick}>
+      <img src={searchSVG} alt="" />
+    </button>
+    <label><input type="text" name="" id="" />Search...</label>
   </div>
-  <div class="filter">
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-      <path
-        fill="#383838"
-        d="M11 18q-.425 0-.713-.288T10 17q0-.425.288-.713T11 16h2q.425 0 .713.288T14 17q0 .425-.288.713T13 18h-2Zm-4-5q-.425 0-.713-.288T6 12q0-.425.288-.713T7 11h10q.425 0 .713.288T18 12q0 .425-.288.713T17 13H7ZM4 8q-.425 0-.713-.288T3 7q0-.425.288-.713T4 6h16q.425 0 .713.288T21 7q0 .425-.288.713T20 8H4Z"
-      />
-    </svg>
+  <div class="filter" class:active={filterVisible}>
+    <button on:click={filterClick}>
+      <img src={filterSVG} alt="" />
+    </button>
   </div>
-  <div class="tags">
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"
-      ><path
-        fill="#363636"
-        d="M5.5 7A1.5 1.5 0 0 1 4 5.5A1.5 1.5 0 0 1 5.5 4A1.5 1.5 0 0 1 7 5.5A1.5 1.5 0 0 1 5.5 7m15.91 4.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.11 0-2 .89-2 2v7c0 .55.22 1.05.59 1.41l8.99 9c.37.36.87.59 1.42.59c.55 0 1.05-.23 1.41-.59l7-7c.37-.36.59-.86.59-1.41c0-.56-.23-1.06-.59-1.42Z"
-      /></svg
-    >
-    <Tags />
+  <div class="tags" class:active={tagsVisible}>
+    <button on:click={tagsClick}>
+      <img src={tagsSVG} alt="" />
+    </button>
+
+    {#if tagsVisible}
+      <Tags />
+    {/if}
   </div>
-  <div class="settings">
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"
-      ><path
-        fill="#363636"
-        d="m9.25 22l-.4-3.2q-.325-.125-.613-.3t-.562-.375L4.7 19.375l-2.75-4.75l2.575-1.95Q4.5 12.5 4.5 12.337v-.674q0-.163.025-.338L1.95 9.375l2.75-4.75l2.975 1.25q.275-.2.575-.375t.6-.3l.4-3.2h5.5l.4 3.2q.325.125.613.3t.562.375l2.975-1.25l2.75 4.75l-2.575 1.95q.025.175.025.338v.674q0 .163-.05.338l2.575 1.95l-2.75 4.75l-2.95-1.25q-.275.2-.575.375t-.6.3l-.4 3.2h-5.5Zm2.8-6.5q1.45 0 2.475-1.025T15.55 12q0-1.45-1.025-2.475T12.05 8.5q-1.475 0-2.488 1.025T8.55 12q0 1.45 1.012 2.475T12.05 15.5Z"
-      /></svg
-    >
+  <div class="settings" class:active={settingsVisible}>
+    <button on:click={settingsClick}>
+      <img src={settingsSVG} alt="" />
+    </button>
   </div>
 </div>

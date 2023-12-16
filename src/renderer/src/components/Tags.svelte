@@ -9,14 +9,16 @@
     width: 235px;
     height: fit-content;
     gap: 15px;
-    //display: flex;
+    display: flex;
     padding: 10px;
     flex-direction: column;
     background-color: #ebebeb;
     border: 1px solid gray;
     border-radius: var(--radius);
+    position: absolute;
 
-    display: none;
+    top: 35px;
+    right: -45px;
 
     .upper {
       width: 100%;
