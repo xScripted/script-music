@@ -16,13 +16,13 @@
       title,
       artist,
       date: new Date(),
-      image: {
-        description: cover,
-      },
-      genre: [],
+      APIC: cover,
+      genre: JSON.stringify([]),
     }
 
-    await window.electron.ipcRenderer.invoke('write-meta-data', { fileName, metaData })
+    setTimeout(() => {
+      window.electron.ipcRenderer.invoke('write-meta-data', { fileName, metaData })
+    }, 1000)
 
     const newSong: ISong = {
       fileName,

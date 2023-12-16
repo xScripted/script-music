@@ -21,11 +21,11 @@
           fileName: fileName,
           title: metaSong.title || fileName,
           artist: metaSong.artist || '',
-          tags: JSON.parse(metaSong.comment?.text || '[]') || [],
-          cover: metaSong.image?.description || '',
+          tags: JSON.parse(metaSong.genre || '[]'),
+          cover: metaSong.APIC || '',
           lyrics: '',
         }
-
+        console.log(metaSong)
         allSongs.push(song)
       })
     )
