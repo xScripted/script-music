@@ -4,26 +4,31 @@
   import filterSVG from './../assets/filter.svg'
   import tagsSVG from './../assets/tags.svg'
   import settingsSVG from './../assets/settings.svg'
+  import { panel } from '../scripts/store'
 
   let tagsVisible: boolean = false
   let search: boolean = false
   let settingsVisible: boolean = false
   let filterVisible: boolean = false
 
-  const tagsClick = () => {
+  const tagstoggle = () => {
     tagsVisible = !tagsVisible
   }
 
-  const searchClick = () => {
+  const searchtoggle = () => {
     search = !search
   }
 
-  const settingsClick = () => {
+  const settingstoggle = () => {
     settingsVisible = !settingsVisible
+
+    panel.update(() => (settingsVisible ? 'Ajustes' : ''))
   }
 
-  const filterClick = () => {
+  const filtertoggle = () => {
     filterVisible = !filterVisible
+
+    panel.update(() => (settingsVisible ? 'Filtros' : ''))
   }
 </script>
 
@@ -75,18 +80,18 @@
 
 <div class="container">
   <div class="search" class:active={search}>
-    <button on:click={searchClick}>
+    <button on:click={searchtoggle}>
       <img src={searchSVG} alt="" />
     </button>
     <input class="search-input" type="text" name="" id="" placeholder="Type to search..." />
   </div>
   <div class="filter" class:active={filterVisible}>
-    <button on:click={filterClick}>
+    <button on:click={filtertoggle}>
       <img src={filterSVG} alt="" />
     </button>
   </div>
   <div class="tags" class:active={tagsVisible}>
-    <button on:click={tagsClick}>
+    <button on:click={tagstoggle}>
       <img src={tagsSVG} alt="" />
     </button>
 
@@ -95,7 +100,7 @@
     {/if}
   </div>
   <div class="settings" class:active={settingsVisible}>
-    <button on:click={settingsClick}>
+    <button on:click={settingstoggle}>
       <img src={settingsSVG} alt="" />
     </button>
   </div>

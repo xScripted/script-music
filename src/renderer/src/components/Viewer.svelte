@@ -3,6 +3,16 @@
   import addSVG from './../assets/add.svg'
   import addQueueSVG from './../assets/queue.svg'
   import brushSVG from './../assets/brush.svg'
+  import plusSVG from './../assets/plus.svg'
+  import { panel } from './../scripts/store'
+
+  let newSong: boolean = false
+
+  const toggleNewSong = () => {
+    newSong = !newSong
+
+    panel.update(() => (newSong ? 'Youtube to MP3' : ''))
+  }
 </script>
 
 <style lang="scss">
@@ -65,10 +75,11 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 15px;
+        position: relative;
 
         grid-template-columns: 75px 1fr 1fr 100px;
         border-radius: var(--radius);
-        transition: 0.2s ease;
+        transition: 0.3s ease;
         gap: 10px;
         cursor: pointer;
 
@@ -92,6 +103,23 @@
           }
         }
 
+        .tags {
+          .tag {
+            height: 25px;
+            width: 75px;
+
+            top: 0;
+            bottom: 0;
+            right: 15px;
+            margin: auto;
+            position: absolute;
+
+            background-color: #6d5dfc;
+            border-radius: 5px;
+            transition: 0.3s ease;
+          }
+        }
+
         .more {
           display: none;
           gap: 10px;
@@ -99,11 +127,44 @@
 
         &:hover {
           background-color: rgba(255, 255, 255, 0.35);
-          transition: 0.2s ease;
+          transition: 0.3s ease;
+
+          .tags {
+            .tag {
+              transition: 0.3s ease;
+              width: 25px;
+              transform: translateX(-105px);
+            }
+          }
 
           .more {
             display: flex;
           }
+        }
+      }
+    }
+
+    .new-song {
+      width: 50px;
+      height: 50px;
+
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+
+      background: none;
+      border: none;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        transition: 0.5s ease;
+      }
+
+      &.active {
+        img {
+          transform: rotate(45deg);
+          transition: 0.5s ease;
         }
       }
     }
@@ -118,11 +179,12 @@
     </div>
     <Utilities />
   </div>
+
   <div class="header">
     <div class="color">
       <div class="icon"></div>
     </div>
-    <div class="title">Pa ducharme</div>
+    <div class="title">Te quiero guapo</div>
   </div>
 
   <div class="song-list">
@@ -136,7 +198,9 @@
         <span class="song-title">Cherry Blossom Nightmare</span>
         <span class="singer">Unlike Pluto</span>
       </div>
-      <div class="tags"></div>
+      <div class="tags">
+        <div class="tag"></div>
+      </div>
       <div class="more">
         <img src={brushSVG} alt="" />
         <img src={addQueueSVG} alt="" />
@@ -144,4 +208,8 @@
       </div>
     </div>
   </div>
+
+  <button class="new-song" class:active={newSong} on:click={toggleNewSong}>
+    <img src={plusSVG} alt="" />
+  </button>
 </div>
