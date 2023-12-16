@@ -1,12 +1,8 @@
 <script lang="ts">
   import Utilities from './Utilities.svelte'
-<<<<<<< HEAD
   import addSVG from './../assets/add.svg'
   import addQueueSVG from './../assets/queue.svg'
   import brushSVG from './../assets/brush.svg'
-=======
-  import icons from '../assets/icons.svg'
->>>>>>> c1331edbb362c6b02fe6df659aba5e19c9a8014d
 </script>
 
 <style lang="scss">
@@ -125,8 +121,6 @@
   <div class="header">
     <div class="color">
       <div class="icon"></div>
-
-      <img src={icons} alt="" />
     </div>
     <div class="title">Pa ducharme</div>
   </div>
