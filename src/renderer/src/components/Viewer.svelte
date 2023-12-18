@@ -9,6 +9,7 @@
   import { Howl, Howler } from 'howler'
   import { onMount } from 'svelte'
   import { get } from 'svelte/store'
+  import Tag from './Tag.svelte'
 
   let newSong: boolean = false
   let playlistValue: ISong[] = []
@@ -25,7 +26,7 @@
   const playSong = (fileName: string) => {
     var sound = new Howl({
       src: [path + fileName],
-      rate: 0.85,
+      rate: 1.2,
       volume: 0.2,
     })
     sound.play()
@@ -46,6 +47,7 @@
     height: 100%;
     width: 100%;
     padding: 75px;
+    overflow-y: auto;
 
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: var(--radius);
@@ -131,20 +133,8 @@
         }
 
         .tags {
-          .tag {
-            height: 25px;
-            width: 75px;
-
-            top: 0;
-            bottom: 0;
-            right: 15px;
-            margin: auto;
-            position: absolute;
-
-            background-color: #6d5dfc;
-            border-radius: 5px;
-            transition: 0.3s ease;
-          }
+          display: flex;
+          gap: 10px;
         }
 
         .more {
@@ -223,7 +213,9 @@
           <span class="singer">{song.artist}</span>
         </div>
         <div class="tags">
-          <div class="tag"></div>
+          {#each song.tags as tag}
+            <Tag {tag} />
+          {/each}
         </div>
         <div class="more">
           <img src={brushSVG} alt="" />

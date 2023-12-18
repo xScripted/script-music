@@ -18,11 +18,10 @@
     transition:
       0.5s ease-out,
       padding 0s;
-    width: -2.5%;
-    max-width: 400px;
+    width: 400px;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: var(--radius);
-    overflow: hidden;
+    overflow-y: auto;
     opacity: 0;
 
     &.active {

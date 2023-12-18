@@ -1,15 +1,21 @@
 <script lang="ts">
-  import { playlist } from '../scripts/store.js'
+  import { playlist, tags } from '../scripts/store.js'
   import type { ISong } from './../../../interfaces/ISong.ts'
+  import type { ITag } from './../../../interfaces/ITag.ts'
   import type { IMetaData } from './../../../interfaces/IMetaData.ts'
+  import Tag from './Tag.svelte'
+  import InputTag from './InputTag.svelte'
+
   let youtubeURL = ''
   let cover = ''
   let title = ''
   let artist = ''
+  let formTags = []
 
   const downloadSong = async () => {
     if (!youtubeURL) return
     const fileName = await window.electron.ipcRenderer.invoke('download-song', youtubeURL)
+    const tags: ITag[] = formTags.filter((tag: ITag) => tag.active)
 
     const metaData: IMetaData = {
       fileUrl: fileName,
@@ -17,7 +23,7 @@
       artist,
       date: new Date(),
       subtitle: cover,
-      genre: JSON.stringify([]),
+      genre: JSON.stringify(tags),
     }
 
     setTimeout(() => {
@@ -28,13 +34,25 @@
       fileName: fileName + '.mp3',
       title,
       artist,
-      tags: [],
+      tags,
       cover,
       lyrics: '',
     }
 
     playlist.update((p) => [...p, newSong])
   }
+
+  const activeFormTag = (name: string) => {
+    formTags = formTags.map((tag: ITag) => {
+      if (tag.name === name) tag.active = !tag.active
+
+      return tag
+    })
+  }
+
+  tags.subscribe((value: ITag[]) => {
+    formTags = value
+  })
 </script>
 
 <style lang="scss">
@@ -51,6 +69,13 @@
 
   .tags-group {
     height: 200px;
+  }
+
+  .form-tags {
+    padding: 10px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
   }
 
   .cover {
@@ -71,6 +96,10 @@
       object-fit: cover;
       background-color: rgba(0, 0, 0, 0.2);
     }
+  }
+
+  .input-tag-container {
+    grid-column: span 2;
   }
 </style>
 
@@ -99,6 +128,17 @@
 
   <div class="tags-group">
     <label>Tags</label>
+
+    <div class="form-tags">
+      {#each formTags as tag}
+        <button on:click={() => activeFormTag(tag.name)}>
+          <Tag {tag} />
+        </button>
+      {/each}
+      <div class="input-tag-container">
+        <InputTag />
+      </div>
+    </div>
   </div>
 
   <button class="g-btn" on:click={downloadSong}> Descargar y guardar canción </button>
