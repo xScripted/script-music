@@ -100,6 +100,7 @@
       justify-self: end;
       align-items: center;
       gap: 10px;
+      opacity: 0.5;
 
       img {
         width: 25px;
@@ -134,6 +135,9 @@
   </div>
 
   <div class="panel">
+    <!--on:click que al clicar uno se active el modo del botón y que,
+    cuando ese modo esté abierto, el botón aparezca como seleccionado (opacity: 1;)-->
+
     <img src={slowedSVG} alt="" class="slowed" />
     <img src={nightcoreSVG} alt="" class="nightcore" />
     <img src={queueSVG} alt="" class="queue" />

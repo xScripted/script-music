@@ -134,6 +134,7 @@
 
         .tags {
           display: flex;
+          justify-self: end;
           gap: 10px;
         }
 
@@ -145,14 +146,6 @@
         &:hover {
           background-color: rgba(255, 255, 255, 0.35);
           transition: 0.3s ease;
-
-          .tags {
-            .tag {
-              transition: 0.3s ease;
-              width: 25px;
-              transform: translateX(-105px);
-            }
-          }
 
           .more {
             display: flex;
@@ -208,10 +201,10 @@
     {#each playlistValue as song}
       <div class="song-row">
         <img src={song.cover} class="cover" alt="" />
-        <div class="details" on:click={() => playSong(song.fileName)}>
+        <button class="details" on:click={() => playSong(song.fileName)}>
           <span class="song-title">{song.title}</span>
           <span class="singer">{song.artist}</span>
-        </div>
+        </button>
         <div class="tags">
           {#each song.tags as tag}
             <Tag {tag} />

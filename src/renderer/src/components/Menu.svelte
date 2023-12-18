@@ -1,7 +1,7 @@
 <script lang="ts">
   import { activeSong } from '../scripts/store'
   import heartSVG from './../assets/heart.svg'
-  import addSVG from './../assets/add.svg'
+  import plusSVG from './../assets/plus2.svg'
 </script>
 
 <style lang="scss">
@@ -82,19 +82,19 @@
   <div class="playlists">
     <span class="p-title">Playlists:</span>
     <button class="new-playlist">
-      <img src={addSVG} alt="" class="icon" />
+      <img src={plusSVG} alt="" class="icon" />
       <span>New playlist</span>
     </button>
     <button class="playlist1">
       <img src={heartSVG} alt="" class="icon" />
       <span>Pa ducharme</span>
     </button>
-    <button class="empty">
+    <div class="empty">
       <!-- if (playlistNumber =< 5) {empty.style.display=`flex`} o algo asi saps,
         playlistNumber = numero de playlists creadas = array con las canciones con
         el que se va a hacer un bucle donde se van a mostrar-->
       <span></span>
-    </button>
+    </div>
   </div>
   <div class="cover">
     <img src={$activeSong.cover} alt="" />

@@ -2,6 +2,7 @@
   import type { ITag } from './../../../interfaces/ITag.ts'
   import { tags } from '../scripts/store'
   import { get } from 'svelte/store'
+  import plusSVG from '../assets/plus2.svg'
 
   let name: string = ''
   let color: string = ''
@@ -27,14 +28,15 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    background-color: white;
 
-    background-color: inherit;
     border-radius: 10px;
     padding: 8px 10px;
 
     box-shadow: inset 0 0 10px 0px rgba(0, 0, 0, 0.2);
+
     .name {
-      background-color: inherit;
+      background: none;
       outline: none;
       border: none;
       width: 100%;
@@ -85,9 +87,7 @@
 
 <div class="input-tag">
   <button class="add" on:click={createTag}>
-    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#808080">
-      <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
-    </svg>
+    <img src={plusSVG} alt="" />
   </button>
   <input type="text" class="name" placeholder="New tag" bind:value={name} on:keydown={handleKeydown} />
   <div class="separation" />
