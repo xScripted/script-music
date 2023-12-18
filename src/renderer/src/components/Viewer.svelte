@@ -49,9 +49,9 @@
     padding: 75px;
     overflow-y: auto;
 
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
     border-radius: var(--radius);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
 
     .fuck-go-back {
       position: absolute;
