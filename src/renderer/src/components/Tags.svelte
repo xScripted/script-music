@@ -1,5 +1,6 @@
 <script lang="ts">
   import InputTag from './InputTag.svelte'
+  import { tags } from '../scripts/store'
 
   let active: boolean = false
 </script>
@@ -78,10 +79,14 @@
     </button>
   </div>
   <div class="tags">
-    <label> <input type="checkbox" id="cbox1" value="first_checkbox" /> Este es mi primer checkbox </label>
-    <label> <input type="checkbox" id="cbox1" value="second_checkbox" /> Este es mi segundo checkbox </label>
-    <label> <input type="checkbox" id="cbox1" value="third_checkbox" /> Este es mi tercer checkbox </label>
-    <label> <input type="checkbox" id="cbox1" value="fourth_checkbox" /> Este es mi cuarto checkbox </label>
+    {#each tags as tag}
+      <div class="tag-group">
+        <input type="checkbox" id="cbox1" value="first_checkbox" />
+        <label>
+          {`casilñdfljkgvdf <a estoy hasta los huevos quiero pogamar y no me dejan me cago en la puta quiero irme a mi casa me tienen secuestrado aiuda 112`}</label
+        >
+      </div>
+    {/each}
   </div>
   <InputTag />
 </div>

@@ -1,4 +1,6 @@
-<script lang="ts"></script>
+<script lang="ts">
+  import { activeSong } from '../scripts/store'
+</script>
 
 <style lang="scss">
   .menu {
@@ -64,13 +66,14 @@
 
     .cover {
       width: 100%;
-      height: auto;
       overflow: hidden;
-      border-radius: 0 var(--radius) 0 0;
+      border-radius: var(--radius);
       aspect-ratio: 1/1;
 
       img {
+        object-fit: cover;
         width: 100%;
+        height: 100%;
       }
     }
   }
@@ -113,9 +116,6 @@
     </button>
   </div>
   <div class="cover">
-    <img
-      src="https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/d9/8e/ae/d98eaece-2460-1445-384c-e0d6299268d9/artwork.jpg/1200x1200bf-60.jpg"
-      alt=""
-    />
+    <img src={$activeSong.cover} alt="" />
   </div>
 </div>

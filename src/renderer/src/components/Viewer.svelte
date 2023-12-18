@@ -4,12 +4,15 @@
   import addQueueSVG from './../assets/queue.svg'
   import brushSVG from './../assets/brush.svg'
   import plusSVG from './../assets/plus.svg'
-  import { panel, playlist } from './../scripts/store'
+  import { panel, playlist, activeSong } from './../scripts/store'
   import type { ISong } from '../../../interfaces/ISong'
+  import { Howl, Howler } from 'howler'
+  import { onMount } from 'svelte'
+  import { get } from 'svelte/store'
 
   let newSong: boolean = false
-
   let playlistValue: ISong[] = []
+  let path = ''
 
   playlist.subscribe((value) => (playlistValue = value))
 
@@ -18,6 +21,23 @@
 
     panel.update(() => (newSong ? 'Youtube to MP3' : ''))
   }
+
+  const playSong = (fileName: string) => {
+    var sound = new Howl({
+      src: [path + fileName],
+      rate: 0.85,
+      volume: 0.2,
+    })
+    sound.play()
+
+    const song = get(playlist).find((song: ISong) => song.fileName === fileName)
+
+    activeSong.update(() => song)
+  }
+
+  onMount(async () => {
+    path = await window.electron.ipcRenderer.invoke('get-path')
+  })
 </script>
 
 <style lang="scss">
@@ -92,6 +112,7 @@
           height: 75px;
           width: 75px;
           border-radius: var(--radius);
+          object-fit: cover;
         }
 
         .details {
@@ -189,14 +210,14 @@
     <div class="color">
       <div class="icon"></div>
     </div>
-    <div class="title">Te quiero guapo</div>
+    <div class="title">Te quiero guapa</div>
   </div>
 
   <div class="song-list">
     {#each playlistValue as song}
       <div class="song-row">
         <img src={song.cover} class="cover" alt="" />
-        <div class="details">
+        <div class="details" on:click={() => playSong(song.fileName)}>
           <span class="song-title">{song.title}</span>
           <span class="singer">{song.artist}</span>
         </div>

@@ -3,6 +3,6 @@ export interface IMetaData {
   title: string
   artist: string
   date: Date
-  APIC: string
+  subtitle: string
   genre: string //JSON ITag[]
 }

@@ -16,7 +16,7 @@
       title,
       artist,
       date: new Date(),
-      APIC: cover,
+      subtitle: cover,
       genre: JSON.stringify([]),
     }
 
@@ -25,7 +25,7 @@
     }, 1000)
 
     const newSong: ISong = {
-      fileName,
+      fileName: fileName + '.mp3',
       title,
       artist,
       tags: [],
@@ -68,6 +68,7 @@
       width: 85px;
       height: 85px;
       border-radius: var(--radius);
+      object-fit: cover;
       background-color: rgba(0, 0, 0, 0.2);
     }
   }

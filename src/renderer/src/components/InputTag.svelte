@@ -1,16 +1,21 @@
 <script lang="ts">
-  //Value of input type="color" -> .square background color
-  //Crear variable para guardar el color seleccionado (change) -> color + "tagName"
+  import type { ITag } from './../../../interfaces/ITag.ts'
+  import { tags } from '../scripts/store'
+  import { get } from 'svelte/store'
 
-  //square.styles.background-color= (color + "tagName")
-
-  let tag: string = ''
+  let name: string = ''
   let color: string = ''
 
   function handleKeydown(e) {
     if (e.key === 'Enter') {
-      console.log('tag guardado: ', { tag, color })
-      tag = ''
+      const tag: ITag = {
+        name,
+        color,
+      }
+
+      tags.update((tags: ITag[]) => [...tags, tag])
+
+      window.localStorage.set('tags', JSON.stringify(get(tags)))
     }
   }
 </script>
@@ -79,7 +84,7 @@
   <svg class="add" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#808080">
     <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
   </svg>
-  <input type="text" class="tag" placeholder="New tag" bind:value={tag} on:keydown={handleKeydown} />
+  <input type="text" class="tag" placeholder="New tag" bind:value={name} on:keydown={handleKeydown} />
   <div class="separation" />
   <div class="color-input">
     <div class="square" style="background: {color}" />
