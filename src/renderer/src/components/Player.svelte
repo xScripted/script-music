@@ -25,13 +25,9 @@
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
 
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
     border-radius: var(--radius);
-    backdrop-filter: blur(5px);
-
-    img {
-      width: 35px;
-    }
+    backdrop-filter: blur(10px);
 
     .progress {
       width: 100%;
@@ -86,10 +82,13 @@
       align-items: center;
       gap: 10px;
 
-      .play,
-      .next,
-      .previous {
+      img {
         width: 50px;
+      }
+
+      .shuffle,
+      .repeat {
+        width: 35px;
       }
     }
 
@@ -101,6 +100,10 @@
       justify-self: end;
       align-items: center;
       gap: 10px;
+
+      img {
+        width: 25px;
+      }
     }
   }
 </style>
