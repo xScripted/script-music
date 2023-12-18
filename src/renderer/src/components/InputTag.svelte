@@ -6,24 +6,24 @@
   let name: string = ''
   let color: string = ''
 
-  function handleKeydown(e) {
-    if (e.key === 'Enter') {
-      const tag: ITag = {
-        name,
-        color,
-      }
-
-      tags.update((tags: ITag[]) => [...tags, tag])
-
-      window.localStorage.set('tags', JSON.stringify(get(tags)))
+  const createTag = () => {
+    const tag: ITag = {
+      name,
+      color,
     }
+
+    tags.update((tags: ITag[]) => [...tags, tag])
+
+    window.localStorage.setItem('tags', JSON.stringify(get(tags)))
   }
+
+  const handleKeydown = (e) => (e.key === 'Enter' ? createTag() : null)
 </script>
 
 <style lang="scss">
   .new-tag {
     height: 35px;
-    width: fit-content;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -33,10 +33,7 @@
     gap: 10px;
     padding: 8px 10px;
 
-    box-shadow:
-      3px 3px 5px #bebebe,
-      -3px -3px 5px #ffffff;
-
+    box-shadow: inset 0 0 10px 0px rgba(0, 0, 0, 0.2);
     .tag {
       background-color: inherit;
       outline: none;
@@ -81,9 +78,11 @@
 </style>
 
 <div class="new-tag">
-  <svg class="add" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#808080">
-    <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
-  </svg>
+  <button on:click={createTag}>
+    <svg class="add" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#808080">
+      <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+    </svg>
+  </button>
   <input type="text" class="tag" placeholder="New tag" bind:value={name} on:keydown={handleKeydown} />
   <div class="separation" />
   <div class="color-input">

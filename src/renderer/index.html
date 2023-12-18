@@ -12,11 +12,23 @@
       box-sizing: border-box;
     }
 
+    button {
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      margin: 0;
+      padding: 0;
+      text-align: inherit;
+      font: inherit;
+      border-radius: 0;
+      appearance: none;
+    }
+
     :root {
       --radius: 15px;
     }
 
-    input[type='text'] {
+    .input[type='text'] {
       border: 2px solid transparent;
       width: 15em;
       height: 2.5em;
@@ -29,8 +41,8 @@
       transition: all 0.5s;
     }
 
-    input[type='text']:hover,
-    input[type='text']:focus {
+    .input[type='text']:hover,
+    .input[type='text']:focus {
       border: 2px solid #4a9dec;
       box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
       background-color: white;

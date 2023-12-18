@@ -9,7 +9,7 @@
   import type { ISong } from '../../interfaces/ISong'
 
   const getTags = () => {
-    tags.update(() => JSON.parse(window.localStorage.get('tags') || '[]'))
+    tags.update(() => JSON.parse(window.localStorage.getItem('tags') || '[]'))
   }
 
   const setAllSongs = async () => {

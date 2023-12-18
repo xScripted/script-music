@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Tags from './Tags.svelte'
+  import SelectTags from './SelectTags.svelte'
   import searchSVG from './../assets/search.svg'
   import filterSVG from './../assets/filter.svg'
   import tagsSVG from './../assets/tags.svg'
@@ -96,7 +96,7 @@
     </button>
 
     {#if tagsVisible}
-      <Tags />
+      <SelectTags />
     {/if}
   </div>
   <div class="settings" class:active={settingsVisible}>
