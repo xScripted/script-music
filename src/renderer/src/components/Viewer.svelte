@@ -47,8 +47,9 @@
     width: 100%;
     padding: 75px;
 
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: var(--radius);
+    backdrop-filter: blur(5px);
 
     .fuck-go-back {
       position: absolute;

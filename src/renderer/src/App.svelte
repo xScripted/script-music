@@ -54,6 +54,9 @@
     grid-template-rows: 1fr 100px;
 
     background-color: #cf6b9b;
+    background-image: url('https://cdn.dribbble.com/userupload/10455063/file/original-b2643b7e44bbf0a2bd2e3499dc5a2064.png?resize=1344x896');
+    background-repeat: no-repeat;
+    background-size: 100%;
     color: #363636;
 
     .bottom {

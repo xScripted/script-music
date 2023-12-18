@@ -6,6 +6,7 @@
   .menu {
     height: 100%;
     width: 100%;
+    padding: 10px 0 10px 10px;
 
     display: flex;
     flex-direction: column;
@@ -17,8 +18,6 @@
 
       display: flex;
       flex-direction: column;
-      padding-top: 10px;
-      padding-left: 10px;
       gap: 10px;
 
       .p-title {
@@ -30,7 +29,7 @@
       .new-playlist,
       .playlist1,
       .playlist2,
-      .playlist3 {
+      .empty {
         height: 75px;
         width: 100%;
 
@@ -59,7 +58,7 @@
       }
 
       .playlist2,
-      .playlist3 {
+      .empty {
         background-color: rgba(255, 255, 255, 0.3);
       }
     }
@@ -110,8 +109,10 @@
       <img src="" alt="" class="icon" />
       <span></span>
     </button>
-    <button class="playlist3">
-      <img src="" alt="" class="icon" />
+    <button class="empty">
+      <!-- if (playlistNumber =< 5) {empty.style.display=`flex`} o algo asi saps,
+        playlistNumber = numero de playlists creadas = array con las canciones con
+        el que se va a hacer un bucle donde se van a mostrar-->
       <span></span>
     </button>
   </div>
