@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { get } from 'svelte/store'
   import { panel } from '../scripts/store'
   import YoutubeSong from './YoutubeSong.svelte'
 
@@ -18,15 +17,15 @@
     transition:
       0.5s ease-out,
       padding 0s;
-    width: 400px;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: var(--radius);
     overflow-y: auto;
+    width: 0;
     opacity: 0;
 
     &.active {
       transition: 0.5s ease-in;
-      width: 100%;
+      width: 600px;
       padding: 20px;
       opacity: 1;
     }

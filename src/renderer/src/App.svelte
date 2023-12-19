@@ -70,7 +70,6 @@
       margin: 10px;
       position: relative;
       display: flex;
-      gap: 10px;
       min-height: 0;
     }
 
