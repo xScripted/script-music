@@ -4,7 +4,6 @@
   import Viewer from './components/Viewer.svelte'
   import Panel from './components/Panel.svelte'
   import Menu from './components/Menu.svelte'
-  import Utilities from './components/Utilities.svelte'
   import { onMount } from 'svelte'
   import type { ISong } from '../../interfaces/ISong'
 
@@ -45,6 +44,8 @@
 
 <style lang="scss">
   .wrapper {
+    //font-family: 'Outfit', sans-serif;
+
     height: 100vh;
     width: 100%;
 

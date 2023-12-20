@@ -6,8 +6,17 @@
 
   let name: string = ''
   let color: string = ''
+  let warning: string = ''
 
   const createTag = () => {
+    console.log('holis')
+
+    if (get(tags).find((value: ITag) => value.name === name)) {
+      warning = '* El nombre que has puesto ya existe'
+
+      return
+    }
+
     const tag: ITag = {
       name,
       color,
@@ -16,6 +25,10 @@
     tags.update((tags: ITag[]) => [...tags, tag])
 
     window.localStorage.setItem('tags', JSON.stringify(get(tags)))
+
+    warning = ''
+    name = ''
+    color = ''
   }
 
   const handleKeydown = (e) => (e.key === 'Enter' ? createTag() : null)
@@ -83,7 +96,17 @@
       }
     }
   }
+
+  .warning {
+    position: absolute;
+    bottom: 5px;
+    font-size: 12px;
+    color: rgb(139, 15, 15);
+  }
 </style>
+
+<!--Capar que se puedan hacer dos tags con el mismo nombre-->
+<!--Editor de tags-->
 
 <div class="input-tag">
   <button class="add" on:click={createTag}>
@@ -96,3 +119,5 @@
     <input type="color" class="color" bind:value={color} />
   </div>
 </div>
+
+<span class="warning">{warning}</span>

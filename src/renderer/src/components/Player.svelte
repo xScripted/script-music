@@ -39,7 +39,7 @@
       gap: 10px;
 
       .progress-bar {
-        background-color: white;
+        background-color: rgba(255, 255, 255, 0.5);
         width: 100%;
         height: 10px;
         border-radius: 25px;

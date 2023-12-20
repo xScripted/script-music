@@ -2,6 +2,12 @@
   import { activeSong } from '../scripts/store'
   import heartSVG from './../assets/heart.svg'
   import plusSVG from './../assets/plus2.svg'
+
+  let playlistNumber: number = 1 //array.length de las playlists que hay
+
+  let createPlaylist = () => {
+    console.log('Hola')
+  }
 </script>
 
 <style lang="scss">
@@ -64,10 +70,13 @@
     }
 
     .cover {
-      width: 100%;
+      width: 96%;
       overflow: hidden;
       border-radius: var(--radius);
       aspect-ratio: 1/1;
+
+      position: absolute;
+      bottom: 10px;
 
       img {
         object-fit: cover;
@@ -81,21 +90,26 @@
 <div class="menu">
   <div class="playlists">
     <span class="p-title">Playlists:</span>
-    <button class="new-playlist">
+    <button class="new-playlist" on:click={createPlaylist}>
       <img src={plusSVG} alt="" class="icon" />
       <span>New playlist</span>
     </button>
+
+    <!-- Crear un array con las playlists que hay y hacer un #each-->
     <button class="playlist1">
       <img src={heartSVG} alt="" class="icon" />
       <span>Pa ducharme</span>
     </button>
-    <div class="empty">
-      <!-- if (playlistNumber =< 5) {empty.style.display=`flex`} o algo asi saps,
-        playlistNumber = numero de playlists creadas = array con las canciones con
-        el que se va a hacer un bucle donde se van a mostrar-->
-      <span></span>
-    </div>
+
+    <!-- playlistNumber = numero de playlists creadas = array con las canciones con
+      el que se va a hacer un bucle donde se van a mostrar-->
+    {#if playlistNumber <= 5}
+      <div class="empty" />
+    {/if}
   </div>
+
+  <!-- Encontrar cual es la función que determina si una canción está puesta o no y
+    hacer un if para que solo se muestre este div si hay una canción en reproducción-->
   <div class="cover">
     <img src={$activeSong.cover} alt="" />
   </div>

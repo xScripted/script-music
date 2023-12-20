@@ -1,15 +1,17 @@
 <script lang="ts">
   import Utilities from './Utilities.svelte'
-  import addSVG from './../assets/add.svg'
-  import addQueueSVG from './../assets/queue.svg'
-  import brushSVG from './../assets/brush.svg'
-  import plusSVG from './../assets/plus.svg'
+  import Tag from './Tag.svelte'
   import { panel, playlist, activeSong } from './../scripts/store'
   import type { ISong } from '../../../interfaces/ISong'
   import { Howl, Howler } from 'howler'
   import { onMount } from 'svelte'
   import { get } from 'svelte/store'
-  import Tag from './Tag.svelte'
+
+  import addSVG from './../assets/add.svg'
+  import addQueueSVG from './../assets/queue.svg'
+  import brushSVG from './../assets/brush.svg'
+  import plusSVG from './../assets/plus.svg'
+  import homeSVG from './../assets/home.svg'
 
   let newSong: boolean = false
   let playlistValue: ISong[] = []
@@ -59,7 +61,7 @@
       left: 15px;
 
       .back,
-      .forth {
+      .home {
         height: 25px;
         width: 25px;
         border: none;
@@ -185,7 +187,9 @@
   <div class="utilities">
     <div class="fuck-go-back">
       <button class="back"></button>
-      <button class="forth"></button>
+      <button class="home">
+        <!--<img src={homeSVG} alt="" />-->
+      </button>
     </div>
     <Utilities />
   </div>
