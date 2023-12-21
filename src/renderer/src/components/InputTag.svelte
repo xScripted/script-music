@@ -9,8 +9,6 @@
   let warning: string = ''
 
   const createTag = () => {
-    console.log('holis')
-
     if (get(tags).find((value: ITag) => value.name === name)) {
       warning = '* El nombre que has puesto ya existe'
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import Utilities from './Utilities.svelte'
   import Tag from './Tag.svelte'
-  import { panel, playlist, activeSong } from './../scripts/store'
+  import { panel, playlistFiltered, playlist, activeSong } from './../scripts/store'
   import type { ISong } from '../../../interfaces/ISong'
   import { Howl, Howler } from 'howler'
   import { onMount } from 'svelte'
@@ -12,30 +12,18 @@
   import brushSVG from './../assets/brush.svg'
   import plusSVG from './../assets/plus.svg'
   import homeSVG from './../assets/home.svg'
+  import { player } from '../scripts/player'
 
   let newSong: boolean = false
   let playlistValue: ISong[] = []
   let path = ''
 
-  playlist.subscribe((value) => (playlistValue = value))
+  playlistFiltered.subscribe((value) => (playlistValue = value))
 
   const toggleNewSong = () => {
     newSong = !newSong
 
     panel.update(() => (newSong ? 'Youtube to MP3' : ''))
-  }
-
-  const playSong = (fileName: string) => {
-    var sound = new Howl({
-      src: [path + fileName],
-      rate: 1.2,
-      volume: 0.2,
-    })
-    sound.play()
-
-    const song = get(playlist).find((song: ISong) => song.fileName === fileName)
-
-    activeSong.update(() => song)
   }
 
   onMount(async () => {
@@ -205,7 +193,7 @@
     {#each playlistValue as song}
       <div class="song-row">
         <img src={song.cover} class="cover" alt="" />
-        <button class="details" on:click={() => playSong(song.fileName)}>
+        <button class="details" on:click={() => player.play(song.fileName)}>
           <span class="song-title">{song.title}</span>
           <span class="singer">{song.artist}</span>
         </button>

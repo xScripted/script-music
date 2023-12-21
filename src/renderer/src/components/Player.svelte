@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { activeSong } from '../scripts/store'
+  import { activeSong, isPaused } from '../scripts/store'
+  import { player } from '../scripts/player'
 
   import shuffleSVG from './../assets/shuffle.svg'
   import previousSVG from './../assets/previous.svg'
@@ -11,6 +12,12 @@
   import slowedSVG from './../assets/slowed.svg'
   import djSVG from './../assets/dj1.svg'
   import queueSVG from './../assets/queue.svg'
+
+  let isPausedValue
+
+  isPaused.subscribe((value) => {
+    isPausedValue = value
+  })
 </script>
 
 <style lang="scss">
@@ -127,8 +134,15 @@
     <img src={shuffleSVG} alt="" class="shuffle" />
     <img src={previousSVG} alt="" class="previous" />
     <div class="play-pause">
-      <img src={playSVG} alt="" class="play" />
-      <!--<img src={pauseSVG} alt="" class="pause" />-->
+      {#if isPausedValue}
+        <button on:click={() => player.resume()}>
+          <img src={playSVG} alt="" class="play" />
+        </button>
+      {:else}
+        <button on:click={() => player.pause()}>
+          <img src={pauseSVG} alt="" class="pause" />
+        </button>
+      {/if}
     </div>
     <img src={nextSVG} alt="" class="next" />
     <img src={repeatSVG} alt="" class="repeat" />

@@ -5,9 +5,7 @@
 
   let playlistNumber: number = 1 //array.length de las playlists que hay
 
-  let createPlaylist = () => {
-    console.log('Hola')
-  }
+  let createPlaylist = () => {}
 </script>
 
 <style lang="scss">

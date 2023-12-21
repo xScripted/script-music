@@ -4,12 +4,14 @@
   import filterSVG from './../assets/filter.svg'
   import tagsSVG from './../assets/tags.svg'
   import settingsSVG from './../assets/settings.svg'
-  import { panel } from '../scripts/store'
+  import { panel, filterSearch } from '../scripts/store'
+  import { player } from '../scripts/player'
 
   let tagsVisible: boolean = false
   let search: boolean = false
   let settingsVisible: boolean = false
   let filterVisible: boolean = false
+  let searchValue: string = ''
 
   const tagstoggle = () => {
     tagsVisible = !tagsVisible
@@ -29,6 +31,11 @@
     filterVisible = !filterVisible
 
     panel.update(() => (settingsVisible ? 'Filtros' : ''))
+  }
+
+  const updateGlobalSearch = () => {
+    filterSearch.update((value: string) => (value = searchValue))
+    player.filter()
   }
 </script>
 
@@ -83,7 +90,7 @@
     <button on:click={searchtoggle}>
       <img src={searchSVG} alt="" />
     </button>
-    <input class="search-input" type="text" name="" id="" placeholder="Type to search..." />
+    <input class="search-input" type="text" bind:value={searchValue} on:input={updateGlobalSearch} placeholder="Type to search..." />
   </div>
   <div class="filter" class:active={filterVisible}>
     <button on:click={filtertoggle}>

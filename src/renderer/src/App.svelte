@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { playlist, tags } from './scripts/store'
+  import { playlist, playlistFiltered, tags, path } from './scripts/store'
   import Player from './components/Player.svelte'
   import Viewer from './components/Viewer.svelte'
   import Panel from './components/Panel.svelte'
@@ -28,15 +28,20 @@
           cover: metaSong.subtitle || '',
           lyrics: '',
         }
-        console.log(metaSong)
+
         allSongs.push(song)
       })
     )
 
     playlist.set(allSongs)
+    playlistFiltered.set(allSongs)
   }
 
   onMount(async () => {
+    const pathValue = await window.electron.ipcRenderer.invoke('get-path')
+
+    path.update(() => pathValue)
+
     await setAllSongs()
     getTags()
   })
