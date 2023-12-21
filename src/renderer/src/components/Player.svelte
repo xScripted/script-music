@@ -148,6 +148,8 @@
     <img src={repeatSVG} alt="" class="repeat" />
   </div>
 
+  <!-- VOLUMEEEEEN -->
+
   <div class="panel">
     <!--on:click que al clicar uno se active el modo del botón y que,
     cuando ese modo esté abierto, el botón aparezca como seleccionado (opacity: 1;)-->

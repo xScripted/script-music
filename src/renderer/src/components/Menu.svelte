@@ -108,7 +108,10 @@
 
   <!-- Encontrar cual es la función que determina si una canción está puesta o no y
     hacer un if para que solo se muestre este div si hay una canción en reproducción-->
-  <div class="cover">
-    <img src={$activeSong.cover} alt="" />
-  </div>
+
+  {#if $activeSong.fileName}
+    <div class="cover">
+      <img src={$activeSong.cover} alt="" />
+    </div>
+  {/if}
 </div>

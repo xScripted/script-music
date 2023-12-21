@@ -19,7 +19,7 @@ export const player = {
 
     const howl = new Howl({
       src: [get(path) + fileName],
-      rate: 2,
+      rate: 1,
       volume: 0.2,
       onplay: () => isPaused.update(() => false),
       onend: () => isPaused.update(() => true),
