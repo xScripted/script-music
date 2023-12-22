@@ -23,7 +23,7 @@
       artist,
       date: new Date(),
       subtitle: cover,
-      genre: JSON.stringify(tags),
+      genre: tags.map((tag: ITag) => tag.name),
     }
 
     setTimeout(() => {
@@ -51,55 +51,76 @@
   }
 
   tags.subscribe((value: ITag[]) => {
-    formTags = value
+    formTags = value.map((tag: ITag) => {
+      tag.active = false
+      return tag
+    })
   })
 </script>
 
 <style lang="scss">
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px 0;
-  }
-
-  label {
-    font-weight: bold;
-  }
-
-  .tags-group {
-    height: 200px;
-  }
-
-  .form-tags {
-    padding: 10px 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 10px;
-  }
-
-  .cover {
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
-    padding: 12px 0;
-    flex: 1;
-
+  .youtube-song {
     .input-group {
-      padding: 0;
-      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 0;
     }
-    img {
-      width: 85px;
-      height: 85px;
-      border-radius: var(--radius);
-      object-fit: cover;
-      background-color: rgba(0, 0, 0, 0.2);
+
+    label {
+      font-weight: bold;
+    }
+
+    .tags-group {
+      height: 200px;
+    }
+
+    .flex {
+      display: flex;
+      gap: 20px;
+    }
+
+    .form-tags {
+      padding: 10px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 10px;
+    }
+
+    .cover {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      padding: 12px 0;
+      flex: 1;
+
+      .input-group {
+        padding: 0;
+        flex: 1;
+      }
+      img {
+        width: 85px;
+        height: 85px;
+        border-radius: var(--radius);
+        object-fit: cover;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .input-tag-container {
+      grid-column: span 2;
     }
   }
 
-  .input-tag-container {
-    grid-column: span 2;
+  .download-song {
+    position: absolute;
+    width: fit-content;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    padding: 20px 85px;
+    margin: auto;
+    white-space: nowrap;
   }
 </style>
 
@@ -116,14 +137,17 @@
       <input class="input" type="text" bind:value={cover} placeholder="Image url" />
     </div>
   </div>
-  <div class="input-group">
-    <label>Title</label>
-    <input class="input" type="text" bind:value={title} placeholder="Title" />
-  </div>
 
-  <div class="input-group">
-    <label>Artist</label>
-    <input class="input" type="text" bind:value={artist} placeholder="Artist" />
+  <div class="flex">
+    <div class="input-group">
+      <label>Title</label>
+      <input class="input" type="text" bind:value={title} placeholder="Title" />
+    </div>
+
+    <div class="input-group">
+      <label>Artist</label>
+      <input class="input" type="text" bind:value={artist} placeholder="Artist" />
+    </div>
   </div>
 
   <div class="tags-group">
@@ -140,6 +164,5 @@
       </div>
     </div>
   </div>
-
-  <button class="g-btn" on:click={downloadSong}> Descargar y guardar canción </button>
 </div>
+<button class="g-btn download-song" on:click={downloadSong}> Descargar y guardar canción </button>

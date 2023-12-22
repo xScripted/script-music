@@ -1,6 +1,6 @@
 <script lang="ts">
   import ProgressBar from './ProgressBar.svelte'
-  import { activeSong, isPaused, rate, volume } from '../scripts/store'
+  import { activeSong, isPaused, panel, rate, volume } from '../scripts/store'
   import { player } from '../scripts/player'
   import { get } from 'svelte/store'
 
@@ -19,21 +19,30 @@
   import volumeDownSVG from './../assets/volumeDown.svg'
 
   let isPausedValue
+  let panelValue
   let buttonOn: boolean = false
   let newRate: number = 1
   let newVolume: number = get(volume)
   let oldVolume: number = 0.5
 
-  isPaused.subscribe((value) => {
-    isPausedValue = value
-  })
+  isPaused.subscribe((value) => (isPausedValue = value))
+  panel.subscribe((value) => (panelValue = value))
 
-  const updateRate = (defaultRate: number) => {
-    // Toggle rate, defaultRate puede ser 0.8 o 1.2 (se llama en el html)
-    newRate = get(rate) <= 1 ? defaultRate : 1
-
+  const updateRate = () => {
     rate.update(() => newRate)
     if (get(activeSong).howl) get(activeSong).howl.rate(newRate)
+  }
+
+  const updateSlowed = () => {
+    newRate = get(rate) >= 1 ? 0.8 : 1
+
+    updateRate()
+  }
+
+  const updateNightcore = () => {
+    newRate = get(rate) <= 1 ? 1.2 : 1
+
+    updateRate()
   }
 
   const updateVolume = (ev) => {
@@ -188,10 +197,10 @@
   <div class="panel">
     <!-- Cuando el modo esté on, que el botón aparezca como seleccionado (opacity: 1;) -->
 
-    <button on:click={() => updateRate(0.8)} class="utility" class:active={newRate < 1}>
+    <button on:click={updateSlowed} class="utility" class:active={newRate < 1}>
       <img src={slowedSVG} alt="" />
     </button>
-    <button on:click={() => updateRate(1.2)} class="utility" class:active={newRate > 1}>
+    <button on:click={updateNightcore} class="utility" class:active={newRate > 1}>
       <img src={nightcoreSVG} alt="" />
     </button>
     <button class="utility">
@@ -200,8 +209,12 @@
 
       <img src={djSVG} alt="" class:active={buttonOn} />
     </button>
-    <button class="utility">
-      <img src={queueSVG} alt="" class:active={buttonOn} />
+    <button
+      class="utility"
+      class:active={panelValue === 'Queue'}
+      on:click={() => panel.update((value) => (value === 'Queue' ? '' : 'Queue'))}
+    >
+      <img src={queueSVG} alt="" />
     </button>
 
     <div class="volume">
@@ -214,7 +227,7 @@
           <img src={volumeUpSVG} alt="" />
         {/if}
       </button>
-      <input type="range" class="volume-bar" min="0" max="1" step="0.01" value={newVolume} on:input={updateVolume} />
+      <input type="range" class="volume-bar" min="0" max="0.5" step="0.01" value={newVolume} on:input={updateVolume} />
     </div>
   </div>
 </div>

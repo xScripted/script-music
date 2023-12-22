@@ -4,5 +4,5 @@ export interface IMetaData {
   artist: string
   date: Date
   subtitle: string
-  genre: string //JSON ITag[]
+  genre: string[]
 }
