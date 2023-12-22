@@ -8,6 +8,8 @@
   import type { ISong } from '../../interfaces/ISong'
   import type { ITag } from '../../interfaces/ITag'
 
+  let HTMLAppWrapper: HTMLElement
+
   const getTags = () => {
     tags.update(() => {
       const tagsFromDB: ITag[] = JSON.parse(window.localStorage.getItem('tags') || '[]')
@@ -53,11 +55,15 @@
 
     await setAllSongs()
     getTags()
+
+    const savedBG = window.localStorage.getItem('bg')
+
+    if (savedBG) HTMLAppWrapper.style.backgroundImage = `url(${savedBG})`
   })
 </script>
 
 <style lang="scss">
-  .wrapper {
+  .app-wrapper {
     //font-family: 'Outfit', sans-serif;
 
     height: 100vh;
@@ -69,7 +75,7 @@
     grid-template-rows: 1fr 125px;
 
     background-color: #cf6b9b;
-    background-image: url('https://cdn.dribbble.com/userupload/10455063/file/original-b2643b7e44bbf0a2bd2e3499dc5a2064.png?resize=1344x896');
+    background-image: url('https://wallpapers.com/images/hd/cute-pikachu-pokemon-ynbgo9vzeaemo126.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -94,7 +100,7 @@
   }
 </style>
 
-<div class="wrapper">
+<div class="app-wrapper" bind:this={HTMLAppWrapper}>
   <div class="left">
     <Menu />
   </div>

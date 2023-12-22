@@ -1,6 +1,7 @@
 <script lang="ts">
   import { panel } from '../scripts/store'
   import YoutubeSong from './YoutubeSong.svelte'
+  import Settings from './Settings.svelte'
 
   let active: boolean = false
 
@@ -16,8 +17,8 @@
   .panel {
     position: relative;
     transition:
-      0.5s ease-out,
-      padding 0s;
+      width 0.3s ease-out,
+      opacity 0.3s 0.3s;
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
     border-radius: var(--radius);
@@ -28,7 +29,9 @@
     margin-left: 0;
 
     &.active {
-      transition: 0.5s ease-in;
+      transition:
+        width 0.3s ease-in,
+        opacity 0.3s 0.3s;
       width: 600px;
       padding: 20px;
       opacity: 1;
@@ -49,5 +52,9 @@
 
   {#if panelValue === 'Youtube to MP3'}
     <YoutubeSong />
+  {/if}
+
+  {#if panelValue === 'Settings'}
+    <Settings />
   {/if}
 </div>

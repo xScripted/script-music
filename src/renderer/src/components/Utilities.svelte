@@ -6,31 +6,20 @@
   import settingsSVG from './../assets/settings.svg'
   import { panel, filterSearch } from '../scripts/store'
   import { player } from '../scripts/player'
+  import Dropdown from './Dropdown.svelte'
 
   let tagsVisible: boolean = false
   let search: boolean = false
+  let filters: boolean = false
+
   let settingsVisible: boolean = false
   let filterVisible: boolean = false
   let searchValue: string = ''
 
-  const tagstoggle = () => {
-    tagsVisible = !tagsVisible
-  }
-
-  const searchtoggle = () => {
-    search = !search
-  }
-
   const settingstoggle = () => {
     settingsVisible = !settingsVisible
 
-    panel.update(() => (settingsVisible ? 'Ajustes' : ''))
-  }
-
-  const filtertoggle = () => {
-    filterVisible = !filterVisible
-
-    panel.update(() => (settingsVisible ? 'Filtros' : ''))
+    panel.update(() => (settingsVisible ? 'Settings' : ''))
   }
 
   const updateGlobalSearch = () => {
@@ -79,6 +68,26 @@
       }
     }
 
+    .song-filters {
+      .song-filter-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 10px 0;
+        gap: 10px;
+
+        button {
+          border: 1px solid rgb(170, 170, 170);
+          padding: 10px 20px;
+          border-radius: var(--radius);
+          font-size: 14px;
+
+          &:hover {
+            background-color: rgb(236, 236, 236);
+          }
+        }
+      }
+    }
+
     .tags {
       position: relative;
     }
@@ -87,22 +96,45 @@
 
 <div class="container">
   <div class="search" class:active={search}>
-    <button on:click={searchtoggle}>
+    <button on:click={() => (search = !search)}>
       <img src={searchSVG} alt="" />
     </button>
     <input class="search-input" type="text" bind:value={searchValue} on:input={updateGlobalSearch} placeholder="Type to search..." />
   </div>
-  <button on:click={filtertoggle} class="filter" class:active={filterVisible}>
-    <img src={filterSVG} alt="" />
-  </button>
-  <div class="tags" class:active={tagsVisible}>
-    <button on:click={tagstoggle}>
-      <img src={tagsSVG} alt="" />
+
+  <div class="song-filters">
+    <button on:click={() => (filters = !filters)} class:active={filterVisible}>
+      <img src={filterSVG} alt="" />
     </button>
 
-    {#if tagsVisible}
+    <Dropdown bind:isOpen={filters} id="dropdown-filters">
+      <h4>Ordenar por</h4>
+
+      <div class="song-filter-section">
+        <button> Artist </button>
+        <button> Title </button>
+        <button> Date </button>
+        <button> Shuffle </button>
+      </div>
+
+      <h4>Filtros</h4>
+
+      <div class="song-filter-section">
+        <button> Cover </button>
+        <button> Lyrics </button>
+        <button> Repre </button>
+        <button> No tags </button>
+      </div>
+    </Dropdown>
+  </div>
+
+  <div class="tags" class:active={tagsVisible}>
+    <button on:click={() => (tagsVisible = !tagsVisible)}>
+      <img src={tagsSVG} alt="" />
+    </button>
+    <Dropdown bind:isOpen={tagsVisible} id="dropdown-tags">
       <SelectTags />
-    {/if}
+    </Dropdown>
   </div>
   <button on:click={settingstoggle} class="settings" class:active={settingsVisible}>
     <img src={settingsSVG} alt="" />

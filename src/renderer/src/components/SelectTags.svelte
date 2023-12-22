@@ -39,23 +39,7 @@
 </script>
 
 <style lang="scss">
-  .container {
-    width: 270px;
-    height: fit-content;
-    gap: 15px;
-    display: flex;
-    padding: 20px;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.7);
-    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius);
-    position: absolute;
-    z-index: 2;
-
-    top: 35px;
-    right: -45px;
-
+  .select-tags {
     .upper {
       width: 100%;
       height: fit-content;
@@ -102,13 +86,14 @@
 
     .tags {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
       gap: 10px;
+      padding: 20px 0;
     }
   }
 </style>
 
-<div class="container">
+<div class="select-tags">
   <div class="upper">
     <button on:click={toggleAllTags}>{allActive ? 'Unselect all tags' : 'Select all tags'} </button>
     <button class="switch" class:active on:click={() => (active = !active)}>
