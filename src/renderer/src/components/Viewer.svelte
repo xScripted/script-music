@@ -114,8 +114,7 @@
 
     .song-list {
       margin-top: 75px;
-      height: 100%;
-      max-height: 400px;
+      height: 75%;
       overflow: scroll;
       overflow-x: hidden;
 
