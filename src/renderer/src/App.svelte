@@ -6,9 +6,18 @@
   import Menu from './components/Menu.svelte'
   import { onMount } from 'svelte'
   import type { ISong } from '../../interfaces/ISong'
+  import type { ITag } from '../../interfaces/ITag'
 
   const getTags = () => {
-    tags.update(() => JSON.parse(window.localStorage.getItem('tags') || '[]'))
+    tags.update(() => {
+      const tagsFromDB: ITag[] = JSON.parse(window.localStorage.getItem('tags') || '[]')
+
+      return tagsFromDB.map((tag: ITag) => {
+        tag.active = true
+
+        return tag
+      })
+    })
   }
 
   const setAllSongs = async () => {
@@ -57,7 +66,7 @@
     position: relative;
     display: grid;
     grid-template-columns: 250px 1fr;
-    grid-template-rows: 1fr 100px;
+    grid-template-rows: 1fr 125px;
 
     background-color: #cf6b9b;
     background-image: url('https://cdn.dribbble.com/userupload/10455063/file/original-b2643b7e44bbf0a2bd2e3499dc5a2064.png?resize=1344x896');

@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { activeSong, isPaused } from '../scripts/store'
+  import ProgressBar from './ProgressBar.svelte'
+  import { activeSong, isPaused, rate, volume } from '../scripts/store'
   import { player } from '../scripts/player'
+  import { get } from 'svelte/store'
 
   import shuffleSVG from './../assets/shuffle.svg'
   import previousSVG from './../assets/previous.svg'
@@ -12,12 +14,50 @@
   import slowedSVG from './../assets/slowed.svg'
   import djSVG from './../assets/dj1.svg'
   import queueSVG from './../assets/queue.svg'
+  import mutedSVG from './../assets/muted.svg'
+  import volumeUpSVG from './../assets/volumeUp.svg'
+  import volumeDownSVG from './../assets/volumeDown.svg'
 
   let isPausedValue
+  let buttonOn: boolean = false
+  let newRate: number = 1
+  let newVolume: number = get(volume)
+  let oldVolume: number = 0.5
 
   isPaused.subscribe((value) => {
     isPausedValue = value
   })
+
+  const updateRate = (defaultRate: number) => {
+    // Toggle rate, defaultRate puede ser 0.8 o 1.2 (se llama en el html)
+    newRate = get(rate) <= 1 ? defaultRate : 1
+
+    rate.update(() => newRate)
+    if (get(activeSong).howl) get(activeSong).howl.rate(newRate)
+  }
+
+  const updateVolume = (ev) => {
+    // Conseguimos el valor del input
+    newVolume = Number(ev.target.value)
+
+    // Actualizamos la variable GOD
+    volume.update(() => newVolume)
+
+    // Guardamos el valor antiguo
+    oldVolume = newVolume
+
+    // Actualizamos la cancion que esta sonando ahora mismo
+    if (get(activeSong).howl) get(activeSong).howl.volume(newVolume)
+  }
+
+  const toggleMute = () => {
+    volume.update(() => {
+      newVolume = get(volume) ? 0 : oldVolume
+      return newVolume
+    })
+
+    if (get(activeSong).howl) get(activeSong).howl.volume(newVolume)
+  }
 </script>
 
 <style lang="scss">
@@ -25,8 +65,8 @@
     height: 100%;
     width: 100%;
 
-    padding: 10px;
-    padding-top: 0px;
+    padding: 15px;
+    padding-top: 10px;
     display: inline-grid;
     justify-content: center;
     grid-template-rows: 1fr 1fr;
@@ -36,29 +76,9 @@
     border-radius: var(--radius);
     backdrop-filter: blur(10px);
 
-    .progress {
+    .progress-bar {
       width: 100%;
-      grid-column: 1/4;
-
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      gap: 10px;
-
-      .progress-bar {
-        background-color: rgba(255, 255, 255, 0.5);
-        width: 100%;
-        height: 10px;
-        border-radius: 25px;
-        overflow: hidden;
-
-        .song-progress {
-          background: linear-gradient(330deg, #5b0eeb 0%, #6d5dfc 50%, #8abdff 100%);
-          height: 100%;
-          border-radius: 25px;
-          transform: translateX(-500px);
-        }
-      }
+      grid-column: 1/5;
     }
 
     .details {
@@ -87,6 +107,7 @@
       justify-content: space-evenly;
       justify-self: center;
       align-items: center;
+
       gap: 10px;
 
       img {
@@ -107,22 +128,38 @@
       justify-self: end;
       align-items: center;
       gap: 10px;
-      opacity: 0.5;
 
       img {
         width: 25px;
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+      }
+
+      .utility {
+        opacity: 0.5;
+
+        &.active {
+          opacity: 1;
+        }
+      }
+
+      .volume {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        opacity: 1;
+        gap: 10px;
       }
     }
   }
 </style>
 
 <div class="player">
-  <div class="progress">
-    <div class="current-min">0:00</div>
-    <div class="progress-bar">
-      <div class="song-progress"></div>
-    </div>
-    <div class="duration">3:48</div>
+  <div class="progress-bar">
+    <ProgressBar />
   </div>
 
   <div class="details">
@@ -148,15 +185,36 @@
     <img src={repeatSVG} alt="" class="repeat" />
   </div>
 
-  <!-- VOLUMEEEEEN -->
-
   <div class="panel">
-    <!--on:click que al clicar uno se active el modo del botón y que,
-    cuando ese modo esté abierto, el botón aparezca como seleccionado (opacity: 1;)-->
+    <!-- Cuando el modo esté on, que el botón aparezca como seleccionado (opacity: 1;) -->
 
-    <img src={slowedSVG} alt="" class="slowed" />
-    <img src={nightcoreSVG} alt="" class="nightcore" />
-    <img src={queueSVG} alt="" class="queue" />
-    <img src={djSVG} alt="" class="dj" />
+    <button on:click={() => updateRate(0.8)} class="utility" class:active={newRate < 1}>
+      <img src={slowedSVG} alt="" />
+    </button>
+    <button on:click={() => updateRate(1.2)} class="utility" class:active={newRate > 1}>
+      <img src={nightcoreSVG} alt="" />
+    </button>
+    <button class="utility">
+      <!-- Crear variable para cuando empieza y cuando acaba una canción
+      (hacer que empiece en el 20% y acabe en el 80%, por ejemplo) -->
+
+      <img src={djSVG} alt="" class:active={buttonOn} />
+    </button>
+    <button class="utility">
+      <img src={queueSVG} alt="" class:active={buttonOn} />
+    </button>
+
+    <div class="volume">
+      <button class="speaker" on:click={toggleMute}>
+        {#if newVolume === 0}
+          <img src={mutedSVG} alt="" />
+        {:else if newVolume <= 0.5}
+          <img src={volumeDownSVG} alt="" />
+        {:else}
+          <img src={volumeUpSVG} alt="" />
+        {/if}
+      </button>
+      <input type="range" class="volume-bar" min="0" max="1" step="0.01" value={newVolume} on:input={updateVolume} />
+    </div>
   </div>
 </div>

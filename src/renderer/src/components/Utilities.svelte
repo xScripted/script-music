@@ -92,11 +92,9 @@
     </button>
     <input class="search-input" type="text" bind:value={searchValue} on:input={updateGlobalSearch} placeholder="Type to search..." />
   </div>
-  <div class="filter" class:active={filterVisible}>
-    <button on:click={filtertoggle}>
-      <img src={filterSVG} alt="" />
-    </button>
-  </div>
+  <button on:click={filtertoggle} class="filter" class:active={filterVisible}>
+    <img src={filterSVG} alt="" />
+  </button>
   <div class="tags" class:active={tagsVisible}>
     <button on:click={tagstoggle}>
       <img src={tagsSVG} alt="" />
@@ -106,9 +104,7 @@
       <SelectTags />
     {/if}
   </div>
-  <div class="settings" class:active={settingsVisible}>
-    <button on:click={settingstoggle}>
-      <img src={settingsSVG} alt="" />
-    </button>
-  </div>
+  <button on:click={settingstoggle} class="settings" class:active={settingsVisible}>
+    <img src={settingsSVG} alt="" />
+  </button>
 </div>

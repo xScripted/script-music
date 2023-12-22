@@ -1,12 +1,17 @@
 <script lang="ts">
   import InputTag from './InputTag.svelte'
   import { tags } from '../scripts/store'
+  import { player } from '../scripts/player'
   import Tag from './Tag.svelte'
   import type { ITag } from './../../../interfaces/ITag.ts'
 
   let tagsValue = []
 
-  tags.subscribe((value) => (tagsValue = value))
+  tags.subscribe((value) => {
+    tagsValue = value
+
+    player.filter()
+  })
 
   const toggleTag = (tagName: string) => {
     tags.update((value: ITag[]) => {

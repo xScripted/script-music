@@ -37,6 +37,7 @@
     height: 100%;
     width: 100%;
     padding: 75px;
+    padding-bottom: 15px;
     overflow-y: auto;
 
     background-color: rgba(255, 255, 255, 0.3);
@@ -58,7 +59,7 @@
       }
     }
 
-    .header {
+    /*.header {
       width: 100%;
       display: flex;
       align-items: center;
@@ -83,10 +84,40 @@
         font-size: 75px;
         font-weight: bolder;
       }
+    }*/
+
+    .header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+
+      .color {
+        height: 50px;
+        width: 150px;
+        border-radius: var(--radius);
+        background: linear-gradient(330deg, #5b0eeb 0%, #6d5dfc 50%, #8abdff 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .icon {
+          width: 75%;
+        }
+      }
+
+      .title {
+        font-size: 50px;
+        font-weight: bolder;
+      }
     }
 
     .song-list {
       margin-top: 75px;
+      height: 100%;
+      max-height: 400px;
+      overflow: scroll;
+      overflow-x: hidden;
 
       .song-row {
         display: grid;
@@ -190,6 +221,8 @@
   </div>
 
   <div class="song-list">
+    <!-- Overflow: scroll para que solo se scrolleen las canciones -->
+
     {#each playlistValue as song}
       <div class="song-row">
         <img src={song.cover} class="cover" alt="" />
