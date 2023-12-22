@@ -12,7 +12,7 @@
   import repeatSVG from './../assets/repeat.svg'
   import nightcoreSVG from './../assets/nightcore.svg'
   import slowedSVG from './../assets/slowed.svg'
-  import djSVG from './../assets/dj1.svg'
+  import djSVG from './../assets/dj.svg'
   import queueSVG from './../assets/queue.svg'
   import mutedSVG from './../assets/muted.svg'
   import volumeUpSVG from './../assets/volumeUp.svg'

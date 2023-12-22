@@ -6,13 +6,14 @@
   import { Howl, Howler } from 'howler'
   import { onMount } from 'svelte'
   import { get } from 'svelte/store'
+  import { player } from '../scripts/player'
 
   import addSVG from './../assets/add.svg'
   import addQueueSVG from './../assets/queue.svg'
   import brushSVG from './../assets/brush.svg'
   import plusSVG from './../assets/plus.svg'
   import homeSVG from './../assets/home.svg'
-  import { player } from '../scripts/player'
+  import backSVG from './../assets/back.svg'
 
   let newSong: boolean = false
   let playlistValue: ISong[] = []
@@ -36,9 +37,12 @@
     position: relative;
     height: 100%;
     width: 100%;
-    padding: 75px;
-    padding-bottom: 15px;
-    overflow-y: auto;
+
+    display: grid;
+    grid-template-rows: 60px 175px 1fr;
+    padding: 15px 75px;
+
+    overflow: hidden;
 
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: var(--radius);
@@ -49,17 +53,12 @@
       top: 15px;
       left: 15px;
 
-      .back,
-      .home {
-        height: 25px;
-        width: 25px;
-        border: none;
-        border-radius: 50px;
-        background-color: #363636;
+      img {
+        height: 30px;
       }
     }
 
-    /*.header {
+    .header {
       width: 100%;
       display: flex;
       align-items: center;
@@ -84,37 +83,11 @@
         font-size: 75px;
         font-weight: bolder;
       }
-    }*/
-
-    .header {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 25px;
-
-      .color {
-        height: 50px;
-        width: 150px;
-        border-radius: var(--radius);
-        background: linear-gradient(330deg, #5b0eeb 0%, #6d5dfc 50%, #8abdff 100%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .icon {
-          width: 75%;
-        }
-      }
-
-      .title {
-        font-size: 50px;
-        font-weight: bolder;
-      }
     }
 
     .song-list {
-      margin-top: 75px;
-      height: 75%;
+      padding-top: 75px;
+      height: 100%;
       overflow: scroll;
       overflow-x: hidden;
 
@@ -204,9 +177,11 @@
 <div class="viewer">
   <div class="utilities">
     <div class="fuck-go-back">
-      <button class="back"></button>
+      <button class="back">
+        <img src={backSVG} alt="" />
+      </button>
       <button class="home">
-        <!--<img src={homeSVG} alt="" />-->
+        <img src={homeSVG} alt="" />
       </button>
     </div>
     <Utilities />
