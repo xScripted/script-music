@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { playlist, tags } from '../scripts/store.js'
+  import { playlist, playlistFiltered, tags } from '../scripts/store.js'
   import type { ISong } from './../../../interfaces/ISong.ts'
   import type { ITag } from './../../../interfaces/ITag.ts'
   import type { IMetaData } from './../../../interfaces/IMetaData.ts'
@@ -40,6 +40,7 @@
     }
 
     playlist.update((p) => [...p, newSong])
+    playlistFiltered.update((p) => [...p, newSong])
   }
 
   const activeFormTag = (name: string) => {
