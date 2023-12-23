@@ -36,6 +36,7 @@
           title: metaSong.title || fileName,
           artist: metaSong.artist || '',
           tags: JSON.parse(metaSong.genre || '[]'),
+          date: metaSong.date,
           cover: metaSong.subtitle || '',
           lyrics: '',
         }
@@ -53,8 +54,8 @@
 
     path.update(() => pathValue)
 
-    await setAllSongs()
     getTags()
+    await setAllSongs()
 
     const savedBG = window.localStorage.getItem('bg')
 
@@ -74,7 +75,7 @@
     grid-template-columns: 250px 1fr;
     grid-template-rows: 1fr 125px;
 
-    background-color: #cf6b9b;
+    background-color: #000000;
     background-image: url('https://wallpapers.com/images/hd/cute-pikachu-pokemon-ynbgo9vzeaemo126.jpg');
     background-repeat: no-repeat;
     background-position: center;

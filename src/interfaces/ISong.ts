@@ -1,13 +1,13 @@
-import type { ITag } from './ITag'
 import type { Howl } from 'howler'
 
 export interface ISong {
   fileName: string
   title: string
   artist: string
-  tags: ITag[]
+  tags: string[]
   cover: string
   lyrics: string
+  date: Date
 }
 
 export interface IActiveSong extends ISong {

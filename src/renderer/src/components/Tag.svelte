@@ -1,7 +1,17 @@
 <script lang="ts">
+  import { tags } from '../scripts/store'
+  import { get } from 'svelte/store'
   import type { ITag } from './../../../interfaces/ITag'
 
-  export let tag: ITag
+  export let tag: ITag = {}
+  export let tagName: string = ''
+  export let active: boolean = false
+
+  let tagsValue = get(tags)
+
+  tags.subscribe((value: ITag[]) => (tagsValue = value))
+
+  if (tagName) tag = tagsValue.find((storeTag: ITag) => storeTag.name === tagName)
 </script>
 
 <style lang="scss">
@@ -42,9 +52,9 @@
   }
 </style>
 
-<div class="tag" class:active={tag.active}>
+<div class="tag" class:active>
   <span>
-    {tag.name}
+    {tag?.name}
   </span>
-  <div class="bg" style="background-color: {tag.color}" />
+  <div class="bg" style="background-color: {tag?.color}" />
 </div>
