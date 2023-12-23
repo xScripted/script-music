@@ -9,8 +9,11 @@ export const player = {
     playlistFiltered.update(() => {
       return get(playlist).filter((song: ISong) => {
         // Search
-        const includeTitle: boolean = song.title.includes(get(filterSearch))
-        const includeArtist: boolean = song.title.includes(get(filterSearch))
+        let songTitle: string = song.title.toLowerCase()
+        let songArtist: string = song.artist.toLowerCase()
+
+        const includeTitle: boolean = songTitle.includes(get(filterSearch).toLowerCase())
+        const includeArtist: boolean = songArtist.includes(get(filterSearch).toLowerCase())
 
         // Tags
         const activeTags: ITag[] = get(tags).filter((tag: ITag) => tag.active)

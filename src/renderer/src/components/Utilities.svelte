@@ -7,6 +7,7 @@
   import { panel, filterSearch } from '../scripts/store'
   import { player } from '../scripts/player'
   import Dropdown from './Dropdown.svelte'
+  import { onMount } from 'svelte'
 
   let tagsVisible: boolean = false
   let search: boolean = false
@@ -26,6 +27,17 @@
     filterSearch.update((value: string) => (value = searchValue))
     player.filter()
   }
+
+  //Close outside
+  let HTMLContainer
+
+  onMount(() => {
+    window.addEventListener('click', (ev: any) => {
+      if (!HTMLContainer.contains(ev.target) && !searchValue) {
+        search = false
+      }
+    })
+  })
 </script>
 
 <style lang="scss">
@@ -86,6 +98,10 @@
           }
         }
       }
+
+      .filters {
+        margin-top: 20px;
+      }
     }
 
     .tags {
@@ -95,7 +111,7 @@
 </style>
 
 <div class="container">
-  <div class="search" class:active={search}>
+  <div class="search" class:active={search} bind:this={HTMLContainer}>
     <button on:click={() => (search = !search)}>
       <img src={searchSVG} alt="" />
     </button>
@@ -108,7 +124,7 @@
     </button>
 
     <Dropdown bind:isOpen={filters} id="dropdown-filters">
-      <h4>Ordenar por</h4>
+      <h4 class="sorting">Ordenar por</h4>
 
       <div class="song-filter-section">
         <button> Artist </button>
@@ -117,7 +133,7 @@
         <button> Shuffle </button>
       </div>
 
-      <h4>Filtros</h4>
+      <h4 class="filters">Filtros</h4>
 
       <div class="song-filter-section">
         <button> Cover </button>

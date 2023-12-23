@@ -195,8 +195,6 @@
   </div>
 
   <div class="panel">
-    <!-- Cuando el modo esté on, que el botón aparezca como seleccionado (opacity: 1;) -->
-
     <button on:click={updateSlowed} class="utility" class:active={newRate < 1}>
       <img src={slowedSVG} alt="" />
     </button>
@@ -221,7 +219,7 @@
       <button class="speaker" on:click={toggleMute}>
         {#if newVolume === 0}
           <img src={mutedSVG} alt="" />
-        {:else if newVolume <= 0.5}
+        {:else if newVolume <= 0.25}
           <img src={volumeDownSVG} alt="" />
         {:else}
           <img src={volumeUpSVG} alt="" />

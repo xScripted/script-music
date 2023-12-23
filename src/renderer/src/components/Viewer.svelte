@@ -195,8 +195,6 @@
   </div>
 
   <div class="song-list">
-    <!-- Overflow: scroll para que solo se scrolleen las canciones -->
-
     {#each playlistValue as song}
       <div class="song-row">
         <img src={song.cover} class="cover" alt="" />
