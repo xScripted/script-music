@@ -2,6 +2,7 @@
   import { panel } from '../scripts/store'
   import YoutubeSong from './YoutubeSong.svelte'
   import Settings from './Settings.svelte'
+  import UpdateSong from './UpdateSong.svelte'
 
   let active: boolean = false
 
@@ -56,5 +57,9 @@
 
   {#if panelValue === 'Settings'}
     <Settings />
+  {/if}
+
+  {#if panelValue === 'Update song'}
+    <UpdateSong />
   {/if}
 </div>

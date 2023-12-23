@@ -1,5 +1,5 @@
 export interface ITag {
-  name: string
+  name?: string
   color?: string
   active?: boolean
 }

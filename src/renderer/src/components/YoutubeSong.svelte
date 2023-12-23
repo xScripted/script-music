@@ -10,7 +10,7 @@
   let cover = ''
   let title = ''
   let artist = ''
-  let formTags = []
+  let formTags: ITag[] = []
 
   const downloadSong = async () => {
     if (!youtubeURL) return
@@ -23,7 +23,7 @@
       artist,
       date: new Date(),
       subtitle: cover,
-      genre: tags.map((tag: ITag) => tag.name),
+      genre: JSON.stringify(tags.map((tag: ITag) => tag.name)),
     }
 
     setTimeout(() => {
@@ -34,9 +34,10 @@
       fileName: fileName + '.mp3',
       title,
       artist,
-      tags,
+      tags: tags.map((tag: ITag) => tag.name),
       cover,
       lyrics: '',
+      date: new Date(),
     }
 
     playlist.update((p) => [...p, newSong])

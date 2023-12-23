@@ -1,23 +1,16 @@
 <script lang="ts">
   import Utilities from './Utilities.svelte'
-  import Tag from './Tag.svelte'
-  import { panel, playlistFiltered, playlist, activeSong } from './../scripts/store'
-  import type { ISong } from '../../../interfaces/ISong'
-  import { Howl, Howler } from 'howler'
-  import { onMount } from 'svelte'
-  import { get } from 'svelte/store'
-  import { player } from '../scripts/player'
 
-  import addSVG from './../assets/add.svg'
-  import addQueueSVG from './../assets/queue.svg'
-  import brushSVG from './../assets/brush.svg'
+  import { panel, playlistFiltered } from './../scripts/store'
+  import type { ISong } from '../../../interfaces/ISong'
+  import Song from './Song.svelte'
+
   import plusSVG from './../assets/plus.svg'
   import homeSVG from './../assets/home.svg'
   import backSVG from './../assets/back.svg'
 
   let newSong: boolean = false
   let playlistValue: ISong[] = []
-  let path = ''
 
   playlistFiltered.subscribe((value) => (playlistValue = value))
 
@@ -26,10 +19,6 @@
 
     panel.update(() => (newSong ? 'Youtube to MP3' : ''))
   }
-
-  onMount(async () => {
-    path = await window.electron.ipcRenderer.invoke('get-path')
-  })
 </script>
 
 <style lang="scss">
@@ -90,61 +79,6 @@
       height: 100%;
       overflow: scroll;
       overflow-x: hidden;
-
-      .song-row {
-        display: grid;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 15px;
-        position: relative;
-
-        grid-template-columns: 75px 1fr 1fr 100px;
-        border-radius: var(--radius);
-        transition: 0.3s ease;
-        gap: 10px;
-        cursor: pointer;
-
-        .cover {
-          height: 75px;
-          width: 75px;
-          border-radius: var(--radius);
-          object-fit: cover;
-        }
-
-        .details {
-          display: flex;
-          flex-direction: column;
-
-          .song-title {
-            font-size: 22px;
-          }
-
-          .singer {
-            font-weight: lighter;
-            font-size: 18px;
-          }
-        }
-
-        .tags {
-          display: flex;
-          justify-self: end;
-          gap: 10px;
-        }
-
-        .more {
-          display: none;
-          gap: 10px;
-        }
-
-        &:hover {
-          background-color: rgba(255, 255, 255, 0.35);
-          transition: 0.3s ease;
-
-          .more {
-            display: flex;
-          }
-        }
-      }
     }
 
     .new-song {
@@ -195,26 +129,8 @@
   </div>
 
   <div class="song-list">
-    <!-- Overflow: scroll para que solo se scrolleen las canciones -->
-
     {#each playlistValue as song}
-      <div class="song-row">
-        <img src={song.cover} class="cover" alt="" />
-        <button class="details" on:click={() => player.play(song.fileName)}>
-          <span class="song-title">{song.title}</span>
-          <span class="singer">{song.artist}</span>
-        </button>
-        <div class="tags">
-          {#each song.tags as tag}
-            <Tag {tag} />
-          {/each}
-        </div>
-        <div class="more">
-          <img src={brushSVG} alt="" />
-          <img src={addQueueSVG} alt="" />
-          <img src={addSVG} alt="" />
-        </div>
-      </div>
+      <Song {song} />
     {/each}
   </div>
 

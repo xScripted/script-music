@@ -103,7 +103,7 @@
   <div class="tags">
     {#each tagsValue as tag}
       <button on:click={() => toggleTag(tag.name)}>
-        <Tag {tag} />
+        <Tag {tag} active={tag.active} />
       </button>
     {/each}
   </div>
