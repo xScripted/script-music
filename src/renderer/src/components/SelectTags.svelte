@@ -3,13 +3,19 @@
   import { tags } from '../scripts/store'
   import { player } from '../scripts/player'
   import Tag from './Tag.svelte'
-  import type { ITag } from './../../../interfaces/ITag.ts'
+  import type { ITag } from './../../../interfaces/ITag'
+  import { tagsSwitch } from '../scripts/store'
 
-  let tagsValue = []
+  let tagsValue: ITag[] = []
+  let tagsSwitchValue: boolean = false
 
-  tags.subscribe((value) => {
+  tags.subscribe((value: ITag[]) => {
     tagsValue = value
+    player.filter()
+  })
 
+  tagsSwitch.subscribe((value: boolean) => {
+    tagsSwitchValue = value
     player.filter()
   })
 
@@ -17,7 +23,6 @@
     tags.update((value: ITag[]) => {
       return value.map((tag: ITag) => {
         if (tag.name === tagName) tag.active = !tag.active
-
         return tag
       })
     })
@@ -35,7 +40,11 @@
     })
   }
 
-  let active: boolean = false
+  const toggleSwitch = () => {
+    tagsSwitch.update((value) => {
+      return !value
+    })
+  }
 </script>
 
 <style lang="scss">
@@ -95,8 +104,10 @@
 
 <div class="select-tags">
   <div class="upper">
-    <button on:click={toggleAllTags}>{allActive ? 'Unselect all tags' : 'Select all tags'} </button>
-    <button class="switch" class:active on:click={() => (active = !active)}>
+    <button on:click={toggleAllTags}>
+      {allActive ? 'Unselect all tags' : 'Select all tags'}
+    </button>
+    <button class="switch" class:active={tagsSwitchValue} on:click={toggleSwitch}>
       <div class="circle" />
     </button>
   </div>

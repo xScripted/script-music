@@ -1,12 +1,17 @@
 import type { IActiveSong, ISong } from '../../../interfaces/ISong'
 import type { ITag } from '../../../interfaces/ITag'
-import { playlistFiltered, playlist, filterSearch, path, activeSong, isPaused, rate, volume, tags } from './store'
+import { playlistFiltered, playlist, filterSearch, path, activeSong, isPaused, rate, volume, tags, tagsSwitch } from './store'
 import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
+
+const isInStoreTags = (songTagName: string, activeTags: ITag[]): boolean => {
+  return activeTags.some((storeTag: ITag) => storeTag.name === songTagName)
+}
 
 export const player = {
   filter() {
     playlistFiltered.update(() => {
+      const activeTags: ITag[] = get(tags).filter((tag: ITag) => tag.active)
       return get(playlist).filter((song: ISong) => {
         // Search
         let songTitle: string = song.title.toLowerCase()
@@ -16,18 +21,11 @@ export const player = {
         const includeArtist: boolean = songArtist.includes(get(filterSearch).toLowerCase())
 
         // Tags
-        const activeTags: ITag[] = get(tags).filter((tag: ITag) => tag.active)
-
-        let isAnyTagActive = true
-        if (activeTags.length) {
-          const isInStoreTags = (songTagName: string): boolean => {
-            return activeTags.some((storeTag: ITag) => storeTag.name === songTagName)
-          }
-
-          isAnyTagActive = song.tags.some((songTag: ITag) => isInStoreTags(songTag.name))
-        }
-
-        return (includeTitle || includeArtist) && isAnyTagActive
+        const isAnyTagActive: boolean = song.tags.some((tagName: string) => isInStoreTags(tagName, activeTags)) // Miramos si algun tag de la cancion coincide con algun tag activo
+        const allTagsActive: boolean = song.tags.every((tagName: string) => isInStoreTags(tagName, activeTags)) // Miramos si TODOS los tags de la cancion coincide con algun tag activo
+        const filterTags = get(tagsSwitch) ? isAnyTagActive : allTagsActive
+        console.log(song.title, isAnyTagActive, allTagsActive)
+        return (includeTitle || includeArtist) && filterTags
       })
     })
   },

@@ -33,7 +33,7 @@
 
   onMount(() => {
     window.addEventListener('click', (ev: any) => {
-      if (!HTMLContainer.contains(ev.target) && !searchValue) {
+      if (HTMLContainer && !HTMLContainer.contains(ev.target) && !searchValue) {
         search = false
       }
     })

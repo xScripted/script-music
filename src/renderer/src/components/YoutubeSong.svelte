@@ -142,23 +142,23 @@
 
   <div class="flex">
     <div class="input-group">
-      <label>Title</label>
+      <label for="">Title</label>
       <input class="input" type="text" bind:value={title} placeholder="Title" />
     </div>
 
     <div class="input-group">
-      <label>Artist</label>
+      <label for="">Artist</label>
       <input class="input" type="text" bind:value={artist} placeholder="Artist" />
     </div>
   </div>
 
   <div class="tags-group">
-    <label>Tags</label>
+    <label for="">Tags</label>
 
     <div class="form-tags">
       {#each formTags as tag}
         <button on:click={() => activeFormTag(tag.name)}>
-          <Tag {tag} />
+          <Tag {tag} active={tag.active} />
         </button>
       {/each}
       <div class="input-tag-container">
