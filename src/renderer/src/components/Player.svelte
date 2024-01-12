@@ -123,9 +123,13 @@
         width: 50px;
       }
 
-      .shuffle,
-      .repeat {
+      .secondary {
         width: 35px;
+        opacity: 0.5;
+
+        &.active {
+          opacity: 1;
+        }
       }
     }
 
@@ -177,8 +181,12 @@
   </div>
 
   <div class="control">
-    <img src={shuffleSVG} alt="" class="shuffle" />
-    <img src={previousSVG} alt="" class="previous" />
+    <button class:active={buttonOn}>
+      <img src={shuffleSVG} alt="" class="secondary" />
+    </button>
+    <button on:click={() => player.back()}>
+      <img src={previousSVG} alt="" class="previous" />
+    </button>
     <div class="play-pause">
       {#if isPausedValue}
         <button on:click={() => player.resume()}>
@@ -190,8 +198,12 @@
         </button>
       {/if}
     </div>
-    <img src={nextSVG} alt="" class="next" />
-    <img src={repeatSVG} alt="" class="repeat" />
+    <button on:click={() => player.forth()}>
+      <img src={nextSVG} alt="" class="next" />
+    </button>
+    <button class:active={buttonOn}>
+      <img src={repeatSVG} alt="" class="secondary" />
+    </button>
   </div>
 
   <div class="panel">

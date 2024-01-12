@@ -4,6 +4,9 @@ import { playlistFiltered, playlist, filterSearch, path, activeSong, isPaused, r
 import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
 
+let history: string[] = []
+let historyIndex: number = 0
+
 const isInStoreTags = (songTagName: string, activeTags: ITag[]): boolean => {
   return activeTags.some((storeTag: ITag) => storeTag.name === songTagName)
 }
@@ -29,7 +32,7 @@ export const player = {
       })
     })
   },
-  play(fileName: string) {
+  play(fileName: string, isHistory: boolean = false) {
     if (get(activeSong).howl) get(activeSong).howl.unload()
 
     const howl = new Howl({
@@ -51,6 +54,7 @@ export const player = {
           tags: song.tags,
           cover: song.cover,
           lyrics: song.lyrics,
+          date: song.date,
           howl,
         }
 
@@ -59,11 +63,32 @@ export const player = {
     })
 
     howl.play()
+
+    if (!isHistory) {
+      history = history.slice(0, historyIndex + 1)
+      console.log(history)
+      history.push(fileName)
+      if (history.length > 1) historyIndex++
+    }
+    console.table(history)
+    console.log(historyIndex)
   },
+
   pause() {
     get(activeSong).howl ? get(activeSong).howl.pause() : null
   },
   resume() {
     get(activeSong).howl ? get(activeSong).howl.play() : null
+  },
+
+  back() {
+    if (historyIndex) historyIndex--
+
+    player.play(history[historyIndex], true)
+  },
+  forth() {
+    if (historyIndex < history.length) historyIndex++
+
+    player.play(history[historyIndex], true)
   },
 }
