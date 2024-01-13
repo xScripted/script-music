@@ -1,11 +1,12 @@
 import type { IActiveSong, ISong } from '../../../interfaces/ISong'
 import type { ITag } from '../../../interfaces/ITag'
-import { playlistFiltered, playlist, filterSearch, path, activeSong, isPaused, rate, volume, tags, tagsSwitch } from './store'
+import { playlistFiltered, playlist, filterSearch, path, activeSong, isPaused, rate, volume, tags, tagsSwitch, fadeTime } from './store'
 import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
 
 let history: string[] = []
 let historyIndex: number = 0
+let timeoutID
 
 const isInStoreTags = (songTagName: string, activeTags: ITag[]): boolean => {
   return activeTags.some((storeTag: ITag) => storeTag.name === songTagName)
@@ -33,14 +34,27 @@ export const player = {
     })
   },
   play(fileName: string, isHistory: boolean = false) {
-    if (get(activeSong).howl) get(activeSong).howl.unload()
+    const howlsList = (Howler as any)._howls
+
+    if (howlsList.length === 1) {
+      timeoutID = setTimeout(() => howlsList[0].unload(), get(fadeTime) * 1000)
+      howlsList[0].fade(get(volume), 0, get(fadeTime) * 1000)
+    }
+
+    if (howlsList.length === 2) {
+      howlsList[0].unload()
+      clearTimeout(timeoutID)
+      timeoutID = setTimeout(() => howlsList[0].unload(), get(fadeTime) * 1000)
+      howlsList[0].fade(get(volume), 0, get(fadeTime) * 1000)
+    }
+
+    //👍
 
     const howl = new Howl({
       src: [get(path) + fileName],
       rate: get(rate),
       volume: get(volume),
       onend: () => isPaused.update(() => true),
-      onstop: () => isPaused.update(() => true),
       onpause: () => isPaused.update(() => true),
       onplay: () => {
         isPaused.update(() => false)
@@ -66,12 +80,9 @@ export const player = {
 
     if (!isHistory) {
       history = history.slice(0, historyIndex + 1)
-      console.log(history)
       history.push(fileName)
       if (history.length > 1) historyIndex++
     }
-    console.table(history)
-    console.log(historyIndex)
   },
 
   pause() {
