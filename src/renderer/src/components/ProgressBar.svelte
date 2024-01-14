@@ -11,10 +11,14 @@
     return min + ':' + secZeros + sec
   }
 
+  let HTMLProgressBar: HTMLElement
+
   let totalDurationFormatted = '0:00'
   let currentDurationFormatted = '0:00'
   let progressPercentage: number = 0
   let translate: number = 105
+  let holding: boolean = false
+  let mousePosition: number
   let activeSongValue
 
   setInterval(() => {
@@ -26,6 +30,8 @@
     progressPercentage = (activeSongValue.howl.seek() * 100) / activeSongValue.howl.duration()
 
     translate = 100 - progressPercentage
+
+    if (holding) progressChange()
   }, 100)
 
   activeSong.subscribe((value: IActiveSong) => {
@@ -34,6 +40,17 @@
     activeSongValue = value
     totalDurationFormatted = formatToDuration(~~value.howl.duration())
   })
+
+  const progressChange = () => {
+    let barWidth: number = HTMLProgressBar.getBoundingClientRect().width
+
+    let barOffset: number = (window.innerWidth - barWidth) / 2
+    console.log(mousePosition)
+
+    let newProgress: number = (mousePosition * 100) / (barOffset + barWidth)
+
+    //forma de hacer que activeSongValue.howl.seek() (posición actual de la canción) = newProgress
+  }
 </script>
 
 <style lang="scss">
@@ -61,8 +78,16 @@
 
 <div class="progress">
   <div class="current-min">{currentDurationFormatted}</div>
-  <div class="progress-bar">
+
+  <!--si levantas el click fuera de la barra no se ejecuta el mouseup-->
+  <button
+    class="progress-bar"
+    bind:this={HTMLProgressBar}
+    on:mousedown={() => (holding = true)}
+    on:mouseup={() => (holding = false)}
+    on:mousemove={(event) => (mousePosition = event.clientX)}
+  >
     <div class="song-progress" style="transform: translateX(-{translate}%);" />
-  </div>
+  </button>
   <div class="duration">{totalDurationFormatted}</div>
 </div>

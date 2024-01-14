@@ -12,6 +12,7 @@ const isInStoreTags = (songTagName: string, activeTags: ITag[]): boolean => {
   return activeTags.some((storeTag: ITag) => storeTag.name === songTagName)
 }
 
+//usar el Howler.pool para la lista de sonidos inactivos (autoplay)
 export const player = {
   filter() {
     playlistFiltered.update(() => {
@@ -28,7 +29,6 @@ export const player = {
         const isAnyTagActive: boolean = song.tags.some((tagName: string) => isInStoreTags(tagName, activeTags)) // Miramos si algun tag de la cancion coincide con algun tag activo
         const allTagsActive: boolean = song.tags.every((tagName: string) => isInStoreTags(tagName, activeTags)) // Miramos si TODOS los tags de la cancion coincide con algun tag activo
         const filterTags = get(tagsSwitch) ? isAnyTagActive : allTagsActive
-        console.log(song.title, isAnyTagActive, allTagsActive)
         return (includeTitle || includeArtist) && filterTags
       })
     })
@@ -54,7 +54,6 @@ export const player = {
       src: [get(path) + fileName],
       rate: get(rate),
       volume: get(volume),
-      onend: () => isPaused.update(() => true),
       onpause: () => isPaused.update(() => true),
       onplay: () => {
         isPaused.update(() => false)

@@ -9,7 +9,7 @@
   import nextSVG from './../assets/next.svg'
   import playSVG from './../assets/play2.svg'
   import pauseSVG from './../assets/pause2.svg'
-  import repeatSVG from './../assets/repeat.svg'
+  import loopSVG from './../assets/repeat.svg'
   import nightcoreSVG from './../assets/nightcore.svg'
   import slowedSVG from './../assets/slowed.svg'
   import djSVG from './../assets/dj.svg'
@@ -24,6 +24,7 @@
   let newRate: number = 1
   let newVolume: number = get(volume)
   let oldVolume: number = 0.5
+  let loop: boolean = false
 
   isPaused.subscribe((value) => (isPausedValue = value))
   panel.subscribe((value) => (panelValue = value))
@@ -66,6 +67,10 @@
     })
 
     if (get(activeSong).howl) get(activeSong).howl.volume(newVolume)
+  }
+
+  const onLoop = () => {
+    //mirar el howl.loop para poner en bucle el sonido actual.
   }
 </script>
 
@@ -181,8 +186,8 @@
   </div>
 
   <div class="control">
-    <button class:active={buttonOn}>
-      <img src={shuffleSVG} alt="" class="secondary" />
+    <button>
+      <img src={shuffleSVG} alt="" class="secondary" class:active={buttonOn} />
     </button>
     <button on:click={() => player.back()}>
       <img src={previousSVG} alt="" class="previous" />
@@ -201,8 +206,8 @@
     <button on:click={() => player.forth()}>
       <img src={nextSVG} alt="" class="next" />
     </button>
-    <button class:active={buttonOn}>
-      <img src={repeatSVG} alt="" class="secondary" />
+    <button on:click={onLoop}>
+      <img src={loopSVG} alt="" class="secondary" class:active={buttonOn} />
     </button>
   </div>
 
