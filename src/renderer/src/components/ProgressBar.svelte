@@ -32,6 +32,7 @@
     translate = 100 - progressPercentage
 
     if (holding) progressChange()
+    //detectar cuando falten 5s* para que la canción acabe y tirar el player.next()
   }, 100)
 
   activeSong.subscribe((value: IActiveSong) => {
@@ -43,13 +44,12 @@
 
   const progressChange = () => {
     let barWidth: number = HTMLProgressBar.getBoundingClientRect().width
-
     let barOffset: number = (window.innerWidth - barWidth) / 2
-    console.log(mousePosition)
 
-    let newProgress: number = (mousePosition * 100) / (barOffset + barWidth)
+    let newProgress: number = ((mousePosition - barOffset) / barWidth) * 100
+    let newSec: number = (newProgress * activeSongValue.howl.duration()) / 100
 
-    //forma de hacer que activeSongValue.howl.seek() (posición actual de la canción) = newProgress
+    activeSongValue.howl.seek(newSec)
   }
 </script>
 

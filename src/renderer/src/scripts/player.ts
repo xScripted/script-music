@@ -101,4 +101,7 @@ export const player = {
 
     player.play(history[historyIndex], true)
   },
+  next() {
+    //la función se ejecuta cuando falten 5s* para que la canción termine
+  },
 }
