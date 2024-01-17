@@ -1,6 +1,8 @@
 <script lang="ts">
+  import { get } from 'svelte/store'
   import type { IActiveSong } from '../../../interfaces/ISong'
-  import { activeSong } from '../scripts/store'
+  import { player } from '../scripts/player'
+  import { activeSong, fadeTime } from '../scripts/store'
 
   const formatToDuration = (duration: number): string => {
     let min: number = ~~(duration / 60)
@@ -21,6 +23,8 @@
   let mousePosition: number
   let activeSongValue
 
+  let flag: boolean = false
+
   setInterval(() => {
     if (!activeSongValue) return
     if (!activeSongValue.howl) return
@@ -32,7 +36,15 @@
     translate = 100 - progressPercentage
 
     if (holding) progressChange()
-    //detectar cuando falten 5s* para que la canción acabe y tirar el player.next()
+
+    let songOffset: number = activeSongValue.howl.duration() - get(fadeTime)
+
+    if (activeSongValue.howl.seek() > songOffset && !flag) {
+      flag = true
+      player.next(get(activeSong))
+    }
+
+    if (activeSongValue.howl.seek() < songOffset) flag = false
   }, 100)
 
   activeSong.subscribe((value: IActiveSong) => {

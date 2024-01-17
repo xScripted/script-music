@@ -1,6 +1,20 @@
 import type { IActiveSong, ISong } from '../../../interfaces/ISong'
 import type { ITag } from '../../../interfaces/ITag'
-import { playlistFiltered, playlist, filterSearch, path, activeSong, isPaused, rate, volume, tags, tagsSwitch, fadeTime } from './store'
+import {
+  playlistFiltered,
+  playlist,
+  filterSearch,
+  path,
+  activeSong,
+  isPaused,
+  rate,
+  volume,
+  tags,
+  tagsSwitch,
+  fadeTime,
+  loop,
+  random,
+} from './store'
 import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
 
@@ -101,7 +115,27 @@ export const player = {
 
     player.play(history[historyIndex], true)
   },
-  next() {
-    //la función se ejecuta cuando falten 5s* para que la canción termine
+  next(activeSong: IActiveSong) {
+    //si la variable del loop está on, vuelve a tirar el play con la misma canción
+    if (get(loop)) {
+      player.play(activeSong.fileName)
+      return
+    }
+    //si la variable del random está on, las canciones de la cola son intocables, se pone random cuando acaban dichas canciones
+    //Si random = on && no hay canciones en la cola -> busca una canción aleatoria del playlistFilter
+    //Si no hay nada puesto, poner la siguiente canción disponible del playlistFilter (posición 0)
+    //crear una constante: number = playlistFilter.indexOf (buscar el fileName de la canción actual en la playlist)
+    //const nextSongID: number = (playlistFilter.indexOf() + 1) y if(no excede el playlistFilter.length) -> player.play(playlistFilter[nextSongID].fileName) else player.play(playlistFilter[0].fileName)
+
+    const nextSongID: number = get(playlistFiltered).indexOf(activeSong) + 1
+
+    if (nextSongID <= get(playlistFiltered).length) player.play(get(playlistFiltered)[nextSongID].fileName)
+    player.play(get(playlistFiltered)[0].fileName)
+
+    //cuando hagáis pruebas, Miquel y Laia del futuro, os daréis cuenta de los errores con el activeSong de la progressBar.svelte 👍
+
+    console.log('playlistFiltered: ', get(playlistFiltered))
+    console.log('nextSongID: ', nextSongID)
+    console.log('-------------------------------------')
   },
 }
