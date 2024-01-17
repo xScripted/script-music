@@ -16,7 +16,7 @@ export const volume: Writable<number> = writable(0.5)
 export const updatingSong: Writable<ISong> = writable()
 export const fadeTime: Writable<number> = writable(5)
 export const loop: Writable<boolean> = writable(false)
-export const random: Writable<boolean> = writable(false)
+export const shuffle: Writable<boolean> = writable(false)
 export const activeSong: Writable<IActiveSong> = writable({
   fileName: '',
   title: '',

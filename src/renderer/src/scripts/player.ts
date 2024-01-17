@@ -13,7 +13,7 @@ import {
   tagsSwitch,
   fadeTime,
   loop,
-  random,
+  shuffle,
 } from './store'
 import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
@@ -116,26 +116,25 @@ export const player = {
     player.play(history[historyIndex], true)
   },
   next(activeSong: IActiveSong) {
-    //si la variable del loop está on, vuelve a tirar el play con la misma canción
     if (get(loop)) {
       player.play(activeSong.fileName)
       return
     }
+
     //si la variable del random está on, las canciones de la cola son intocables, se pone random cuando acaban dichas canciones
     //Si random = on && no hay canciones en la cola -> busca una canción aleatoria del playlistFilter
-    //Si no hay nada puesto, poner la siguiente canción disponible del playlistFilter (posición 0)
-    //crear una constante: number = playlistFilter.indexOf (buscar el fileName de la canción actual en la playlist)
-    //const nextSongID: number = (playlistFilter.indexOf() + 1) y if(no excede el playlistFilter.length) -> player.play(playlistFilter[nextSongID].fileName) else player.play(playlistFilter[0].fileName)
+    let finalID: number = 0
 
-    const nextSongID: number = get(playlistFiltered).indexOf(activeSong) + 1
+    if (get(shuffle)) {
+      finalID = Math.floor(Math.random() * get(playlistFiltered).length)
+      player.play(get(playlistFiltered)[finalID].fileName)
 
-    if (nextSongID <= get(playlistFiltered).length) player.play(get(playlistFiltered)[nextSongID].fileName)
-    player.play(get(playlistFiltered)[0].fileName)
+      return
+    }
 
-    //cuando hagáis pruebas, Miquel y Laia del futuro, os daréis cuenta de los errores con el activeSong de la progressBar.svelte 👍
+    const nextSongID: number = get(playlistFiltered).findIndex((song: ISong) => song.fileName === activeSong.fileName) + 1
+    if (nextSongID < get(playlistFiltered).length) finalID = nextSongID
 
-    console.log('playlistFiltered: ', get(playlistFiltered))
-    console.log('nextSongID: ', nextSongID)
-    console.log('-------------------------------------')
+    player.play(get(playlistFiltered)[finalID].fileName)
   },
 }

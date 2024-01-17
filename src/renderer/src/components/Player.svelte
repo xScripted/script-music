@@ -1,6 +1,6 @@
 <script lang="ts">
   import ProgressBar from './ProgressBar.svelte'
-  import { activeSong, isPaused, panel, rate, volume } from '../scripts/store'
+  import { activeSong, isPaused, panel, rate, volume, loop, shuffle } from '../scripts/store'
   import { player } from '../scripts/player'
   import { get } from 'svelte/store'
 
@@ -20,14 +20,17 @@
 
   let isPausedValue
   let panelValue
+  let loopValue
+  let shuffleValue
   let buttonOn: boolean = false
   let newRate: number = 1
   let newVolume: number = get(volume)
   let oldVolume: number = 0.5
-  let loop: boolean = false
 
   isPaused.subscribe((value) => (isPausedValue = value))
   panel.subscribe((value) => (panelValue = value))
+  loop.subscribe((value) => (loopValue = value))
+  shuffle.subscribe((value) => (shuffleValue = value))
 
   const updateRate = () => {
     rate.update(() => newRate)
@@ -44,6 +47,14 @@
     newRate = get(rate) <= 1 ? 1.2 : 1
 
     updateRate()
+  }
+
+  const updateLoop = () => {
+    loop.update((value) => !value)
+  }
+
+  const updateShuffle = () => {
+    shuffle.update((value) => !value)
   }
 
   const updateVolume = (ev) => {
@@ -67,10 +78,6 @@
     })
 
     if (get(activeSong).howl) get(activeSong).howl.volume(newVolume)
-  }
-
-  const onLoop = () => {
-    //mirar el howl.loop para poner en bucle el sonido actual.
   }
 </script>
 
@@ -186,8 +193,8 @@
   </div>
 
   <div class="control">
-    <button>
-      <img src={shuffleSVG} alt="" class="secondary" class:active={buttonOn} />
+    <button on:click={updateShuffle}>
+      <img src={shuffleSVG} alt="" class="secondary" class:active={shuffleValue} />
     </button>
     <button on:click={() => player.back()}>
       <img src={previousSVG} alt="" class="previous" />
@@ -206,8 +213,8 @@
     <button on:click={() => player.forth()}>
       <img src={nextSVG} alt="" class="next" />
     </button>
-    <button on:click={onLoop}>
-      <img src={loopSVG} alt="" class="secondary" class:active={buttonOn} />
+    <button on:click={updateLoop}>
+      <img src={loopSVG} alt="" class="secondary" class:active={loopValue} />
     </button>
   </div>
 
