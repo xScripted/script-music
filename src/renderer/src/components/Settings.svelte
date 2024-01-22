@@ -21,13 +21,16 @@
 </script>
 
 <style lang="scss">
-  .input-group {
+  .settings {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     padding: 20px 0;
 
-    .rate {
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
   }
 
@@ -40,22 +43,24 @@
   <div class="input-group">
     <h4>Background image</h4>
     <input class="input" type="text" bind:value={bgImage} on:input={updateBG} placeholder="URL" />
+  </div>
 
-    <div class="rate">
-      <h4>Nightcore:</h4>
-      <input class="input" type="range" />
-      <h4>Slowed:</h4>
-      <input class="input" type="range" />
-    </div>
+  <div class="input-group">
+    <h4>Nightcore:</h4>
+    <input class="input" type="range" />
+    <h4>Slowed:</h4>
+    <input class="input" type="range" />
+  </div>
 
-    <div class="DJ">
-      <h3>DJ mode</h3>
-      <h4>Start</h4>
-      <input class="input" type="number" />
-      <h4>Finish</h4>
-      <input class="input" type="number" />
-    </div>
+  <div class="input-group">
+    <h3>DJ mode</h3>
+    <h4>Start</h4>
+    <input class="input" type="number" />
+    <h4>Finish</h4>
+    <input class="input" type="number" />
+  </div>
 
+  <div class="input-group">
     <h4>Song delay</h4>
     <input class="input" type="number" />
     <span>s</span>
