@@ -122,7 +122,6 @@ export const player = {
     }
 
     //si la variable del random está on, las canciones de la cola son intocables, se pone random cuando acaban dichas canciones
-    //Si random = on && no hay canciones en la cola -> busca una canción aleatoria del playlistFilter
     let finalID: number = 0
 
     if (get(shuffle)) {

@@ -25,7 +25,14 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 10px 0;
+    padding: 20px 0;
+
+    .rate {
+    }
+  }
+
+  .input[type='number'] {
+    padding: 10px;
   }
 </style>
 
@@ -33,5 +40,24 @@
   <div class="input-group">
     <h4>Background image</h4>
     <input class="input" type="text" bind:value={bgImage} on:input={updateBG} placeholder="URL" />
+
+    <div class="rate">
+      <h4>Nightcore:</h4>
+      <input class="input" type="range" />
+      <h4>Slowed:</h4>
+      <input class="input" type="range" />
+    </div>
+
+    <div class="DJ">
+      <h3>DJ mode</h3>
+      <h4>Start</h4>
+      <input class="input" type="number" />
+      <h4>Finish</h4>
+      <input class="input" type="number" />
+    </div>
+
+    <h4>Song delay</h4>
+    <input class="input" type="number" />
+    <span>s</span>
   </div>
 </div>

@@ -97,13 +97,6 @@
         width: 100%;
         transition: 0.5s ease;
       }
-
-      &.active {
-        img {
-          transform: rotate(45deg);
-          transition: 0.5s ease;
-        }
-      }
     }
   }
 </style>
@@ -134,7 +127,7 @@
     {/each}
   </div>
 
-  <button class="new-song" class:active={newSong} on:click={toggleNewSong}>
+  <button class="new-song" on:click={toggleNewSong}>
     <img src={plusSVG} alt="" />
   </button>
 </div>

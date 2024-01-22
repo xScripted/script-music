@@ -4,6 +4,8 @@
   import Settings from './Settings.svelte'
   import UpdateSong from './UpdateSong.svelte'
 
+  import plusSVG from './../assets/plus2.svg'
+
   let active: boolean = false
 
   let panelValue: string = ''
@@ -33,10 +35,29 @@
       transition:
         width 0.3s ease-in,
         opacity 0.3s 0.3s;
+
       width: 600px;
       padding: 20px;
       opacity: 1;
       margin-left: 10px;
+
+      .close {
+        width: 30px;
+        height: 30px;
+
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        transform: rotate(45deg);
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        img {
+          width: 100%;
+        }
+      }
     }
 
     h2 {
@@ -62,4 +83,8 @@
   {#if panelValue === 'Update song'}
     <UpdateSong />
   {/if}
+
+  <button class="close" on:click={() => (active = false)}>
+    <img src={plusSVG} alt="" />
+  </button>
 </div>
