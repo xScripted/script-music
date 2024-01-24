@@ -1,7 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+  import { nightRate, slowRate } from '../scripts/store'
+  import { get } from 'svelte/store'
 
   let bgImage
+  let slowValue
+  let nightValue
+
+  slowRate.subscribe((value) => (slowValue = value))
+  nightRate.subscribe((value) => (nightValue = value))
 
   const updateBG = () => {
     // Guardamos la imagen nueva en el localstorage
@@ -14,9 +21,27 @@
     appWrapper.style.backgroundImage = `url(${bgImage})`
   }
 
+  //el rate no se actualiza al instante
+
+  const updateNightcore = (event) => {
+    nightRate.update(() => event.target.value)
+    window.localStorage.setItem('nightValue', nightValue)
+  }
+
+  const updateSlowed = (event) => {
+    slowRate.update(() => event.target.value)
+    window.localStorage.setItem('slowValue', slowValue)
+  }
+
   onMount(() => {
     const savedBG = window.localStorage.getItem('bg')
     bgImage = savedBG ? savedBG : ''
+
+    const savedNightValue: any = window.localStorage.getItem('nightValue')
+    nightRate.update(() => savedNightValue)
+
+    const savedSlowValue: any = window.localStorage.getItem('slowValue')
+    slowRate.update(() => savedSlowValue)
   })
 </script>
 
@@ -25,16 +50,26 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px 0;
 
     .input-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      //gap: 10px;
+
+      .title {
+        display: flex;
+        gap: 10px;
+      }
+
+      .dj {
+        display: flex;
+        justify-content: space-around;
+      }
     }
   }
 
   .input[type='number'] {
+    width: 50%;
     padding: 10px;
   }
 </style>
@@ -46,23 +81,41 @@
   </div>
 
   <div class="input-group">
-    <h4>Nightcore:</h4>
-    <input class="input" type="range" />
-    <h4>Slowed:</h4>
-    <input class="input" type="range" />
+    <div class="title">
+      <h4>Nightcore:</h4>
+      <div class="nightValue">{nightValue}</div>
+    </div>
+    <input class="input" type="range" on:input={updateNightcore} value={nightValue} min="1" max="2" step="0.1" />
+
+    <div class="title">
+      <h4>Slowed:</h4>
+      <div class="slowValue">{slowValue}</div>
+    </div>
+    <input class="input" type="range" on:input={updateSlowed} value={slowValue} min="0.1" max="1" step="0.1" />
   </div>
 
   <div class="input-group">
     <h3>DJ mode</h3>
-    <h4>Start</h4>
-    <input class="input" type="number" />
-    <h4>Finish</h4>
-    <input class="input" type="number" />
+    <div class="dj">
+      <div class="start">
+        <h4>Start:</h4>
+        <input class="input" type="number" />
+        <span>%</span>
+      </div>
+
+      <div class="finish">
+        <h4>Finish:</h4>
+        <input class="input" type="number" />
+        <span>%</span>
+      </div>
+    </div>
   </div>
 
   <div class="input-group">
-    <h4>Song delay</h4>
-    <input class="input" type="number" />
-    <span>s</span>
+    <h4>Song delay:</h4>
+    <div class="delay">
+      <input class="input" type="number" />
+      <span>s</span>
+    </div>
   </div>
 </div>

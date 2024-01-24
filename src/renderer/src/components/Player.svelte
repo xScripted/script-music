@@ -1,6 +1,6 @@
 <script lang="ts">
   import ProgressBar from './ProgressBar.svelte'
-  import { activeSong, isPaused, panel, rate, volume, loop, shuffle } from '../scripts/store'
+  import { activeSong, isPaused, panel, rate, volume, loop, shuffle, slowRate, nightRate } from '../scripts/store'
   import { player } from '../scripts/player'
   import { get } from 'svelte/store'
 
@@ -38,13 +38,13 @@
   }
 
   const updateSlowed = () => {
-    newRate = get(rate) >= 1 ? 0.8 : 1
+    newRate = get(rate) >= 1 ? get(slowRate) : 1
 
     updateRate()
   }
 
   const updateNightcore = () => {
-    newRate = get(rate) <= 1 ? 1.2 : 1
+    newRate = get(rate) <= 1 ? get(nightRate) : 1
 
     updateRate()
   }
