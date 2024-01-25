@@ -1,8 +1,7 @@
 <script lang="ts">
   import ProgressBar from './ProgressBar.svelte'
-  import { activeSong, isPaused, panel, rate, volume, loop, shuffle, slowRate, nightRate } from '../scripts/store'
+  import { activeSong, isPaused, panel, newVolume, loop, shuffle, newRate } from '../scripts/store'
   import { player } from '../scripts/player'
-  import { get } from 'svelte/store'
 
   import shuffleSVG from './../assets/shuffle.svg'
   import previousSVG from './../assets/previous.svg'
@@ -19,66 +18,19 @@
   import volumeDownSVG from './../assets/volumeDown.svg'
 
   let isPausedValue
+  let shuffleValue
+  let volumeValue
   let panelValue
   let loopValue
-  let shuffleValue
+  let rateValue
   let buttonOn: boolean = false
-  let newRate: number = 1
-  let newVolume: number = get(volume)
-  let oldVolume: number = 0.5
 
   isPaused.subscribe((value) => (isPausedValue = value))
   panel.subscribe((value) => (panelValue = value))
   loop.subscribe((value) => (loopValue = value))
   shuffle.subscribe((value) => (shuffleValue = value))
-
-  const updateRate = () => {
-    rate.update(() => newRate)
-    if (get(activeSong).howl) get(activeSong).howl.rate(newRate)
-  }
-
-  const updateSlowed = () => {
-    newRate = get(rate) >= 1 ? get(slowRate) : 1
-
-    updateRate()
-  }
-
-  const updateNightcore = () => {
-    newRate = get(rate) <= 1 ? get(nightRate) : 1
-
-    updateRate()
-  }
-
-  const updateLoop = () => {
-    loop.update((value) => !value)
-  }
-
-  const updateShuffle = () => {
-    shuffle.update((value) => !value)
-  }
-
-  const updateVolume = (ev) => {
-    // Conseguimos el valor del input
-    newVolume = Number(ev.target.value)
-
-    // Actualizamos la variable GOD
-    volume.update(() => newVolume)
-
-    // Guardamos el valor antiguo
-    oldVolume = newVolume
-
-    // Actualizamos la cancion que esta sonando ahora mismo
-    if (get(activeSong).howl) get(activeSong).howl.volume(newVolume)
-  }
-
-  const toggleMute = () => {
-    volume.update(() => {
-      newVolume = get(volume) ? 0 : oldVolume
-      return newVolume
-    })
-
-    if (get(activeSong).howl) get(activeSong).howl.volume(newVolume)
-  }
+  newRate.subscribe((value) => (rateValue = value))
+  newVolume.subscribe((value) => (volumeValue = value))
 </script>
 
 <style lang="scss">
@@ -193,7 +145,7 @@
   </div>
 
   <div class="control">
-    <button on:click={updateShuffle}>
+    <button on:click={player.updateShuffle}>
       <img src={shuffleSVG} alt="" class="secondary" class:active={shuffleValue} />
     </button>
     <button on:click={() => player.back()}>
@@ -213,16 +165,16 @@
     <button on:click={() => player.forth()}>
       <img src={nextSVG} alt="" class="next" />
     </button>
-    <button on:click={updateLoop}>
+    <button on:click={player.updateLoop}>
       <img src={loopSVG} alt="" class="secondary" class:active={loopValue} />
     </button>
   </div>
 
   <div class="panel">
-    <button on:click={updateSlowed} class="utility" class:active={newRate < 1}>
+    <button on:click={player.updateSlowed} class="utility" class:active={rateValue < 1}>
       <img src={slowedSVG} alt="" />
     </button>
-    <button on:click={updateNightcore} class="utility" class:active={newRate > 1}>
+    <button on:click={player.updateNightcore} class="utility" class:active={rateValue > 1}>
       <img src={nightcoreSVG} alt="" />
     </button>
     <button class="utility">
@@ -240,16 +192,16 @@
     </button>
 
     <div class="volume">
-      <button class="speaker" on:click={toggleMute}>
-        {#if newVolume === 0}
+      <button class="speaker" on:click={player.toggleMute}>
+        {#if volumeValue === 0}
           <img src={mutedSVG} alt="" />
-        {:else if newVolume <= 0.25}
+        {:else if volumeValue <= 0.25}
           <img src={volumeDownSVG} alt="" />
         {:else}
           <img src={volumeUpSVG} alt="" />
         {/if}
       </button>
-      <input type="range" class="volume-bar" min="0" max="0.5" step="0.01" value={newVolume} on:input={updateVolume} />
+      <input type="range" class="volume-bar" min="0" max="0.5" step="0.01" value={volumeValue} on:input={player.updateVolume} />
     </div>
   </div>
 </div>

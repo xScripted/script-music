@@ -2,6 +2,7 @@
   import { onMount } from 'svelte'
   import { nightRate, slowRate } from '../scripts/store'
   import { get } from 'svelte/store'
+  import { player } from '../scripts/player'
 
   let bgImage
   let slowValue
@@ -26,11 +27,15 @@
   const updateNightcore = (event) => {
     nightRate.update(() => event.target.value)
     window.localStorage.setItem('nightValue', nightValue)
+
+    player.updateNightcore()
   }
 
   const updateSlowed = (event) => {
     slowRate.update(() => event.target.value)
     window.localStorage.setItem('slowValue', slowValue)
+
+    player.updateSlowed()
   }
 
   onMount(() => {

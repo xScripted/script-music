@@ -8,18 +8,24 @@ import {
   activeSong,
   isPaused,
   rate,
+  newRate,
   volume,
+  newVolume,
   tags,
   tagsSwitch,
   fadeTime,
   loop,
   shuffle,
+  nightRate,
+  slowRate,
 } from './store'
 import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
 
 let history: string[] = []
 let historyIndex: number = 0
+
+let oldVolume: number = 0.5
 let timeoutID
 
 const isInStoreTags = (songTagName: string, activeTags: ITag[]): boolean => {
@@ -135,5 +141,47 @@ export const player = {
     if (nextSongID < get(playlistFiltered).length) finalID = nextSongID
 
     player.play(get(playlistFiltered)[finalID].fileName)
+  },
+  updateRate() {
+    rate.update(() => get(newRate))
+    if (get(activeSong).howl) get(activeSong).howl.rate(get(newRate))
+  },
+  updateSlowed() {
+    newRate.update(() => (get(rate) >= 1 ? get(slowRate) : 1))
+
+    player.updateRate()
+  },
+
+  updateNightcore() {
+    newRate.update(() => (get(rate) <= 1 ? get(nightRate) : 1))
+
+    //ha dejado de ir, Laia del futuro (el slowed tmb) aka: se está toggleando
+
+    player.updateRate()
+  },
+  updateLoop() {
+    loop.update((value) => !value)
+  },
+
+  updateShuffle() {
+    shuffle.update((value) => !value)
+  },
+  updateVolume(ev) {
+    newVolume.update(() => Number(ev.target.value))
+    volume.update(() => get(newVolume))
+
+    // Guardamos el valor antiguo
+    oldVolume = get(newVolume)
+
+    // Actualizamos la cancion que esta sonando ahora mismo
+    if (get(activeSong).howl) get(activeSong).howl.volume(get(newVolume))
+  },
+  toggleMute() {
+    volume.update(() => {
+      newVolume.update(() => (get(volume) ? 0 : oldVolume))
+      return get(newVolume)
+    })
+
+    if (get(activeSong).howl) get(activeSong).howl.volume(get(newVolume))
   },
 }
