@@ -2,7 +2,7 @@
   import { get } from 'svelte/store'
   import type { IActiveSong } from '../../../interfaces/ISong'
   import { player } from '../scripts/player'
-  import { activeSong, fadeTime } from '../scripts/store'
+  import { activeSong, fadeTime, djMode, djModeStart, djModeFinish } from '../scripts/store'
 
   const formatToDuration = (duration: number): string => {
     let min: number = ~~(duration / 60)
@@ -37,9 +37,16 @@
 
     if (holding) progressChange()
 
-    let songOffset: number = activeSongValue.howl.duration() - get(fadeTime)
+    const songOffset: number = activeSongValue.howl.duration() - get(fadeTime)
 
-    if (activeSongValue.howl.seek() > songOffset && !flag) {
+    if (get(djMode)) {
+      const endTime = (activeSongValue.howl.duration() * get(djModeFinish)) / 100
+
+      if (activeSongValue.howl.seek() > endTime && !flag) {
+        flag = true
+        player.next(get(activeSong))
+      }
+    } else if (activeSongValue.howl.seek() > songOffset && !flag) {
       flag = true
       player.next(get(activeSong))
     }

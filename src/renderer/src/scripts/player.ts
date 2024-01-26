@@ -18,6 +18,8 @@ import {
   shuffle,
   nightRate,
   slowRate,
+  djMode,
+  djModeStart,
 } from './store'
 import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
@@ -89,6 +91,12 @@ export const player = {
           lyrics: song.lyrics,
           date: song.date,
           howl,
+        }
+
+        if (get(djMode)) {
+          const startTime = (howl.duration() * get(djModeStart)) / 100
+
+          howl.seek(startTime)
         }
 
         activeSong.update(() => newActiveSong)

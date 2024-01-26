@@ -1,15 +1,19 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { nightRate, slowRate } from '../scripts/store'
+  import { nightRate, slowRate, djModeStart, djModeFinish } from '../scripts/store'
   import { get } from 'svelte/store'
   import { player } from '../scripts/player'
 
   let bgImage
   let slowValue
   let nightValue
+  let djModeStartValue
+  let djModeFinishValue
 
   slowRate.subscribe((value) => (slowValue = value))
   nightRate.subscribe((value) => (nightValue = value))
+  djModeStart.subscribe((value) => (djModeStartValue = value))
+  djModeFinish.subscribe((value) => (djModeFinishValue = value))
 
   const updateBG = () => {
     // Guardamos la imagen nueva en el localstorage
@@ -38,15 +42,28 @@
     player.updateSlowed()
   }
 
+  const updateDjModeStart = (event) => {
+    djModeStart.update(() => event.target.value)
+    window.localStorage.setItem('djModeStart', djModeStartValue)
+  }
+
+  const updateDjModeFinish = (event) => {
+    djModeFinish.update(() => event.target.value)
+    window.localStorage.setItem('djModeFinish', djModeFinishValue)
+  }
+
   onMount(() => {
     const savedBG = window.localStorage.getItem('bg')
     bgImage = savedBG ? savedBG : ''
 
-    const savedNightValue: any = window.localStorage.getItem('nightValue')
+    const savedNightValue: any = window.localStorage.getItem('nightValue') || get(nightRate)
     nightRate.update(() => savedNightValue)
 
-    const savedSlowValue: any = window.localStorage.getItem('slowValue')
+    const savedSlowValue: any = window.localStorage.getItem('slowValue') || get(slowRate)
     slowRate.update(() => savedSlowValue)
+
+    djModeStart.update(() => Number(window.localStorage.getItem('djModeStart') || get(djModeStart)))
+    djModeFinish.update(() => Number(window.localStorage.getItem('djModeFinish') || get(djModeFinish)))
   })
 </script>
 
@@ -69,6 +86,11 @@
       .dj {
         display: flex;
         justify-content: space-around;
+
+        .start,
+        .finish {
+          width: 100%;
+        }
       }
     }
   }
@@ -104,13 +126,13 @@
     <div class="dj">
       <div class="start">
         <h4>Start:</h4>
-        <input class="input" type="number" />
+        <input class="input" type="number" on:input={updateDjModeStart} value={djModeStartValue} min="0" max="50" />
         <span>%</span>
       </div>
 
       <div class="finish">
         <h4>Finish:</h4>
-        <input class="input" type="number" />
+        <input class="input" type="number" on:input={updateDjModeFinish} value={djModeFinishValue} min="51" max="100" />
         <span>%</span>
       </div>
     </div>

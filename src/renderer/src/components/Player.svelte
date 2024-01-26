@@ -1,6 +1,6 @@
 <script lang="ts">
   import ProgressBar from './ProgressBar.svelte'
-  import { activeSong, isPaused, panel, newVolume, loop, shuffle, newRate } from '../scripts/store'
+  import { activeSong, isPaused, panel, newVolume, loop, shuffle, newRate, djMode } from '../scripts/store'
   import { player } from '../scripts/player'
 
   import shuffleSVG from './../assets/shuffle.svg'
@@ -23,6 +23,7 @@
   let panelValue
   let loopValue
   let rateValue
+  let djModeValue
   let buttonOn: boolean = false
 
   isPaused.subscribe((value) => (isPausedValue = value))
@@ -31,6 +32,7 @@
   shuffle.subscribe((value) => (shuffleValue = value))
   newRate.subscribe((value) => (rateValue = value))
   newVolume.subscribe((value) => (volumeValue = value))
+  djMode.subscribe((value) => (djModeValue = value))
 </script>
 
 <style lang="scss">
@@ -177,11 +179,8 @@
     <button on:click={player.updateNightcore} class="utility" class:active={rateValue > 1}>
       <img src={nightcoreSVG} alt="" />
     </button>
-    <button class="utility">
-      <!-- Crear variable para cuando empieza y cuando acaba una canción
-      (hacer que empiece en el 20% y acabe en el 80%, por ejemplo) -->
-
-      <img src={djSVG} alt="" class:active={buttonOn} />
+    <button class="utility" class:active={djModeValue} on:click={() => djMode.update(() => !djModeValue)}>
+      <img src={djSVG} alt="" />
     </button>
     <button
       class="utility"
