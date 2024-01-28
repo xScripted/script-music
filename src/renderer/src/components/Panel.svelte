@@ -40,7 +40,6 @@
       padding: 20px;
       opacity: 1;
       margin-left: 10px;
-
       .close {
         width: 30px;
         height: 30px;

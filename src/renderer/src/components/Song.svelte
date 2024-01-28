@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ISong } from '../../../interfaces/ISong'
   import { player } from '../scripts/player'
-  import { panel, updatingSong } from '../scripts/store'
+  import { panel, queue, updatingSong } from '../scripts/store'
 
   import Tag from './Tag.svelte'
 
@@ -14,6 +14,13 @@
   const openEditor = () => {
     panel.update(() => 'Update song')
     updatingSong.update(() => song)
+  }
+
+  const addToQueue = () => {
+    queue.update((value) => {
+      value.push(song)
+      return value
+    })
   }
 </script>
 
@@ -87,7 +94,7 @@
   </div>
   <div class="more">
     <img src={brushSVG} alt="" on:click={openEditor} />
-    <img src={addQueueSVG} alt="" />
+    <img src={addQueueSVG} alt="" on:click={addToQueue} />
     <img src={addSVG} alt="" />
   </div>
 </div>

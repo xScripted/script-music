@@ -5,6 +5,7 @@ import type { ITag } from '../../../interfaces/ITag'
 
 export const playlist: Writable<ISong[]> = writable([])
 export const playlistFiltered: Writable<ISong[]> = writable([])
+export const queue: Writable<ISong[]> = writable([])
 export const panel: Writable<string> = writable('')
 export const tags: Writable<ITag[]> = writable([])
 export const tagsSwitch: Writable<boolean> = writable(false)
