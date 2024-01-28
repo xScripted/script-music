@@ -17,12 +17,6 @@
   let filterVisible: boolean = false
   let searchValue: string = ''
 
-  const settingstoggle = () => {
-    settingsVisible = !settingsVisible
-
-    panel.update(() => (settingsVisible ? 'Settings' : ''))
-  }
-
   const updateGlobalSearch = () => {
     filterSearch.update((value: string) => (value = searchValue))
     player.filter()
@@ -152,7 +146,11 @@
       <SelectTags />
     </Dropdown>
   </div>
-  <button on:click={settingstoggle} class="settings" class:active={settingsVisible}>
+  <button
+    on:click={() => panel.update((value) => (value === 'Settings' ? '' : 'Settings'))}
+    class="settings"
+    class:active={settingsVisible}
+  >
     <img src={settingsSVG} alt="" />
   </button>
 </div>

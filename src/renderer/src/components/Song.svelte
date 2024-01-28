@@ -6,7 +6,7 @@
   import Tag from './Tag.svelte'
 
   import addSVG from './../assets/add.svg'
-  import addQueueSVG from './../assets/queue.svg'
+  import addQueueSVG from './../assets/queueAdd.svg'
   import brushSVG from './../assets/brush.svg'
 
   export let song: ISong
@@ -68,6 +68,10 @@
     .more {
       display: none;
       gap: 10px;
+
+      img {
+        height: 20px;
+      }
     }
 
     &:hover {

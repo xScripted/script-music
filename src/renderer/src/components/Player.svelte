@@ -6,8 +6,8 @@
   import shuffleSVG from './../assets/shuffle.svg'
   import previousSVG from './../assets/previous.svg'
   import nextSVG from './../assets/next.svg'
-  import playSVG from './../assets/play2.svg'
-  import pauseSVG from './../assets/pause2.svg'
+  import playSVG from './../assets/play.svg'
+  import pauseSVG from './../assets/pause.svg'
   import loopSVG from './../assets/repeat.svg'
   import nightcoreSVG from './../assets/nightcore.svg'
   import slowedSVG from './../assets/slowed.svg'
@@ -24,7 +24,6 @@
   let loopValue
   let rateValue
   let djModeValue
-  let buttonOn: boolean = false
 
   isPaused.subscribe((value) => (isPausedValue = value))
   panel.subscribe((value) => (panelValue = value))

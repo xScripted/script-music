@@ -20,6 +20,7 @@ import {
   slowRate,
   djMode,
   djModeStart,
+  queue,
 } from './store'
 import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
@@ -125,13 +126,27 @@ export const player = {
     player.play(history[historyIndex], true)
   },
   forth() {
-    if (historyIndex < history.length) historyIndex++
+    if (!get(queue).length && historyIndex < history.length) {
+      historyIndex++
+      player.play(history[historyIndex], true)
 
-    player.play(history[historyIndex], true)
+      return
+    }
+
+    player.next()
   },
-  next(activeSong: IActiveSong) {
+  next(fileName: string = '') {
     if (get(loop)) {
-      player.play(activeSong.fileName)
+      player.play(fileName)
+      return
+    }
+
+    if (get(queue).length) {
+      player.play(get(queue)[0].fileName)
+      player.removeSong(0)
+
+      console.log('hola')
+
       return
     }
 
@@ -145,7 +160,7 @@ export const player = {
       return
     }
 
-    const nextSongID: number = get(playlistFiltered).findIndex((song: ISong) => song.fileName === activeSong.fileName) + 1
+    const nextSongID: number = get(playlistFiltered).findIndex((song: ISong) => song.fileName === fileName) + 1
     if (nextSongID < get(playlistFiltered).length) finalID = nextSongID
 
     player.play(get(playlistFiltered)[finalID].fileName)
@@ -191,5 +206,8 @@ export const player = {
     })
 
     if (get(activeSong).howl) get(activeSong).howl.volume(get(newVolume))
+  },
+  removeSong(i: number) {
+    queue.update((value) => value.filter((_, index: number) => index != i))
   },
 }

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { queue } from './../scripts/store'
+  import { player } from '../scripts/player'
 
   import moveSVG from './../assets/move.svg'
   import deleteSVG from './../assets/delete.svg'
@@ -76,7 +77,7 @@
         <div class="artist">{song.artist}</div>
       </div>
       <div class="functions">
-        <img src={deleteSVG} alt="" class="delete" />
+        <img src={deleteSVG} alt="" class="delete" on:click={() => player.removeSong(i)} />
         <img src={moveSVG} alt="" class="move" />
       </div>
     </div>

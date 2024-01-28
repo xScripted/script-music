@@ -14,6 +14,8 @@
     active = !!value
     panelValue = value
   })
+
+  $: if (!active) panel.update(() => '')
 </script>
 
 <style lang="scss">
