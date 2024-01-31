@@ -7,6 +7,29 @@
 
   let queueValue
   queue.subscribe((value) => (queueValue = value))
+
+  const drag = (event) => {
+    event.dataTransfer.setData('nombre', 'laia')
+    console.log(event.target)
+  }
+
+  let altura: number = 0
+  let HTMLContenedor: HTMLElement
+
+  const dragOver = (event) => {
+    ;[...HTMLContenedor.children].map((song, index) => {
+      console.log(song.getBoundingClientRect().top)
+
+      if (event.clientY < song.getBoundingClientRect().top) {
+        song.classList.add('before')
+      } else {
+        song.classList.remove('before')
+      }
+    })
+
+    //console.log('por gilipollas: ', event.clientY)
+    //👍
+  }
 </script>
 
 <style lang="scss">
@@ -17,6 +40,8 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+
+    padding: 5px 0;
 
     .songRow {
       display: flex;
@@ -64,13 +89,20 @@
           display: flex;
         }
       }
+
+      transition: 0.3s ease;
     }
+  }
+
+  .before {
+    transform: translateY(50px);
+    transition: 0.3s ease;
   }
 </style>
 
-<div class="container">
+<div class="container" on:dragover={dragOver} bind:this={HTMLContenedor}>
   {#each queueValue as song, i}
-    <div class="songRow">
+    <div class="songRow" draggable="true" id="drag{i}">
       <span class="position">{i + 1}</span>
       <div class="song">
         <div class="title">{song.title}</div>
@@ -78,8 +110,10 @@
       </div>
       <div class="functions">
         <img src={deleteSVG} alt="" class="delete" on:click={() => player.removeSong(i)} />
-        <img src={moveSVG} alt="" class="move" />
+        <img src={moveSVG} alt="" class="move" on:dragstart={drag} />
       </div>
     </div>
   {/each}
 </div>
+
+<div class="before" />
