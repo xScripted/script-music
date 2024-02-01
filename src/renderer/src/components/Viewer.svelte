@@ -28,7 +28,8 @@
     width: 100%;
 
     display: grid;
-    grid-template-rows: 60px 175px 1fr;
+    grid-template-rows: 60px 625px 1fr;
+    //grid-template-rows: 60px 175px 1fr;
     padding: 15px 75px;
 
     overflow: hidden;
@@ -47,7 +48,7 @@
       }
     }
 
-    .header {
+    /*.header {
       width: 100%;
       display: flex;
       align-items: center;
@@ -72,10 +73,10 @@
         font-size: 75px;
         font-weight: bolder;
       }
-    }
+    }*/
 
     .song-list {
-      padding-top: 75px;
+      //padding-top: 75px;
       height: 100%;
       overflow: scroll;
       overflow-x: hidden;
@@ -114,12 +115,12 @@
     <Utilities />
   </div>
 
-  <div class="header">
+  <!--<div class="header">
     <div class="color">
       <div class="icon"></div>
     </div>
     <div class="title">Te quiero guapa</div>
-  </div>
+  </div>-->
 
   <div class="song-list">
     {#each playlistValue as song}

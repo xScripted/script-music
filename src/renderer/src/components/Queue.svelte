@@ -149,6 +149,10 @@
       </div>
     </div>
   {/each}
+
+  {#if queueValue.length < 1}
+    <span style="text-align: center;">No songs on queue 😪</span>
+  {/if}
 </div>
 
 <div class="before" />
