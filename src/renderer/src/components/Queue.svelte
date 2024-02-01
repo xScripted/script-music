@@ -3,6 +3,7 @@
   import { player } from '../scripts/player'
 
   import moveSVG from './../assets/move.svg'
+  import playSVG from './../assets/play.svg'
   import deleteSVG from './../assets/delete.svg'
 
   let queueValue
@@ -54,6 +55,26 @@
       transition: 0.3s ease;
       cursor: pointer;
 
+      .position {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 25px;
+        height: 100%;
+
+        .play {
+          position: absolute;
+          height: 100%;
+          top: 0;
+          left: 0;
+          margin: auto;
+
+          opacity: 0;
+        }
+      }
+
       .song {
         width: 100%;
         text-align: start;
@@ -85,6 +106,16 @@
         background-color: rgba(255, 255, 255, 0.35);
         transition: 0.3s ease;
 
+        .position {
+          .play {
+            opacity: 0.8;
+          }
+
+          span {
+            opacity: 0;
+          }
+        }
+
         .functions {
           display: flex;
         }
@@ -102,8 +133,12 @@
 
 <div class="container" on:dragover={dragOver} bind:this={HTMLContenedor}>
   {#each queueValue as song, i}
-    <div class="songRow" draggable="true" id="drag{i}">
-      <span class="position">{i + 1}</span>
+    <div class="songRow" draggable="true" id="drag{i}" on:click={() => player.play(song.fileName)}>
+      <div class="position">
+        <span>{i + 1}</span>
+        <img src={playSVG} alt="" class="play" />
+      </div>
+
       <div class="song">
         <div class="title">{song.title}</div>
         <div class="artist">{song.artist}</div>
