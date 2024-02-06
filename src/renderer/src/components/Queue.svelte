@@ -6,21 +6,28 @@
   import playSVG from './../assets/play.svg'
   import deleteSVG from './../assets/delete.svg'
 
+  let dragElement: HTMLElement
+  let HTMLContenedor: HTMLElement
   let queueValue
   queue.subscribe((value) => (queueValue = value))
 
-  const drag = (event) => {
-    event.dataTransfer.setData('nombre', 'laia')
-    console.log(event.target)
+  const dragStart = (event) => {
+    dragElement = event.target
+    dragElement.style.visibility = 'hidden'
   }
 
-  let altura: number = 0
-  let HTMLContenedor: HTMLElement
+  const drop = () => {
+    const pepePapa = HTMLContenedor.querySelector('.before')
+    HTMLContenedor.insertBefore(dragElement, pepePapa)
+    ;[...HTMLContenedor.children].map((song) => {
+      song.classList.remove('before')
+    })
+    dragElement.style.visibility = 'visible'
+  }
 
   const dragOver = (event) => {
+    event.preventDefault()
     ;[...HTMLContenedor.children].map((song, index) => {
-      console.log(song.getBoundingClientRect().top)
-
       if (event.clientY < song.getBoundingClientRect().top) {
         song.classList.add('before')
       } else {
@@ -28,7 +35,6 @@
       }
     })
 
-    //console.log('por gilipollas: ', event.clientY)
     //👍
   }
 </script>
@@ -131,9 +137,9 @@
   }
 </style>
 
-<div class="container" on:dragover={dragOver} bind:this={HTMLContenedor}>
+<div class="container" on:dragover={dragOver} on:drop={drop} bind:this={HTMLContenedor}>
   {#each queueValue as song, i}
-    <div class="songRow" draggable="true" id="drag{i}" on:click={() => player.play(song.fileName)}>
+    <div class="songRow" draggable="true" id="drag{i}" on:click={() => player.play(song.fileName)} on:dragstart={dragStart}>
       <div class="position">
         <span>{i + 1}</span>
         <img src={playSVG} alt="" class="play" />
@@ -145,7 +151,7 @@
       </div>
       <div class="functions">
         <img src={deleteSVG} alt="" class="delete" on:click={() => player.removeSong(i)} />
-        <img src={moveSVG} alt="" class="move" on:dragstart={drag} />
+        <!--<img src={moveSVG} alt="" class="move"  />-->
       </div>
     </div>
   {/each}
