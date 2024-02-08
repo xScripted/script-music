@@ -7,6 +7,7 @@
   import { onMount } from 'svelte'
   import type { ISong } from '../../interfaces/ISong'
   import type { ITag } from '../../interfaces/ITag'
+  import { player } from './scripts/player'
 
   let HTMLAppWrapper: HTMLElement
 
@@ -25,7 +26,8 @@
   const setAllSongs = async () => {
     const fileNames: string[] = await window.electron.ipcRenderer.invoke('get-song-file-names')
 
-    let allSongs = []
+    let allSongs: ISong[] = []
+    let tagsFromSongs: any = new Set()
 
     await Promise.all(
       fileNames.map(async (fileName: string) => {
@@ -41,9 +43,15 @@
           lyrics: '',
         }
 
+        for (let tag of song.tags) tagsFromSongs.add(tag)
+
         allSongs.push(song)
       })
     )
+
+    for (let tag of tagsFromSongs) {
+      player.createTag(tag, '#FFFFFF')
+    }
 
     playlist.set(allSongs)
     playlistFiltered.set(allSongs)

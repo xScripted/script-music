@@ -1,35 +1,12 @@
 <script lang="ts">
-  import type { ITag } from './../../../interfaces/ITag.ts'
-  import { tags } from '../scripts/store'
-  import { get } from 'svelte/store'
   import plusSVG from '../assets/plus2.svg'
+  import { player } from '../scripts/player.js'
 
   let name: string = ''
   let color: string = ''
   let warning: string = ''
 
-  const createTag = () => {
-    if (get(tags).find((value: ITag) => value.name === name)) {
-      warning = '* El nombre que has puesto ya existe'
-
-      return
-    }
-
-    const tag: ITag = {
-      name,
-      color,
-    }
-
-    tags.update((tags: ITag[]) => [...tags, tag])
-
-    window.localStorage.setItem('tags', JSON.stringify(get(tags)))
-
-    warning = ''
-    name = ''
-    color = ''
-  }
-
-  const handleKeydown = (e) => (e.key === 'Enter' ? createTag() : null)
+  const handleKeydown = (e) => (e.key === 'Enter' ? (warning = player.createTag(name, color)) : null)
 </script>
 
 <style lang="scss">
@@ -107,7 +84,7 @@
 <!--Editor de tags-->
 
 <div class="input-tag">
-  <button class="add" on:click={createTag}>
+  <button class="add" on:click={() => player.createTag(name, color)}>
     <img src={plusSVG} alt="" />
   </button>
   <input type="text" class="name" placeholder="New tag" bind:value={name} on:keydown={handleKeydown} />

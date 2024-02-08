@@ -210,4 +210,26 @@ export const player = {
   removeSong(i: number) {
     queue.update((value) => value.filter((_, index: number) => index != i))
   },
+
+  createTag(name: string, color: string) {
+    if (get(tags).find((value: ITag) => value.name === name)) {
+      return '* El nombre que has puesto ya existe'
+    }
+
+    if (!name) return '* ¡El nombre esta vacio!'
+
+    const tag: ITag = {
+      name,
+      color,
+    }
+
+    tags.update((tags: ITag[]) => [...tags, tag])
+
+    window.localStorage.setItem('tags', JSON.stringify(get(tags)))
+
+    name = ''
+    color = ''
+
+    return ''
+  },
 }
