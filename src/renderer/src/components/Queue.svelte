@@ -2,18 +2,47 @@
   import { queue } from './../scripts/store'
   import { player } from '../scripts/player'
 
-  import moveSVG from './../assets/move.svg'
   import playSVG from './../assets/play.svg'
   import deleteSVG from './../assets/delete.svg'
+  //import moveSVG from './../assets/move.svg'
 
   let dragElement: HTMLElement
   let HTMLContenedor: HTMLElement
+  let songDupe: HTMLElement
   let queueValue
   queue.subscribe((value) => (queueValue = value))
 
   const dragStart = (event) => {
     dragElement = event.target
+
+    songDupe = dragElement.cloneNode(true) as HTMLElement
+    HTMLContenedor.appendChild(songDupe)
+    songDupe.classList.add('cloned')
+
     dragElement.style.visibility = 'hidden'
+  }
+
+  const dragOver = (event) => {
+    event.preventDefault()
+
+    for (let song of HTMLContenedor.children) {
+      if (event.clientY < song.getBoundingClientRect().top) {
+        song.classList.add('before')
+      } else {
+        song.classList.remove('before')
+      }
+    }
+
+    console.log(event.clientY)
+
+    songDupe.style.transform = `translateY(${event.clientY}px)`
+
+    //👍
+  }
+
+  const dragEnd = (event) => {
+    dragElement.style.visibility = 'visible'
+    songDupe.remove()
   }
 
   const drop = () => {
@@ -22,20 +51,8 @@
     ;[...HTMLContenedor.children].map((song) => {
       song.classList.remove('before')
     })
+
     dragElement.style.visibility = 'visible'
-  }
-
-  const dragOver = (event) => {
-    event.preventDefault()
-    ;[...HTMLContenedor.children].map((song, index) => {
-      if (event.clientY < song.getBoundingClientRect().top) {
-        song.classList.add('before')
-      } else {
-        song.classList.remove('before')
-      }
-    })
-
-    //👍
   }
 </script>
 
@@ -44,6 +61,7 @@
     height: fit-content;
     width: 100%;
 
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -59,7 +77,7 @@
       padding: 5px 10px;
       border-radius: 5px;
       transition: 0.3s ease;
-      cursor: pointer;
+      cursor: grab;
 
       .position {
         position: relative;
@@ -132,14 +150,29 @@
   }
 
   .before {
-    transform: translateY(50px);
+    //transform: translateY(50px);
     transition: 0.3s ease;
+  }
+
+  :global(.cloned) {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.35);
+    position: absolute;
+    z-index: 5;
+    border: 2px solid red;
   }
 </style>
 
 <div class="container" on:dragover={dragOver} on:drop={drop} bind:this={HTMLContenedor}>
   {#each queueValue as song, i}
-    <div class="songRow" draggable="true" id="drag{i}" on:click={() => player.play(song.fileName)} on:dragstart={dragStart}>
+    <div
+      class="songRow"
+      draggable="true"
+      id="drag{i}"
+      on:click={() => player.play(song.fileName)}
+      on:dragstart={dragStart}
+      on:dragend={dragEnd}
+    >
       <div class="position">
         <span>{i + 1}</span>
         <img src={playSVG} alt="" class="play" />

@@ -223,6 +223,8 @@ export const player = {
       color,
     }
 
+    console.log('createTag: ', tag)
+
     tags.update((tags: ITag[]) => [...tags, tag])
 
     window.localStorage.setItem('tags', JSON.stringify(get(tags)))

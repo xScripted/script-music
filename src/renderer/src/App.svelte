@@ -50,6 +50,7 @@
     )
 
     for (let tag of tagsFromSongs) {
+      console.log('appTags: ', tag)
       player.createTag(tag, '#FFFFFF')
     }
 
