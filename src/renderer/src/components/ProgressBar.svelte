@@ -44,11 +44,11 @@
 
       if (activeSongValue.howl.seek() > endTime && !flag) {
         flag = true
-        player.next(get(activeSong))
+        player.next()
       }
     } else if (activeSongValue.howl.seek() > songOffset && !flag) {
       flag = true
-      player.next(get(activeSong))
+      player.next()
     }
 
     if (activeSongValue.howl.seek() < songOffset) flag = false

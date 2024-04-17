@@ -33,8 +33,6 @@
       }
     }
 
-    console.log(event.clientY)
-
     songDupe.style.transform = `translateY(${event.clientY}px)`
 
     //👍

@@ -109,7 +109,7 @@ export const player = {
     if (!isHistory) {
       history = history.slice(0, historyIndex + 1)
       history.push(fileName)
-      if (history.length > 1) historyIndex++
+      if (history.length) historyIndex++
     }
   },
 
@@ -126,6 +126,7 @@ export const player = {
     player.play(history[historyIndex], true)
   },
   forth() {
+    console.log(!get(queue).length, historyIndex, history.length)
     if (!get(queue).length && historyIndex < history.length) {
       historyIndex++
       player.play(history[historyIndex], true)
@@ -135,17 +136,15 @@ export const player = {
 
     player.next()
   },
-  next(fileName: string = '') {
+  next() {
     if (get(loop)) {
-      player.play(fileName)
+      player.play(get(activeSong).fileName)
       return
     }
 
     if (get(queue).length) {
       player.play(get(queue)[0].fileName)
       player.removeSong(0)
-
-      console.log('hola')
 
       return
     }
@@ -160,7 +159,7 @@ export const player = {
       return
     }
 
-    const nextSongID: number = get(playlistFiltered).findIndex((song: ISong) => song.fileName === fileName) + 1
+    const nextSongID: number = get(playlistFiltered).findIndex((song: ISong) => song.fileName === get(activeSong).fileName) + 1
     if (nextSongID < get(playlistFiltered).length) finalID = nextSongID
 
     player.play(get(playlistFiltered)[finalID].fileName)
@@ -222,8 +221,6 @@ export const player = {
       name,
       color,
     }
-
-    console.log('createTag: ', tag)
 
     tags.update((tags: ITag[]) => [...tags, tag])
 
