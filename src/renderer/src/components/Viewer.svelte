@@ -34,10 +34,6 @@
 
     overflow: hidden;
 
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: var(--radius);
-    backdrop-filter: blur(10px);
-
     .fuck-go-back {
       position: absolute;
       top: 15px;
@@ -102,7 +98,7 @@
   }
 </style>
 
-<div class="viewer">
+<div class="viewer g-box">
   <div class="utilities">
     <div class="fuck-go-back">
       <button class="back">

@@ -66,10 +66,7 @@
         border: none;
         cursor: pointer;
         background: linear-gradient(330deg, #ebebeb 0%, #ebebeb 50%, #ebebeb 100%);
-
-        box-shadow:
-          3px 3px 5px #bebebe,
-          -3px -3px 5px #ffffff;
+        border: 1px solid lightgrey;
 
         .circle {
           border: none;

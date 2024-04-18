@@ -11,7 +11,8 @@ export const downloadSong = async (youtubeUrl: string): Promise<string> => {
 
 export const writeMetaData = async ({ fileName, metaData }) => {
   const path = await process.cwd()
-  const filePath = `${path}/music/${fileName}.mp3`
+  const mp3 = fileName.includes('.mp3') ? '' : '.mp3'
+  const filePath = `${path}/music/${fileName}${mp3}`
 
   id3.update(metaData, filePath)
 }

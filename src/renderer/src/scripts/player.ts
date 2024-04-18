@@ -26,7 +26,7 @@ import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
 
 let history: string[] = []
-let historyIndex: number = 0
+let historyIndex: number = -1
 
 let oldVolume: number = 0.5
 let timeoutID
@@ -109,7 +109,7 @@ export const player = {
     if (!isHistory) {
       history = history.slice(0, historyIndex + 1)
       history.push(fileName)
-      if (history.length) historyIndex++
+      historyIndex++
     }
   },
 
@@ -125,9 +125,9 @@ export const player = {
 
     player.play(history[historyIndex], true)
   },
+
   forth() {
-    console.log(!get(queue).length, historyIndex, history.length)
-    if (!get(queue).length && historyIndex < history.length) {
+    if (!get(queue).length && historyIndex < history.length - 1) {
       historyIndex++
       player.play(history[historyIndex], true)
 

@@ -46,10 +46,6 @@
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
 
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: var(--radius);
-    backdrop-filter: blur(10px);
-
     .progress-bar {
       width: 100%;
       grid-column: 1/5;
@@ -135,7 +131,7 @@
   }
 </style>
 
-<div class="player">
+<div class="player g-box">
   <div class="progress-bar">
     <ProgressBar />
   </div>

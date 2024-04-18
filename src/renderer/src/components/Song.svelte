@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ISong } from '../../../interfaces/ISong'
   import { player } from '../scripts/player'
-  import { panel, queue, updatingSong } from '../scripts/store'
+  import { panel, queue, selectedSongForUpdate } from '../scripts/store'
 
   import Tag from './Tag.svelte'
 
@@ -13,7 +13,7 @@
 
   const openEditor = () => {
     panel.update(() => 'Update song')
-    updatingSong.update(() => song)
+    selectedSongForUpdate.update(() => song)
   }
 
   const addToQueue = () => {

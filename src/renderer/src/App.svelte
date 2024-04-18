@@ -84,7 +84,7 @@
     grid-template-rows: 1fr 125px;
 
     background-color: #000000;
-    background-image: url('https://wallpapers.com/images/hd/cute-pikachu-pokemon-ynbgo9vzeaemo126.jpg');
+    background-image: url('https://wallpapers.com/images/featured/aesthetic-cloud-background-05bsl7m2e5bh01ki.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

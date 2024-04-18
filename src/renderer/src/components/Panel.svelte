@@ -24,14 +24,13 @@
     transition:
       width 0.3s ease-out,
       opacity 0.3s 0.3s;
-    background-color: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    border-radius: var(--radius);
     overflow-y: auto;
     overflow-x: hidden;
     width: 0;
     opacity: 0;
     margin-left: 0;
+    display: flex;
+    flex-direction: column;
 
     &.active {
       transition:
@@ -70,7 +69,7 @@
   }
 </style>
 
-<div class="panel" class:active>
+<div class="panel g-box" class:active>
   <h2>{$panel}</h2>
 
   {#if panelValue === 'Youtube to MP3'}

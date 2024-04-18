@@ -20,8 +20,7 @@
 
     border-radius: 10px;
     padding: 8px 10px;
-
-    box-shadow: inset 0 0 10px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid lightgrey;
 
     .name {
       background: none;
