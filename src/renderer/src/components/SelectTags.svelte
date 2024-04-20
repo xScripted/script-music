@@ -21,8 +21,21 @@
 
   const toggleTag = (tagName: string) => {
     tags.update((value: ITag[]) => {
+      console.log(
+        value.map((tag: ITag) => {
+          if (tag.name === tagName) {
+            tag.active = !tag.active
+          }
+
+          return tag
+        })
+      )
+
       return value.map((tag: ITag) => {
-        if (tag.name === tagName) tag.active = !tag.active
+        if (tag.name === tagName) {
+          tag.active = !tag.active
+        }
+
         return tag
       })
     })

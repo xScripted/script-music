@@ -9,6 +9,7 @@
   import { get } from 'svelte/store'
 
   let selectedSongForUpdateValue
+  let tagsCopy: ITag[] = get(tags)
 
   selectedSongForUpdate.subscribe((value: ISong) => (selectedSongForUpdateValue = value))
 
@@ -19,13 +20,9 @@
   const fileName = selectedSongForUpdateValue.fileName
 
   const toggleTag = (tagName: string) => {
-    const tagActive = selectedSongForUpdateValue.tags.find((name: string) => name === tagName)
+    const tagIndex: number = tagsCopy.findIndex((tag: ITag) => tag.name === tagName)
 
-    if (tagActive) {
-      selectedSongForUpdateValue.tags = selectedSongForUpdateValue.tags.filter((name: string) => name != tagName)
-    } else {
-      selectedSongForUpdateValue.tags.push(tagName)
-    }
+    tagsCopy[tagIndex].active = !tagsCopy[tagIndex].active
   }
 
   const updateSong = () => {
@@ -74,6 +71,18 @@
         return p
       })
     }
+  }
+
+  let tagsValue
+
+  tags.subscribe((value) => (tagsValue = value))
+
+  $: {
+    tagsCopy = tagsValue.map((tag: ITag) => {
+      tag.active = selectedSongForUpdateValue.tags.find((name: string) => name === tag.name)
+
+      return tag
+    })
   }
 </script>
 
@@ -149,9 +158,9 @@
       <h4>Tags</h4>
 
       <div class="form-tags">
-        {#each get(tags) as tag}
+        {#each tagsCopy as tag}
           <button on:click={() => toggleTag(tag.name)}>
-            <Tag {tag} active={selectedSongForUpdateValue.tags.find((x) => x === tag.name)} />
+            <Tag {tag} active={tag.active} />
           </button>
         {/each}
         <div class="input-tag-container">
@@ -160,6 +169,4 @@
       </div>
     </div>
   </div>
-
-  <button class="g-btn update-song-btn" on:click={updateSong}> Actualizar canción </button>
 </div>
