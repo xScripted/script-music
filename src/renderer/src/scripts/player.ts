@@ -50,8 +50,9 @@ export const player = {
 
         // Tags
         const isAnyTagActive: boolean = song.tags.some((tagName: string) => isInStoreTags(tagName, activeTags)) // Miramos si algun tag de la cancion coincide con algun tag activo
-        const allTagsActive: boolean = song.tags.every((tagName: string) => isInStoreTags(tagName, activeTags)) // Miramos si TODOS los tags de la cancion coincide con algun tag activo
+        const allTagsActive: boolean = activeTags.every((tag: ITag) => song.tags.includes(tag.name)) // Miramos si TODOS los tags de la cancion coincide con algun tag activo
         const filterTags = get(tagsSwitch) ? isAnyTagActive : allTagsActive
+        console.log(get(tagsSwitch))
         return (includeTitle || includeArtist) && filterTags
       })
     })

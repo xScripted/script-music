@@ -30,7 +30,7 @@
     display: grid;
     grid-template-rows: 60px 625px 1fr;
     //grid-template-rows: 60px 175px 1fr;
-    padding: 15px 75px;
+    padding: 20px;
 
     overflow: hidden;
 

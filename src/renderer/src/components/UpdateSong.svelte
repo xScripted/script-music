@@ -13,20 +13,21 @@
 
   selectedSongForUpdate.subscribe((value: ISong) => (selectedSongForUpdateValue = value))
 
-  let cover = selectedSongForUpdateValue.cover
-  let title = selectedSongForUpdateValue.title
-  let artist = selectedSongForUpdateValue.artist
-  let formTags: ITag[] = selectedSongForUpdateValue.tags
-  const fileName = selectedSongForUpdateValue.fileName
+  let cover: string = selectedSongForUpdateValue.cover
+  let title: string = selectedSongForUpdateValue.title
+  let artist: string = selectedSongForUpdateValue.artist
+  const fileName: string = selectedSongForUpdateValue.fileName
 
   const toggleTag = (tagName: string) => {
     const tagIndex: number = tagsCopy.findIndex((tag: ITag) => tag.name === tagName)
 
     tagsCopy[tagIndex].active = !tagsCopy[tagIndex].active
+
+    updateSong()
   }
 
   const updateSong = () => {
-    const tags: ITag[] = formTags.filter((tag: ITag) => tag.active)
+    const activeTags = tagsCopy.filter((tag: ITag) => tag.active).map((tag: ITag) => tag.name)
 
     const metaData: IMetaData = {
       fileUrl: fileName,
@@ -34,7 +35,7 @@
       artist,
       date: new Date(),
       subtitle: cover,
-      genre: JSON.stringify(tags.map((tag: ITag) => tag.name)),
+      genre: JSON.stringify(activeTags),
     }
 
     window.electron.ipcRenderer.invoke('write-meta-data', { fileName, metaData })
@@ -45,7 +46,7 @@
         fileName: p[playlistI].fileName,
         title,
         artist,
-        tags: tags.map((tag: ITag) => tag.name),
+        tags: activeTags,
         cover,
         lyrics: p[playlistI].lyrics,
         date: p[playlistI].date,
@@ -54,6 +55,7 @@
       return p
     })
 
+    //playlist Filtered Index
     const playlistFI = get(playlistFiltered).findIndex((song: ISong) => song.fileName === fileName)
 
     if (playlistFI) {
@@ -62,7 +64,7 @@
           fileName: p[playlistFI].fileName,
           title,
           artist,
-          tags: tags.map((tag: ITag) => tag.name),
+          tags: activeTags,
           cover,
           lyrics: p[playlistFI].lyrics,
           date: p[playlistFI].date,
@@ -73,9 +75,8 @@
     }
   }
 
-  let tagsValue
-
-  tags.subscribe((value) => (tagsValue = value))
+  let tagsValue: ITag[]
+  tags.subscribe((value: ITag[]) => (tagsValue = value.map((tag: ITag) => Object.assign({}, tag))))
 
   $: {
     tagsCopy = tagsValue.map((tag: ITag) => {
@@ -126,11 +127,6 @@
         grid-row: span 2;
         object-fit: cover;
       }
-    }
-
-    .update-song-btn {
-      padding: 20px;
-      text-align: center;
     }
   }
 </style>

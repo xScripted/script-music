@@ -9,28 +9,11 @@
   let tagsValue: ITag[] = []
   let tagsSwitchValue: boolean = false
 
-  tags.subscribe((value: ITag[]) => {
-    tagsValue = value
-    player.filter()
-  })
-
-  tagsSwitch.subscribe((value: boolean) => {
-    tagsSwitchValue = value
-    player.filter()
-  })
+  tags.subscribe((value: ITag[]) => (tagsValue = value))
+  tagsSwitch.subscribe((value: boolean) => (tagsSwitchValue = value))
 
   const toggleTag = (tagName: string) => {
     tags.update((value: ITag[]) => {
-      console.log(
-        value.map((tag: ITag) => {
-          if (tag.name === tagName) {
-            tag.active = !tag.active
-          }
-
-          return tag
-        })
-      )
-
       return value.map((tag: ITag) => {
         if (tag.name === tagName) {
           tag.active = !tag.active
@@ -39,6 +22,8 @@
         return tag
       })
     })
+
+    player.filter()
   }
 
   let allActive: boolean = false
@@ -51,12 +36,16 @@
         return tag
       })
     })
+
+    player.filter()
   }
 
   const toggleSwitch = () => {
     tagsSwitch.update((value) => {
       return !value
     })
+
+    player.filter()
   }
 </script>
 
