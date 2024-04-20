@@ -198,6 +198,8 @@ export const player = {
 
     // Actualizamos la cancion que esta sonando ahora mismo
     if (get(activeSong).howl) get(activeSong).howl.volume(get(newVolume))
+
+    window.localStorage.setItem('volume', JSON.stringify(get(newVolume)))
   },
   toggleMute() {
     volume.update(() => {

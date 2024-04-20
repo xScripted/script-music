@@ -32,6 +32,10 @@
   newRate.subscribe((value) => (rateValue = value))
   newVolume.subscribe((value) => (volumeValue = value))
   djMode.subscribe((value) => (djModeValue = value))
+
+  const storedVolume = JSON.parse(window.localStorage.getItem('volume') || '""')
+
+  volumeValue = storedVolume
 </script>
 
 <style lang="scss">

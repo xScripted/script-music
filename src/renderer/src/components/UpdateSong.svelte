@@ -9,7 +9,7 @@
   import { get } from 'svelte/store'
 
   let selectedSongForUpdateValue
-  let tagsCopy: ITag[] = get(tags)
+  let tagsCopy: ITag[] = []
 
   selectedSongForUpdate.subscribe((value: ISong) => (selectedSongForUpdateValue = value))
 
@@ -58,21 +58,19 @@
     //playlist Filtered Index
     const playlistFI = get(playlistFiltered).findIndex((song: ISong) => song.fileName === fileName)
 
-    if (playlistFI) {
-      playlistFiltered.update((p: ISong[]) => {
-        p[playlistFI] = {
-          fileName: p[playlistFI].fileName,
-          title,
-          artist,
-          tags: activeTags,
-          cover,
-          lyrics: p[playlistFI].lyrics,
-          date: p[playlistFI].date,
-        }
+    playlistFiltered.update((p: ISong[]) => {
+      p[playlistFI] = {
+        fileName: p[playlistFI].fileName,
+        title,
+        artist,
+        tags: activeTags,
+        cover,
+        lyrics: p[playlistFI].lyrics,
+        date: p[playlistFI].date,
+      }
 
-        return p
-      })
-    }
+      return p
+    })
   }
 
   let tagsValue: ITag[]
@@ -82,7 +80,7 @@
     tagsCopy = tagsValue.map((tag: ITag) => {
       tag.active = selectedSongForUpdateValue.tags.find((name: string) => name === tag.name)
 
-      return tag
+      return { ...tag }
     })
   }
 </script>
