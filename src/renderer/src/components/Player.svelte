@@ -199,7 +199,15 @@
           <img src={volumeUpSVG} alt="" />
         {/if}
       </button>
-      <input type="range" class="volume-bar" min="0" max="0.5" step="0.01" value={volumeValue} on:input={player.updateVolume} />
+      <input
+        type="range"
+        class="volume-bar"
+        min="0"
+        max="0.5"
+        step="0.01"
+        value={volumeValue}
+        on:input={(ev) => player.updateVolume(ev.target.value)}
+      />
     </div>
   </div>
 </div>

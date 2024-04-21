@@ -189,8 +189,8 @@ export const player = {
   updateShuffle() {
     shuffle.update((value) => !value)
   },
-  updateVolume(ev) {
-    newVolume.update(() => Number(ev.target.value))
+  updateVolume(newValue: string) {
+    newVolume.update(() => Number(newValue))
     volume.update(() => get(newVolume))
 
     // Guardamos el valor antiguo

@@ -30,6 +30,8 @@
         font-size: 30px;
         font-weight: bold;
         color: white;
+        text-align: center;
+        padding: 20px 0;
       }
 
       .new-playlist,
@@ -87,7 +89,7 @@
 
 <div class="menu">
   <div class="playlists">
-    <span class="p-title">Playlists:</span>
+    <span class="p-title">playlists</span>
     <button class="new-playlist" on:click={createPlaylist}>
       <img src={plusSVG} alt="" class="icon" />
       <span>New playlist</span>

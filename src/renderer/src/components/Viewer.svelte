@@ -8,6 +8,7 @@
   import plusSVG from './../assets/plus.svg'
   import homeSVG from './../assets/home.svg'
   import backSVG from './../assets/back.svg'
+  import BubbleButton from './BubbleButton.svelte'
 
   let newSong: boolean = false
   let playlistValue: ISong[] = []
@@ -127,4 +128,6 @@
   <button class="new-song" on:click={toggleNewSong}>
     <img src={plusSVG} alt="" />
   </button>
+
+  <BubbleButton />
 </div>
