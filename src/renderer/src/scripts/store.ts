@@ -2,9 +2,11 @@ import { writable } from 'svelte/store'
 import type { Writable } from 'svelte/store'
 import type { ISong, IActiveSong } from '../../../interfaces/ISong'
 import type { ITag } from '../../../interfaces/ITag'
+import type { IPlaylist } from '../../../interfaces/IPlaylist'
 
-export const playlist: Writable<ISong[]> = writable([])
-export const playlistFiltered: Writable<ISong[]> = writable([])
+export const playlists: Writable<IPlaylist[]> = writable([])
+export const songs: Writable<ISong[]> = writable([])
+export const songsFiltered: Writable<ISong[]> = writable([])
 export const queue: Writable<ISong[]> = writable([])
 export const panel: Writable<string> = writable('')
 export const tags: Writable<ITag[]> = writable([])

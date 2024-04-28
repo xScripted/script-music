@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { playlist, playlistFiltered, tags, path } from './scripts/store'
+  import { songs, songsFiltered, tags, path, playlists } from './scripts/store'
   import Player from './components/Player.svelte'
   import Viewer from './components/Viewer.svelte'
   import Panel from './components/Panel.svelte'
@@ -8,6 +8,7 @@
   import type { ISong } from '../../interfaces/ISong'
   import type { ITag } from '../../interfaces/ITag'
   import { player } from './scripts/player'
+  import type { IPlaylist } from '../../interfaces/IPlaylist'
 
   let HTMLAppWrapper: HTMLElement
 
@@ -15,11 +16,7 @@
     tags.update(() => {
       const tagsFromDB: ITag[] = JSON.parse(window.localStorage.getItem('tags') || '[]')
 
-      return tagsFromDB.map((tag: ITag) => {
-        tag.active = true
-
-        return tag
-      })
+      return tagsFromDB
     })
   }
 
@@ -53,8 +50,16 @@
       player.createTag(tag, '#FFFFFF')
     }
 
-    playlist.set(allSongs)
-    playlistFiltered.set(allSongs)
+    songs.set(allSongs)
+    songsFiltered.set(allSongs)
+  }
+
+  const getPlaylists = () => {
+    playlists.update(() => {
+      const playlistsFromDB: IPlaylist[] = JSON.parse(window.localStorage.getItem('playlists') || '[]')
+
+      return playlistsFromDB
+    })
   }
 
   onMount(async () => {
@@ -63,6 +68,7 @@
     path.update(() => pathValue)
 
     getTags()
+    getPlaylists()
     await setAllSongs()
 
     const savedBG = window.localStorage.getItem('bg')

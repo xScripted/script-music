@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { playlist, playlistFiltered, tags } from '../scripts/store.js'
+  import { songs, songsFiltered, tags } from '../scripts/store.js'
   import type { ISong } from './../../../interfaces/ISong.ts'
   import type { ITag } from './../../../interfaces/ITag.ts'
   import type { IMetaData } from './../../../interfaces/IMetaData.ts'
@@ -40,8 +40,11 @@
       date: new Date(),
     }
 
-    playlist.update((p) => [...p, newSong])
-    playlistFiltered.update((p) => [...p, newSong])
+    songs.update((p) => [...p, newSong])
+    songsFiltered.update((p) => [...p, newSong])
+
+    youtubeURL = ''
+    title = ''
   }
 
   const activeFormTag = (name: string) => {
@@ -53,7 +56,9 @@
   }
 
   tags.subscribe((value: ITag[]) => {
-    formTags = value.map((tag: ITag) => {
+    const tagsClonned = JSON.parse(JSON.stringify(value))
+
+    formTags = tagsClonned.map((tag: ITag) => {
       tag.active = false
       return tag
     })

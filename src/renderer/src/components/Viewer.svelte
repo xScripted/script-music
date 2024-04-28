@@ -1,7 +1,7 @@
 <script lang="ts">
   import Utilities from './Utilities.svelte'
 
-  import { panel, playlistFiltered } from './../scripts/store'
+  import { panel, songsFiltered } from './../scripts/store'
   import type { ISong } from '../../../interfaces/ISong'
   import Song from './Song.svelte'
 
@@ -11,9 +11,9 @@
   import BubbleButton from './BubbleButton.svelte'
 
   let newSong: boolean = false
-  let playlistValue: ISong[] = []
+  let songsValue: ISong[] = []
 
-  playlistFiltered.subscribe((value) => (playlistValue = value))
+  songsFiltered.subscribe((value) => (songsValue = value))
 
   const toggleNewSong = () => {
     newSong = !newSong
@@ -120,7 +120,7 @@
   </div>-->
 
   <div class="song-list">
-    {#each playlistValue as song}
+    {#each songsValue as song}
       <Song {song} />
     {/each}
   </div>

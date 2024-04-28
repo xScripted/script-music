@@ -89,7 +89,7 @@
 
 <div class="menu">
   <div class="playlists">
-    <span class="p-title">playlists</span>
+    <span class="p-title">Playlists</span>
     <button class="new-playlist" on:click={createPlaylist}>
       <img src={plusSVG} alt="" class="icon" />
       <span>New playlist</span>

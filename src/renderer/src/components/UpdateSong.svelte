@@ -3,7 +3,7 @@
   import type { ITag } from './../../../interfaces/ITag.ts'
   import type { IMetaData } from './../../../interfaces/IMetaData.ts'
 
-  import { selectedSongForUpdate, tags, playlist, playlistFiltered } from '../scripts/store'
+  import { selectedSongForUpdate, tags, songs, songsFiltered } from '../scripts/store'
   import Tag from './Tag.svelte'
   import InputTag from './InputTag.svelte'
   import { get } from 'svelte/store'
@@ -40,33 +40,33 @@
 
     window.electron.ipcRenderer.invoke('write-meta-data', { fileName, metaData })
 
-    const playlistI = get(playlist).findIndex((song: ISong) => song.fileName === fileName)
-    playlist.update((p: ISong[]) => {
-      p[playlistI] = {
-        fileName: p[playlistI].fileName,
+    const songsI = get(songs).findIndex((song: ISong) => song.fileName === fileName)
+    songs.update((p: ISong[]) => {
+      p[songsI] = {
+        fileName: p[songsI].fileName,
         title,
         artist,
         tags: activeTags,
         cover,
-        lyrics: p[playlistI].lyrics,
-        date: p[playlistI].date,
+        lyrics: p[songsI].lyrics,
+        date: p[songsI].date,
       }
 
       return p
     })
 
-    //playlist Filtered Index
-    const playlistFI = get(playlistFiltered).findIndex((song: ISong) => song.fileName === fileName)
+    //songs Filtered Index
+    const songsFI = get(songsFiltered).findIndex((song: ISong) => song.fileName === fileName)
 
-    playlistFiltered.update((p: ISong[]) => {
-      p[playlistFI] = {
-        fileName: p[playlistFI].fileName,
+    songsFiltered.update((p: ISong[]) => {
+      p[songsFI] = {
+        fileName: p[songsFI].fileName,
         title,
         artist,
         tags: activeTags,
         cover,
-        lyrics: p[playlistFI].lyrics,
-        date: p[playlistFI].date,
+        lyrics: p[songsFI].lyrics,
+        date: p[songsFI].date,
       }
 
       return p

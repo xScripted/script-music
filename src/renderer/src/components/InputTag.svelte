@@ -6,7 +6,16 @@
   let color: string = ''
   let warning: string = ''
 
-  const handleKeydown = (e) => (e.key === 'Enter' ? (warning = player.createTag(name, color)) : null)
+  const createTag = (e) => {
+    warning = ''
+
+    if (e.key === 'Enter' || !e.key) {
+      warning = player.createTag(name, color)
+
+      color = '#FFFFFF'
+      name = ''
+    }
+  }
 </script>
 
 <style lang="scss">
@@ -79,14 +88,13 @@
   }
 </style>
 
-<!--Capar que se puedan hacer dos tags con el mismo nombre-->
 <!--Editor de tags-->
 
 <div class="input-tag">
-  <button class="add" on:click={() => player.createTag(name, color)}>
+  <button class="add" on:click={createTag}>
     <img src={plusSVG} alt="" />
   </button>
-  <input type="text" class="name" placeholder="New tag" bind:value={name} on:keydown={handleKeydown} />
+  <input type="text" class="name" placeholder="New tag" bind:value={name} on:keydown={createTag} />
   <div class="separation" />
   <div class="color-input">
     <div class="square" style="background: {color}" />

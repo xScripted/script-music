@@ -1,8 +1,10 @@
 import type { IActiveSong, ISong } from '../../../interfaces/ISong'
 import type { ITag } from '../../../interfaces/ITag'
+import type { IPlaylist } from '../../../interfaces/IPlaylist'
 import {
-  playlistFiltered,
-  playlist,
+  playlists,
+  songsFiltered,
+  songs,
   filterSearch,
   path,
   activeSong,
@@ -24,6 +26,7 @@ import {
 } from './store'
 import { get } from 'svelte/store'
 import { Howl, Howler } from 'howler'
+import { playlists } from './store'
 
 let history: string[] = []
 let historyIndex: number = -1
@@ -38,9 +41,10 @@ const isInStoreTags = (songTagName: string, activeTags: ITag[]): boolean => {
 //usar el Howler.pool para la lista de sonidos inactivos (autoplay)
 export const player = {
   filter() {
-    playlistFiltered.update(() => {
+    songsFiltered.update(() => {
       const activeTags: ITag[] = get(tags).filter((tag: ITag) => tag.active)
-      return get(playlist).filter((song: ISong) => {
+      const activePlaylists: IPlaylist[] = get(playlists).filter((playlist: IPlaylist) => playlist.active)
+      return get(songs).filter((song: ISong) => {
         // Search
         let songTitle: string = song.title.toLowerCase()
         let songArtist: string = song.artist.toLowerCase()
@@ -49,11 +53,28 @@ export const player = {
         const includeArtist: boolean = songArtist.includes(get(filterSearch).toLowerCase())
 
         // Tags
-        const isAnyTagActive: boolean = song.tags.some((tagName: string) => isInStoreTags(tagName, activeTags)) // Miramos si algun tag de la cancion coincide con algun tag activo
-        const allTagsActive: boolean = activeTags.every((tag: ITag) => song.tags.includes(tag.name)) // Miramos si TODOS los tags de la cancion coincide con algun tag activo
-        const filterTags = get(tagsSwitch) ? isAnyTagActive : allTagsActive
-        console.log(get(tagsSwitch))
-        return (includeTitle || includeArtist) && filterTags
+        let filterTags: boolean = false
+
+        if (get(tagsSwitch)) {
+          // Miramos si algun tag de la cancion coincide con algun tag activo
+          filterTags = activeTags.length ? song.tags.some((tagName: string) => isInStoreTags(tagName, activeTags)) : true
+        } else {
+          // Miramos si TODOS los tags de la cancion coincide con algun tag activo
+          filterTags = activeTags.every((tag: ITag) => song.tags.includes(tag.name))
+        }
+
+        // Playlist
+        let inPlaylistActive = true
+        console.log(activePlaylists)
+        if (activePlaylists.length) {
+          inPlaylistActive = activePlaylists.some((p: IPlaylist) => {
+            if (!p.playlist.length) return true
+
+            return p.playlist.some((fileName: string) => fileName === song.fileName)
+          })
+        }
+
+        return (includeTitle || includeArtist) && filterTags && inPlaylistActive
       })
     })
   },
@@ -82,7 +103,7 @@ export const player = {
       onplay: () => {
         isPaused.update(() => false)
 
-        const song: ISong = get(playlist).find((song: ISong) => song.fileName === fileName)
+        const song: ISong = get(songs).find((song: ISong) => song.fileName === fileName)
 
         const newActiveSong: IActiveSong = {
           fileName: song.fileName,
@@ -113,20 +134,17 @@ export const player = {
       historyIndex++
     }
   },
-
   pause() {
     get(activeSong).howl ? get(activeSong).howl.pause() : null
   },
   resume() {
     get(activeSong).howl ? get(activeSong).howl.play() : null
   },
-
   back() {
     if (historyIndex) historyIndex--
 
     player.play(history[historyIndex], true)
   },
-
   forth() {
     if (!get(queue).length && historyIndex < history.length - 1) {
       historyIndex++
@@ -154,16 +172,16 @@ export const player = {
     let finalID: number = 0
 
     if (get(shuffle)) {
-      finalID = Math.floor(Math.random() * get(playlistFiltered).length)
-      player.play(get(playlistFiltered)[finalID].fileName)
+      finalID = Math.floor(Math.random() * get(songsFiltered).length)
+      player.play(get(songsFiltered)[finalID].fileName)
 
       return
     }
 
-    const nextSongID: number = get(playlistFiltered).findIndex((song: ISong) => song.fileName === get(activeSong).fileName) + 1
-    if (nextSongID < get(playlistFiltered).length) finalID = nextSongID
+    const nextSongID: number = get(songsFiltered).findIndex((song: ISong) => song.fileName === get(activeSong).fileName) + 1
+    if (nextSongID < get(songsFiltered).length) finalID = nextSongID
 
-    player.play(get(playlistFiltered)[finalID].fileName)
+    player.play(get(songsFiltered)[finalID].fileName)
   },
   updateRate() {
     rate.update(() => get(newRate))
