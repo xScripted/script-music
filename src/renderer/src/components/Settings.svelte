@@ -3,6 +3,7 @@
   import { nightRate, slowRate, djModeStart, djModeFinish } from '@/constants/godStore'
   import { get } from 'svelte/store'
   import { player } from '@/scripts/player'
+  import Input from '@/components/Input.svelte'
 
   let bgImage
   let slowValue
@@ -85,7 +86,7 @@
 
       .dj {
         display: flex;
-        justify-content: space-around;
+        gap: 30px;
 
         .start,
         .finish {
@@ -104,7 +105,7 @@
 <div class="settings">
   <div class="input-group">
     <h4>Background image</h4>
-    <input class="input" type="text" bind:value={bgImage} on:input={updateBG} placeholder="URL" />
+    <Input bind:value={bgImage} on:input={updateBG} placeholder="URL" />
   </div>
 
   <div class="input-group">
@@ -126,14 +127,12 @@
     <div class="dj">
       <div class="start">
         <h4>Start:</h4>
-        <input class="input" type="number" on:input={updateDjModeStart} value={djModeStartValue} min="0" max="50" />
-        <span>%</span>
+        <Input sufix="%" type="number" on:input={updateDjModeStart} value={djModeStartValue} min={0} max={50} />
       </div>
 
       <div class="finish">
         <h4>Finish:</h4>
-        <input class="input" type="number" on:input={updateDjModeFinish} value={djModeFinishValue} min="51" max="100" />
-        <span>%</span>
+        <Input sufix="%" type="number" on:input={updateDjModeFinish} value={djModeFinishValue} min={51} max={100} />
       </div>
     </div>
   </div>
@@ -141,8 +140,7 @@
   <div class="input-group">
     <h4>Song delay:</h4>
     <div class="delay">
-      <input class="input" type="number" />
-      <span>s</span>
+      <Input type="number" sufix="s" />
     </div>
   </div>
 </div>

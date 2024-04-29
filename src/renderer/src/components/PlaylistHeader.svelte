@@ -17,6 +17,7 @@
       height: 150px;
       width: 150px;
       border-radius: var(--radius);
+      flex-shrink: 0;
       object-fit: cover;
     }
 
@@ -28,6 +29,7 @@
         font-size: 75px;
         font-weight: bolder;
         color: #363636;
+        width: 100%;
 
         border: none;
         outline: none;
