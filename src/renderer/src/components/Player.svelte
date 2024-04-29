@@ -71,19 +71,6 @@
       align-items: center;
 
       gap: 10px;
-
-      img {
-        width: 50px;
-      }
-
-      .secondary {
-        width: 35px;
-        opacity: 0.5;
-
-        &.active {
-          opacity: 1;
-        }
-      }
     }
 
     .panel {
@@ -94,10 +81,6 @@
       justify-self: end;
       align-items: center;
       gap: 10px;
-
-      img {
-        width: 25px;
-      }
 
       button {
         display: flex;

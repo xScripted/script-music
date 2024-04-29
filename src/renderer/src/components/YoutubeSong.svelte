@@ -134,14 +134,14 @@
 <div class="youtube-song-wrapper">
   <div class="youtube-song">
     <div class="input-group">
-      <label>Youtube URL</label>
+      <label for="">Youtube URL</label>
       <input class="input" type="text" bind:value={youtubeURL} placeholder="https://www.youtube.com/watch?v=ip10YUcH2BA" />
     </div>
 
     <div class="cover">
       <img src={cover} alt="" />
       <div class="input-group">
-        <label>Cover</label>
+        <label for="">Cover</label>
         <input class="input" type="text" bind:value={cover} placeholder="Image url" />
       </div>
     </div>

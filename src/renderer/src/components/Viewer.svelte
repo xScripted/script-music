@@ -34,12 +34,6 @@
 
     overflow: hidden;
 
-    .fuck-go-back {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-    }
-
     .song-list {
       //padding-top: 75px;
       height: 100%;
@@ -58,11 +52,6 @@
       background: none;
       border: none;
       cursor: pointer;
-
-      img {
-        width: 100%;
-        transition: 0.5s ease;
-      }
     }
   }
 </style>

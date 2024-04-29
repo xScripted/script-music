@@ -52,10 +52,6 @@
           font-weight: bold;
           font-size: 20px;
         }
-
-        .icon {
-          width: 50px;
-        }
       }
 
       .playlist1 {

@@ -83,16 +83,6 @@
 
         width: 25px;
         height: 100%;
-
-        .play {
-          position: absolute;
-          height: 100%;
-          top: 0;
-          left: 0;
-          margin: auto;
-
-          opacity: 0;
-        }
       }
 
       .song {
@@ -111,15 +101,6 @@
       .functions {
         display: none;
         gap: 5px;
-
-        img {
-          height: 25px;
-          opacity: 0.5;
-
-          &:hover {
-            opacity: 1;
-          }
-        }
       }
 
       &:hover {
@@ -127,10 +108,6 @@
         transition: 0.3s ease;
 
         .position {
-          .play {
-            opacity: 0.8;
-          }
-
           span {
             opacity: 0;
           }

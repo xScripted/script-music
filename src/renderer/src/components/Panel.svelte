@@ -53,10 +53,6 @@
         background: none;
         border: none;
         cursor: pointer;
-
-        img {
-          width: 100%;
-        }
       }
     }
 
