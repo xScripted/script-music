@@ -1,12 +1,12 @@
 <script lang="ts">
-  import Utilities from './Utilities.svelte'
+  import Utilities from '@/components/Utilities.svelte'
 
-  import { panel, songsFiltered } from './../scripts/store'
-  import type { ISong } from '../../../interfaces/ISong'
-  import Song from './Song.svelte'
+  import { panel, songsFiltered } from '@/scripts/store'
+  import type { ISong } from '@interfaces/ISong'
+  import Song from '@/components/Song.svelte'
 
-  import Svg from '../components/Svg.svelte'
-  import BubbleButton from './BubbleButton.svelte'
+  import Svg from '@/components/Svg.svelte'
+  import BubbleButton from '@/components/BubbleButton.svelte'
 
   let newSong: boolean = false
   let songsValue: ISong[] = []
@@ -37,10 +37,6 @@
       position: absolute;
       top: 15px;
       left: 15px;
-
-      img {
-        height: 30px;
-      }
     }
 
     /*.header {

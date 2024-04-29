@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { ISong } from '../../../interfaces/ISong'
-  import { player } from '../scripts/player'
-  import { panel, queue, selectedSongForUpdate } from '../scripts/store'
-  import Tag from './Tag.svelte'
-  import Svg from '../components/Svg.svelte'
+  import type { ISong } from '@interfaces/ISong'
+  import { player } from '@/scripts/player'
+  import { panel, queue, selectedSongForUpdate } from '@/scripts/store'
+  import Tag from '@/components/Tag.svelte'
+  import Svg from '@/components/Svg.svelte'
 
   export let song: ISong
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { tags } from '../scripts/store'
+  import { tags } from '@/scripts/store'
   import { get } from 'svelte/store'
-  import type { ITag } from './../../../interfaces/ITag'
+  import type { ITag } from '@interfaces/ITag'
 
   export let tag: ITag = {}
   export let tagName: string = ''

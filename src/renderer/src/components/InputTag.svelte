@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Svg from '../components/Svg.svelte'
+  import Svg from '@/components/Svg.svelte'
 
-  import { player } from '../scripts/player.js'
+  import { player } from '@/scripts/player.js'
 
   let name: string = ''
   let color: string = ''

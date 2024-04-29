@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { nightRate, slowRate, djModeStart, djModeFinish } from '../scripts/store'
+  import { nightRate, slowRate, djModeStart, djModeFinish } from '@/scripts/store'
   import { get } from 'svelte/store'
-  import { player } from '../scripts/player'
+  import { player } from '@/scripts/player'
 
   let bgImage
   let slowValue

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { ISong } from './../../../interfaces/ISong.ts'
-  import type { ITag } from './../../../interfaces/ITag.ts'
-  import type { IMetaData } from './../../../interfaces/IMetaData.ts'
+  import type { ISong } from '@interfaces/ISong.ts'
+  import type { ITag } from '@interfaces/ITag.ts'
+  import type { IMetaData } from '@interfaces/IMetaData.ts'
 
-  import { selectedSongForUpdate, tags, songs, songsFiltered } from '../scripts/store'
-  import Tag from './Tag.svelte'
-  import InputTag from './InputTag.svelte'
+  import { selectedSongForUpdate, tags, songs, songsFiltered } from '@/scripts/store'
+  import Tag from '@/components/Tag.svelte'
+  import InputTag from '@/components/InputTag.svelte'
   import { get } from 'svelte/store'
 
   let selectedSongForUpdateValue

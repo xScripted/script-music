@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { queue } from './../scripts/store'
-  import { player } from '../scripts/player'
+  import { queue } from '@/scripts/store'
+  import { player } from '@/scripts/player'
 
-  import Svg from '../components/Svg.svelte'
+  import Svg from '@/components/Svg.svelte'
 
   let dragElement: HTMLElement
   let HTMLContenedor: HTMLElement

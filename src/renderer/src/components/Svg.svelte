@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { svgStore } from '../constants/svgStore'
+  import { svgStore } from '@/constants/svgStore'
 
   export let name: string = ''
   export let fill: string = 'var(--colorText)'

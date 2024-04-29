@@ -1,10 +1,10 @@
 <script lang="ts">
-  import SelectTags from './SelectTags.svelte'
-  import Dropdown from './Dropdown.svelte'
-  import { panel, filterSearch } from '../scripts/store'
-  import { player } from '../scripts/player'
+  import SelectTags from '@/components/SelectTags.svelte'
+  import Dropdown from '@/components/Dropdown.svelte'
+  import { panel, filterSearch } from '@/scripts/store'
+  import { player } from '@/scripts/player'
   import { onMount } from 'svelte'
-  import Svg from '../components/Svg.svelte'
+  import Svg from '@/components/Svg.svelte'
 
   let tagsVisible: boolean = false
   let search: boolean = false
