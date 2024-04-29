@@ -25,15 +25,17 @@
       flex-direction: column;
       gap: 10px;
 
-      .p-title {
-        font-size: 30px;
-        font-weight: bold;
-        color: white;
-        text-align: center;
+      .new-playlist {
         padding: 20px 0;
+        text-align: center;
+
+        .p-title {
+          font-size: 30px;
+          font-weight: bold;
+          color: white;
+        }
       }
 
-      .new-playlist,
       .playlist1,
       .empty {
         height: 75px;
@@ -84,11 +86,10 @@
 
 <div class="menu">
   <div class="playlists">
-    <span class="p-title">Playlists</span>
-    <button class="new-playlist" on:click={createPlaylist}>
+    <div class="new-playlist">
+      <span class="p-title">Playlists</span>
       <Svg name="plus2" />
-      <span>New playlist</span>
-    </button>
+    </div>
 
     <!-- Crear un array con las playlists que hay y hacer un #each-->
     <button class="playlist1">

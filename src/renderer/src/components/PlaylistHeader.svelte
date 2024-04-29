@@ -17,12 +17,7 @@
       height: 150px;
       width: 150px;
       border-radius: var(--radius);
-      overflow: hidden;
-
-      img {
-        width: 100%;
-        object-fit: cover;
-      }
+      object-fit: cover;
     }
 
     .header {
@@ -43,9 +38,7 @@
 </style>
 
 <div class="playlist-header-container">
-  <div class="photo">
-    <img src={image} alt="" />
-  </div>
+  <img class="photo" src={image} alt="" />
   <div class="header">
     <input type="text" class="title" bind:value={title} spellcheck="false" />
     <span class="song-number">{canciones} canciones</span>
