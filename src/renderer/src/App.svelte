@@ -78,6 +78,8 @@
 </script>
 
 <style lang="scss">
+  @import './sass/global.scss';
+
   .app-wrapper {
     //font-family: 'Outfit', sans-serif;
 
