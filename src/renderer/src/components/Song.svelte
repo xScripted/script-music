@@ -2,12 +2,8 @@
   import type { ISong } from '../../../interfaces/ISong'
   import { player } from '../scripts/player'
   import { panel, queue, selectedSongForUpdate } from '../scripts/store'
-
   import Tag from './Tag.svelte'
-
-  import addSVG from './../assets/add.svg'
-  import addQueueSVG from './../assets/queueAdd.svg'
-  import brushSVG from './../assets/brush.svg'
+  import Svg from '../components/Svg.svelte'
 
   export let song: ISong
 
@@ -97,8 +93,8 @@
     {/each}
   </div>
   <div class="more">
-    <img src={brushSVG} alt="" on:click={openEditor} />
-    <img src={addQueueSVG} alt="" on:click={addToQueue} />
-    <img src={addSVG} alt="" />
+    <button on:click={openEditor}> <Svg name="brush" /> </button>
+    <button on:click={addToQueue}> <Svg name="addQueue" /> </button>
+    <button on:click={openEditor}> <Svg name="add" /> </button>
   </div>
 </div>

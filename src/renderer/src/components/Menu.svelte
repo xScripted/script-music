@@ -1,7 +1,6 @@
 <script lang="ts">
   import { activeSong } from '../scripts/store'
-  import heartSVG from './../assets/heart.svg'
-  import plusSVG from './../assets/plus2.svg'
+  import Svg from '../components/Svg.svelte'
 
   let playlistNumber: number = 1 //array.length de las playlists que hay
 
@@ -91,13 +90,13 @@
   <div class="playlists">
     <span class="p-title">Playlists</span>
     <button class="new-playlist" on:click={createPlaylist}>
-      <img src={plusSVG} alt="" class="icon" />
+      <Svg name="plus2" />
       <span>New playlist</span>
     </button>
 
     <!-- Crear un array con las playlists que hay y hacer un #each-->
     <button class="playlist1">
-      <img src={heartSVG} alt="" class="icon" />
+      <Svg name="heart" />
       <span>Pa ducharme</span>
     </button>
 

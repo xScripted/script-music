@@ -3,19 +3,7 @@
   import { activeSong, isPaused, panel, newVolume, loop, shuffle, newRate, djMode } from '../scripts/store'
   import { player } from '../scripts/player'
 
-  import shuffleSVG from './../assets/shuffle.svg'
-  import previousSVG from './../assets/previous.svg'
-  import nextSVG from './../assets/next.svg'
-  import playSVG from './../assets/play.svg'
-  import pauseSVG from './../assets/pause.svg'
-  import loopSVG from './../assets/repeat.svg'
-  import nightcoreSVG from './../assets/nightcore.svg'
-  import slowedSVG from './../assets/slowed.svg'
-  import djSVG from './../assets/dj.svg'
-  import queueSVG from './../assets/queue.svg'
-  import mutedSVG from './../assets/muted.svg'
-  import volumeUpSVG from './../assets/volumeUp.svg'
-  import volumeDownSVG from './../assets/volumeDown.svg'
+  import Svg from '../components/Svg.svelte'
 
   let isPausedValue
   let shuffleValue
@@ -147,56 +135,56 @@
 
   <div class="control">
     <button on:click={player.updateShuffle}>
-      <img src={shuffleSVG} alt="" class="secondary" class:active={shuffleValue} />
+      <Svg name="shuffle" />
     </button>
     <button on:click={() => player.back()}>
-      <img src={previousSVG} alt="" class="previous" />
+      <Svg name="previous" />
     </button>
     <div class="play-pause">
       {#if isPausedValue}
         <button on:click={() => player.resume()}>
-          <img src={playSVG} alt="" class="play" />
+          <Svg name="play" />
         </button>
       {:else}
         <button on:click={() => player.pause()}>
-          <img src={pauseSVG} alt="" class="pause" />
+          <Svg name="pause" />
         </button>
       {/if}
     </div>
     <button on:click={() => player.forth()}>
-      <img src={nextSVG} alt="" class="next" />
+      <Svg name="next" />
     </button>
     <button on:click={player.updateLoop}>
-      <img src={loopSVG} alt="" class="secondary" class:active={loopValue} />
+      <Svg name="loop" />
     </button>
   </div>
 
   <div class="panel">
     <button on:click={player.updateSlowed} class="utility" class:active={rateValue < 1}>
-      <img src={slowedSVG} alt="" />
+      <Svg name="slowed" />
     </button>
     <button on:click={player.updateNightcore} class="utility" class:active={rateValue > 1}>
-      <img src={nightcoreSVG} alt="" />
+      <Svg name="nightcore" />
     </button>
     <button class="utility" class:active={djModeValue} on:click={() => djMode.update(() => !djModeValue)}>
-      <img src={djSVG} alt="" />
+      <Svg name="dj" />
     </button>
     <button
       class="utility"
       class:active={panelValue === 'Queue'}
       on:click={() => panel.update((value) => (value === 'Queue' ? '' : 'Queue'))}
     >
-      <img src={queueSVG} alt="" />
+      <Svg name="queue" />
     </button>
 
     <div class="volume">
       <button class="speaker" on:click={player.toggleMute}>
         {#if volumeValue === 0}
-          <img src={mutedSVG} alt="" />
+          <Svg name="muted" />
         {:else if volumeValue <= 0.25}
-          <img src={volumeDownSVG} alt="" />
+          <Svg name="volumeDown" />
         {:else}
-          <img src={volumeUpSVG} alt="" />
+          <Svg name="volumeUp" />
         {/if}
       </button>
       <input

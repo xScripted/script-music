@@ -1,16 +1,10 @@
 <script lang="ts">
   import SelectTags from './SelectTags.svelte'
   import Dropdown from './Dropdown.svelte'
-
   import { panel, filterSearch } from '../scripts/store'
   import { player } from '../scripts/player'
-
-  import searchSVG from './../assets/search.svg'
-  import filterSVG from './../assets/filter.svg'
-  import tagsSVG from './../assets/tags.svg'
-  import settingsSVG from './../assets/settings.svg'
-
   import { onMount } from 'svelte'
+  import Svg from '../components/Svg.svelte'
 
   let tagsVisible: boolean = false
   let search: boolean = false
@@ -110,14 +104,14 @@
 <div class="container">
   <div class="search" class:active={search} bind:this={HTMLContainer}>
     <button on:click={() => (search = !search)}>
-      <img src={searchSVG} alt="" />
+      <Svg name="search" />
     </button>
     <input class="search-input" type="text" bind:value={searchValue} on:input={updateGlobalSearch} placeholder="Type to search..." />
   </div>
 
   <div class="song-filters">
     <button on:click={() => (filters = !filters)} class:active={filterVisible}>
-      <img src={filterSVG} alt="" />
+      <Svg name="filter" />
     </button>
 
     <Dropdown bind:isOpen={filters} id="dropdown-filters">
@@ -143,7 +137,7 @@
 
   <div class="tags" class:active={tagsVisible}>
     <button on:click={() => (tagsVisible = !tagsVisible)}>
-      <img src={tagsSVG} alt="" />
+      <Svg name="tags" />
     </button>
     <Dropdown bind:isOpen={tagsVisible} id="dropdown-tags">
       <SelectTags />
@@ -154,6 +148,6 @@
     class="settings"
     class:active={settingsVisible}
   >
-    <img src={settingsSVG} alt="" />
+    <Svg name="settings" />
   </button>
 </div>

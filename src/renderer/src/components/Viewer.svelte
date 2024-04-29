@@ -5,9 +5,7 @@
   import type { ISong } from '../../../interfaces/ISong'
   import Song from './Song.svelte'
 
-  import plusSVG from './../assets/plus.svg'
-  import homeSVG from './../assets/home.svg'
-  import backSVG from './../assets/back.svg'
+  import Svg from '../components/Svg.svelte'
   import BubbleButton from './BubbleButton.svelte'
 
   let newSong: boolean = false
@@ -103,10 +101,10 @@
   <div class="utilities">
     <div class="fuck-go-back">
       <button class="back">
-        <img src={backSVG} alt="" />
+        <Svg name="back" />
       </button>
       <button class="home">
-        <img src={homeSVG} alt="" />
+        <Svg name="home" />
       </button>
     </div>
     <Utilities />
@@ -126,7 +124,7 @@
   </div>
 
   <button class="new-song" on:click={toggleNewSong}>
-    <img src={plusSVG} alt="" />
+    <Svg name="plus" />
   </button>
 
   <BubbleButton />

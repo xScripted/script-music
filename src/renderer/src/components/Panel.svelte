@@ -5,7 +5,7 @@
   import UpdateSong from './UpdateSong.svelte'
   import Queue from './Queue.svelte'
 
-  import plusSVG from './../assets/plus2.svg'
+  import Svg from '../components/Svg.svelte'
 
   let active: boolean = false
   let panelValue: string = ''
@@ -89,6 +89,6 @@
   {/if}
 
   <button class="close" on:click={() => (active = false)}>
-    <img src={plusSVG} alt="" />
+    <Svg name="plus2" />
   </button>
 </div>

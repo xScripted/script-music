@@ -1,5 +1,6 @@
 <script lang="ts">
-  import plusSVG from '../assets/plus2.svg'
+  import Svg from '../components/Svg.svelte'
+
   import { player } from '../scripts/player.js'
 
   let name: string = ''
@@ -89,10 +90,9 @@
 </style>
 
 <!--Editor de tags-->
-
 <div class="input-tag">
   <button class="add" on:click={createTag}>
-    <img src={plusSVG} alt="" />
+    <Svg name="plus2" />
   </button>
   <input type="text" class="name" placeholder="New tag" bind:value={name} on:keydown={createTag} />
   <div class="separation" />
