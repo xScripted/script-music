@@ -1,7 +1,23 @@
 <script lang="ts">
+  import type { IPlaylist } from '@interfaces/IPlaylist'
+  import { get } from 'svelte/store'
+  import { playlists } from '@/constants/godStore'
+
   export let image: string
   export let title: string
   export let active: boolean
+
+  const togglePlaylist = () => {
+    playlists.update(() => {
+      return get(playlists).map((playlist: IPlaylist) => {
+        if (playlist.title === title) {
+          playlist.active = !active
+        }
+
+        return playlist
+      })
+    })
+  }
 </script>
 
 <style lang="scss">
@@ -12,6 +28,7 @@
     border: none;
     border-radius: var(--radius);
     background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid transparent;
 
     display: flex;
     justify-content: space-between;
@@ -20,6 +37,10 @@
 
     overflow: hidden;
     cursor: pointer;
+
+    &.active {
+      border: 2px solid var(--colorBrand);
+    }
 
     span {
       width: 100%;
@@ -46,7 +67,7 @@
   }
 </style>
 
-<div class="card" class:active>
+<button class="card" class:active on:click={togglePlaylist}>
   <img class="photo" src={image} alt="" />
   <span>{title}</span>
-</div>
+</button>

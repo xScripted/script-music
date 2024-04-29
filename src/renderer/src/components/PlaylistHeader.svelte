@@ -1,7 +1,11 @@
 <script lang="ts">
+  import { playlists } from '@/constants/godStore'
+
   let image: string = 'https://upload.wikimedia.org/wikipedia/en/c/c4/Falling_in_Reverse_–_Popular_Monster.jpeg'
   let titleArray: string[] = ['Hola', 'adios']
   let canciones: number = 123
+
+  playlists.subscribe(() => {})
 
   let title: string = titleArray.join(' + ')
 </script>
