@@ -28,7 +28,7 @@
       .title {
         font-size: 75px;
         font-weight: bolder;
-        color: #363636;
+        color: var(--colorText);
         width: 100%;
 
         border: none;

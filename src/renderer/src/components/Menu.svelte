@@ -35,11 +35,18 @@
       .new-playlist {
         padding: 20px 0;
         text-align: center;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
 
         .p-title {
           font-size: 30px;
           font-weight: bold;
-          color: white;
+        }
+
+        .add {
+          display: flex;
+          align-items: center;
         }
       }
 
@@ -95,7 +102,9 @@
   <div class="playlists">
     <div class="new-playlist">
       <span class="p-title">Playlists</span>
-      <Svg name="plus2" />
+      <button class="add">
+        <Svg name="plus2" />
+      </button>
     </div>
 
     {#each playlistsValue as playlist}

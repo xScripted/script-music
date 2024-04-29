@@ -96,7 +96,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    color: #363636;
+    color: var(--colorText);
 
     .bottom {
       grid-column: 1/3;
