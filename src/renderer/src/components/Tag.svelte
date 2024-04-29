@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { tags } from '@/scripts/store'
+  import { tags } from '@/constants/godStore'
   import { get } from 'svelte/store'
   import type { ITag } from '@interfaces/ITag'
 

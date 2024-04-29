@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { songs, songsFiltered, tags } from '@/scripts/store.js'
+  import { songs, songsFiltered, tags } from '@/constants/godStore'
   import type { ISong } from '@interfaces/ISong.ts'
   import type { ITag } from '@interfaces/ITag.ts'
   import type { IMetaData } from '@interfaces/IMetaData.ts'

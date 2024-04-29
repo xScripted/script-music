@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { panel } from '@/scripts/store'
+  import { panel } from '@/constants/godStore'
   import YoutubeSong from '@/components/YoutubeSong.svelte'
   import Settings from '@/components/Settings.svelte'
   import UpdateSong from '@/components/UpdateSong.svelte'

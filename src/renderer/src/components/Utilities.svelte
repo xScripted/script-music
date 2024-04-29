@@ -1,7 +1,7 @@
 <script lang="ts">
   import SelectTags from '@/components/SelectTags.svelte'
   import Dropdown from '@/components/Dropdown.svelte'
-  import { panel, filterSearch } from '@/scripts/store'
+  import { panel, filterSearch } from '@/constants/godStore'
   import { player } from '@/scripts/player'
   import { onMount } from 'svelte'
   import Svg from '@/components/Svg.svelte'

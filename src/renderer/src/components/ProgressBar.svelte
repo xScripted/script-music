@@ -2,7 +2,7 @@
   import { get } from 'svelte/store'
   import type { IActiveSong } from '@interfaces/ISong'
   import { player } from '@/scripts/player'
-  import { activeSong, fadeTime, djMode, djModeStart, djModeFinish } from '@/scripts/store'
+  import { activeSong, fadeTime, djMode, djModeStart, djModeFinish } from '@/constants/godStore'
 
   const formatToDuration = (duration: number): string => {
     let min: number = ~~(duration / 60)

@@ -1,6 +1,8 @@
-import type { IActiveSong, ISong } from '../../../interfaces/ISong'
-import type { ITag } from '../../../interfaces/ITag'
-import type { IPlaylist } from '../../../interfaces/IPlaylist'
+import type { IActiveSong, ISong } from '@interfaces/ISong'
+import type { ITag } from '@interfaces/ITag'
+import type { IPlaylist } from '@interfaces/IPlaylist'
+import { get } from 'svelte/store'
+import { Howl, Howler } from 'howler'
 import {
   playlists,
   songsFiltered,
@@ -23,10 +25,7 @@ import {
   djMode,
   djModeStart,
   queue,
-} from './store'
-import { get } from 'svelte/store'
-import { Howl, Howler } from 'howler'
-import { playlists } from './store'
+} from '@/constants/godStore'
 
 let history: string[] = []
 let historyIndex: number = -1

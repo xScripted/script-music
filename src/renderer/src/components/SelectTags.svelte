@@ -1,10 +1,10 @@
 <script lang="ts">
   import InputTag from '@/components/InputTag.svelte'
-  import { tags } from '@/scripts/store'
+  import { tags } from '@/constants/godStore'
   import { player } from '@/scripts/player'
   import Tag from '@/components/Tag.svelte'
   import type { ITag } from '@interfaces/ITag'
-  import { tagsSwitch } from '@/scripts/store'
+  import { tagsSwitch } from '@/constants/godStore'
 
   let tagsValue: ITag[] = []
   let tagsSwitchValue: boolean = false

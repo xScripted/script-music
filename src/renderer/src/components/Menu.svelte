@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { activeSong } from '@/scripts/store'
+  import { activeSong } from '@/constants/godStore'
   import Svg from '@/components/Svg.svelte'
   import PlaylistCard from '@/components/PlaylistCard.svelte'
   let playlistNumber: number = 1 //array.length de las playlists que hay

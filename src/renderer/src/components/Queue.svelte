@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { queue } from '@/scripts/store'
+  import { queue } from '@/constants/godStore'
   import { player } from '@/scripts/player'
 
   import Svg from '@/components/Svg.svelte'

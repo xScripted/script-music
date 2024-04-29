@@ -1,6 +1,6 @@
 <script lang="ts">
   import ProgressBar from '@/components/ProgressBar.svelte'
-  import { activeSong, isPaused, panel, newVolume, loop, shuffle, newRate, djMode } from '@/scripts/store'
+  import { activeSong, isPaused, panel, newVolume, loop, shuffle, newRate, djMode } from '@/constants/godStore'
   import { player } from '@/scripts/player'
 
   import Svg from '@/components/Svg.svelte'
