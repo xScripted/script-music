@@ -5,6 +5,7 @@
   import type { IMetaData } from '@interfaces/IMetaData.ts'
   import Tag from '@/components/Tag.svelte'
   import InputTag from '@/components/InputTag.svelte'
+  import Input from '@/components/Input.svelte'
 
   let youtubeURL = ''
   let cover = ''
@@ -149,7 +150,7 @@
     <div class="flex">
       <div class="input-group">
         <label for="">Title</label>
-        <input class="input" type="text" bind:value={title} placeholder="Title" />
+        <Input bind:value={title} placeholder="Title" />
       </div>
 
       <div class="input-group">
