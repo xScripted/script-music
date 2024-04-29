@@ -2,9 +2,16 @@
   import { activeSong } from '@/constants/godStore'
   import Svg from '@/components/Svg.svelte'
   import PlaylistCard from '@/components/PlaylistCard.svelte'
-  let playlistNumber: number = 1 //array.length de las playlists que hay
+  import { get } from 'svelte/store'
+  import { playlists } from '@/constants/godStore'
+  import type { IPlaylist } from '@interfaces/IPlaylist'
 
+  let playlistNumber: number = 1 //array.length de las playlists que hay
   let createPlaylist = () => {}
+
+  let playlistsValue: IPlaylist[]
+
+  playlists.subscribe((value) => (playlistsValue = value))
 </script>
 
 <style lang="scss">
@@ -85,24 +92,9 @@
 <div class="menu">
   <div class="playlists">
     <span class="p-title">Playlists</span>
-    <button class="new-playlist" on:click={createPlaylist}>
-      <Svg name="plus2" />
-      <span>New playlist</span>
-    </button>
-
-    <!-- Crear un array con las playlists que hay y hacer un #each-->
-    <button class="playlist1">
-      <Svg name="heart" />
-      <span>Pa ducharme</span>
-    </button>
-
-    <PlaylistCard />
-
-    <!-- playlistNumber = numero de playlists creadas = array con las canciones con
-      el que se va a hacer un bucle donde se van a mostrar-->
-    {#if playlistNumber <= 5}
-      <div class="empty" />
-    {/if}
+    {#each playlistsValue as playlist}
+      <PlaylistCard title={playlist.title} image={playlist.image} active={playlist.active} />
+    {/each}
   </div>
 
   {#if $activeSong.fileName}
