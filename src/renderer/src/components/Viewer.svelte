@@ -1,15 +1,13 @@
 <script lang="ts">
-  import PlaylistHeader from './PlaylistHeader.svelte'
-  import Utilities from './Utilities.svelte'
+  import Utilities from '@/components/Utilities.svelte'
+  import PlaylistHeader from '@/components/PlaylistHeader.svelte'
 
-  import { panel, songsFiltered } from './../scripts/store'
-  import type { ISong } from '../../../interfaces/ISong'
-  import Song from './Song.svelte'
+  import { panel, songsFiltered } from '@/scripts/store'
+  import type { ISong } from '@interfaces/ISong'
+  import Song from '@/components/Song.svelte'
 
-  import plusSVG from './../assets/plus.svg'
-  import homeSVG from './../assets/home.svg'
-  import backSVG from './../assets/back.svg'
-  import BubbleButton from './BubbleButton.svelte'
+  import Svg from '@/components/Svg.svelte'
+  import BubbleButton from '@/components/BubbleButton.svelte'
 
   let newSong: boolean = false
   let songsValue: ISong[] = []
@@ -40,10 +38,6 @@
       position: absolute;
       top: 15px;
       left: 15px;
-
-      img {
-        height: 30px;
-      }
     }
 
     .song-list {
@@ -87,7 +81,7 @@
   </div>
 
   <button class="new-song" on:click={toggleNewSong}>
-    <img src={plusSVG} alt="" />
+    <Svg name="plus" />
   </button>
 
   <BubbleButton />

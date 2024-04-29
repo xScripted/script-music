@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { songs, songsFiltered, tags } from '../scripts/store.js'
-  import type { ISong } from './../../../interfaces/ISong.ts'
-  import type { ITag } from './../../../interfaces/ITag.ts'
-  import type { IMetaData } from './../../../interfaces/IMetaData.ts'
-  import Tag from './Tag.svelte'
-  import InputTag from './InputTag.svelte'
+  import { songs, songsFiltered, tags } from '@/scripts/store.js'
+  import type { ISong } from '@interfaces/ISong.ts'
+  import type { ITag } from '@interfaces/ITag.ts'
+  import type { IMetaData } from '@interfaces/IMetaData.ts'
+  import Tag from '@/components/Tag.svelte'
+  import InputTag from '@/components/InputTag.svelte'
 
   let youtubeURL = ''
   let cover = ''

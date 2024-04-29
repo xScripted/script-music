@@ -1,14 +1,14 @@
 <script lang="ts">
   import { songs, songsFiltered, tags, path, playlists } from './scripts/store'
-  import Player from './components/Player.svelte'
-  import Viewer from './components/Viewer.svelte'
-  import Panel from './components/Panel.svelte'
-  import Menu from './components/Menu.svelte'
+  import Player from '@/components/Player.svelte'
+  import Viewer from '@/components/Viewer.svelte'
+  import Panel from '@/components/Panel.svelte'
+  import Menu from '@/components/Menu.svelte'
   import { onMount } from 'svelte'
-  import type { ISong } from '../../interfaces/ISong'
-  import type { ITag } from '../../interfaces/ITag'
-  import { player } from './scripts/player'
-  import type { IPlaylist } from '../../interfaces/IPlaylist'
+  import type { ISong } from '@interfaces/ISong'
+  import type { ITag } from '@interfaces/ITag'
+  import { player } from '@/scripts/player'
+  import type { IPlaylist } from '@interfaces/IPlaylist'
 
   let HTMLAppWrapper: HTMLElement
 
@@ -78,6 +78,8 @@
 </script>
 
 <style lang="scss">
+  @import './sass/global.scss';
+
   .app-wrapper {
     //font-family: 'Outfit', sans-serif;
 

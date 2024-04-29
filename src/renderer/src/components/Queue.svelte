@@ -1,10 +1,8 @@
 <script lang="ts">
-  import { queue } from './../scripts/store'
-  import { player } from '../scripts/player'
+  import { queue } from '@/scripts/store'
+  import { player } from '@/scripts/player'
 
-  import playSVG from './../assets/play.svg'
-  import deleteSVG from './../assets/delete.svg'
-  //import moveSVG from './../assets/move.svg'
+  import Svg from '@/components/Svg.svelte'
 
   let dragElement: HTMLElement
   let HTMLContenedor: HTMLElement
@@ -161,9 +159,9 @@
   }
 </style>
 
-<div class="container" on:dragover={dragOver} on:drop={drop} bind:this={HTMLContenedor}>
+<button class="container" on:dragover={dragOver} on:drop={drop} bind:this={HTMLContenedor}>
   {#each queueValue as song, i}
-    <div
+    <button
       class="songRow"
       draggable="true"
       id="drag{i}"
@@ -173,7 +171,7 @@
     >
       <div class="position">
         <span>{i + 1}</span>
-        <img src={playSVG} alt="" class="play" />
+        <Svg name="play" />
       </div>
 
       <div class="song">
@@ -181,15 +179,16 @@
         <div class="artist">{song.artist}</div>
       </div>
       <div class="functions">
-        <img src={deleteSVG} alt="" class="delete" on:click={() => player.removeSong(i)} />
-        <!--<img src={moveSVG} alt="" class="move"  />-->
+        <button class="delete" on:click={() => player.removeSong(i)}>
+          <Svg name="delete" />
+        </button>
       </div>
-    </div>
+    </button>
   {/each}
 
   {#if queueValue.length < 1}
     <span style="text-align: center;">No songs on queue 😪</span>
   {/if}
-</div>
+</button>
 
 <div class="before" />

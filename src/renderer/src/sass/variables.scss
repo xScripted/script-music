@@ -1,0 +1,22 @@
+:root {
+  --colorBrand: #44a19c;
+  --colorBrandSoft: #c9e9e7;
+  --colorBackground: #f3f3f3;
+  --colorBase: #ffffff;
+  --colorBase2: var(--colorBackground);
+  --colorBorder: #dbdbdb;
+  --colorText: #212121;
+  --colorText2: #6b6b6b;
+  --colorText3: #f1f1f1;
+  --radius: 20px;
+}
+
+body[dark-mode] {
+  --colorBackground: #121212; // #282828
+  --colorBase: #282828;
+  --colorBase2: #3f3f3f;
+  --colorBorder: rgba(255, 255, 255, 0.2);
+  --colorText: #f3f3f3;
+  --colorText2: #adadad;
+  --colorText3: #f1f1f1;
+}
