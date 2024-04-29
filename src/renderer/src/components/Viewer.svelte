@@ -27,21 +27,23 @@
     height: 100%;
     width: 100%;
 
-    display: grid;
-    grid-template-rows: 60px 625px 1fr;
-    //grid-template-rows: 60px 175px 1fr;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    //grid-template-rows: 60px 625px 1fr;
+    //grid-template-rows: 60px 175px 1fr; no
+    padding: 25px;
 
     overflow: hidden;
 
-    .fuck-go-back {
-      position: absolute;
-      top: 15px;
-      left: 15px;
+    .utilities {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      justify-content: right;
     }
 
     .song-list {
-      //padding-top: 75px;
+      margin-top: 50px;
       height: 100%;
       overflow: scroll;
       overflow-x: hidden;
@@ -58,11 +60,6 @@
       background: none;
       border: none;
       cursor: pointer;
-
-      img {
-        width: 100%;
-        transition: 0.5s ease;
-      }
     }
   }
 </style>
@@ -83,6 +80,4 @@
   <button class="new-song" on:click={toggleNewSong}>
     <Svg name="plus" />
   </button>
-
-  <BubbleButton />
 </div>

@@ -1,4 +1,7 @@
-<script lang="ts"></script>
+<script lang="ts">
+  let image: string =
+    'https://imagenes.elpais.com/resizer/v2/SDSYXXO6PZBEVCPJF4STF6ORXI.jpg?auth=e2ddf0ed67d6f2dfc90dc91aeffe698e0f73b01dc60740c4a3f3654f257bb7f9&width=414'
+</script>
 
 <style lang="scss">
   .card {
@@ -47,10 +50,7 @@
 
 <div class="card">
   <div class="photo">
-    <img
-      src="https://imagenes.elpais.com/resizer/v2/SDSYXXO6PZBEVCPJF4STF6ORXI.jpg?auth=e2ddf0ed67d6f2dfc90dc91aeffe698e0f73b01dc60740c4a3f3654f257bb7f9&width=414"
-      alt=""
-    />
+    <img src={image} alt="" />
   </div>
   <span>Hola</span>
 </div>

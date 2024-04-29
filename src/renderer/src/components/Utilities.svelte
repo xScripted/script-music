@@ -33,16 +33,12 @@
 
 <style lang="scss">
   .container {
-    position: absolute;
     height: fit-content;
     width: fit-content;
 
     display: flex;
     justify-content: space-evenly;
     gap: 15px;
-
-    top: 15px;
-    right: 15px;
 
     button {
       background: none;

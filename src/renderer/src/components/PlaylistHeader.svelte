@@ -1,4 +1,5 @@
 <script lang="ts">
+  let image: string = 'https://upload.wikimedia.org/wikipedia/en/c/c4/Falling_in_Reverse_–_Popular_Monster.jpeg'
   let titleArray: string[] = ['Hola', 'adios']
   let canciones: number = 123
 
@@ -6,8 +7,8 @@
 </script>
 
 <style lang="scss">
-  .header-container {
-    width: 100%;
+  .playlist-header-container {
+    height: fit-content;
     display: flex;
     align-items: center;
     gap: 25px;
@@ -41,12 +42,12 @@
   }
 </style>
 
-<div class="header-container">
+<div class="playlist-header-container">
   <div class="photo">
-    <img src="https://upload.wikimedia.org/wikipedia/en/c/c4/Falling_in_Reverse_–_Popular_Monster.jpeg" alt="" />
+    <img src={image} alt="" />
   </div>
   <div class="header">
-    <input type="text" class="title" bind:value={title} />
+    <input type="text" class="title" bind:value={title} spellcheck="false" />
     <span class="song-number">{canciones} canciones</span>
   </div>
 </div>
