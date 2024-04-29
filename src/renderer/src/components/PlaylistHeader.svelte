@@ -1,13 +1,24 @@
 <script lang="ts">
   import { playlists } from '@/constants/godStore'
+  import type { IPlaylist } from '@interfaces/IPlaylist'
 
   let image: string = 'https://upload.wikimedia.org/wikipedia/en/c/c4/Falling_in_Reverse_–_Popular_Monster.jpeg'
-  let titleArray: string[] = ['Hola', 'adios']
-  let canciones: number = 123
+  let titleArray: string[] = []
+  let nSongs: number = 123
+  let title: string = ''
 
-  playlists.subscribe(() => {})
+  playlists.subscribe((value: IPlaylist[]) => {
+    titleArray = []
 
-  let title: string = titleArray.join(' + ')
+    for (let playlist of value) {
+      if (playlist.active) {
+        image = playlist.image
+        titleArray.push(playlist.title)
+      }
+    }
+
+    title = titleArray.length > 1 ? titleArray.join(' + ') : titleArray[0]
+  })
 </script>
 
 <style lang="scss">
@@ -30,7 +41,7 @@
       flex-direction: column;
 
       .title {
-        font-size: 75px;
+        font-size: 70px;
         font-weight: bolder;
         color: var(--colorText);
         width: 100%;
@@ -39,14 +50,24 @@
         outline: none;
         background-color: transparent;
       }
+
+      span.title {
+        font-size: 30px;
+      }
     }
   }
 </style>
 
-<div class="playlist-header-container">
-  <img class="photo" src={image} alt="" />
-  <div class="header">
-    <input type="text" class="title" bind:value={title} spellcheck="false" />
-    <span class="song-number">{canciones} canciones</span>
+{#if title}
+  <div class="playlist-header-container">
+    <img class="photo" src={image} alt="" />
+    <div class="header">
+      {#if titleArray.length <= 1}
+        <input type="text" class="title" bind:value={title} spellcheck="false" />
+      {:else}
+        <span class="title">{title}</span>
+      {/if}
+      <span class="song-number">{nSongs} canciones</span>
+    </div>
   </div>
-</div>
+{/if}

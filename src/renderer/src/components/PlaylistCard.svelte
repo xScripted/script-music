@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { IPlaylist } from '@interfaces/IPlaylist'
-  import { get } from 'svelte/store'
   import { playlists } from '@/constants/godStore'
+  import { get } from 'svelte/store'
 
   export let image: string
   export let title: string
