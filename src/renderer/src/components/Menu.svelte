@@ -49,35 +49,6 @@
           align-items: center;
         }
       }
-
-      .playlist1,
-      .empty {
-        height: 75px;
-        width: 100%;
-
-        border: none;
-        background-color: white;
-        border-radius: var(--radius);
-        text-align: left;
-
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-
-        span {
-          font-weight: bold;
-          font-size: 20px;
-        }
-      }
-
-      .playlist1 {
-        background: linear-gradient(330deg, #5b0eeb 0%, #6d5dfc 50%, #8abdff 100%);
-        color: white;
-      }
-
-      .empty {
-        background-color: rgba(255, 255, 255, 0.3);
-      }
     }
 
     .cover {

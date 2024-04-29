@@ -2,6 +2,8 @@
   import { playlists } from '@/constants/godStore'
   import type { IPlaylist } from '@interfaces/IPlaylist'
 
+  export let shrinkHeader: boolean = false
+
   let image: string = 'https://upload.wikimedia.org/wikipedia/en/c/c4/Falling_in_Reverse_–_Popular_Monster.jpeg'
   let titleArray: string[] = []
   let nSongs: number = 123
@@ -23,12 +25,17 @@
 
 <style lang="scss">
   .playlist-header-container {
+    transition: 0.3s ease;
+
     height: fit-content;
     display: flex;
     align-items: center;
     gap: 25px;
+    margin-bottom: 50px;
 
     .photo {
+      transition: 0.3s ease;
+
       height: 150px;
       width: 150px;
       border-radius: var(--radius);
@@ -41,7 +48,9 @@
       flex-direction: column;
 
       .title {
-        font-size: 70px;
+        transition: 0.3s ease;
+
+        font-size: 75px;
         font-weight: bolder;
         color: var(--colorText);
         width: 100%;
@@ -52,14 +61,42 @@
       }
 
       span.title {
+        transition: 0.3s ease;
+
+        font-size: 50px;
+      }
+    }
+
+    &.shrinkHeader {
+      transition: 0.3s ease;
+
+      margin-bottom: 30px;
+
+      .title {
+        transition: 0.3s ease;
+
         font-size: 30px;
+      }
+
+      span.title {
+        transition: 0.3s ease;
+
+        font-size: 30px;
+      }
+
+      .photo {
+        transition: 0.3s ease;
+
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
       }
     }
   }
 </style>
 
 {#if title}
-  <div class="playlist-header-container">
+  <div class="playlist-header-container" class:shrinkHeader>
     <img class="photo" src={image} alt="" />
     <div class="header">
       {#if titleArray.length <= 1}

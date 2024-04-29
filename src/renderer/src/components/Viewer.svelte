@@ -9,6 +9,7 @@
   import Svg from '@/components/Svg.svelte'
 
   let newSong: boolean = false
+  let shrinkHeader: boolean = false
   let songsValue: ISong[] = []
 
   songsFiltered.subscribe((value) => (songsValue = value))
@@ -17,6 +18,10 @@
     newSong = !newSong
 
     panel.update(() => (newSong ? 'Youtube to MP3' : ''))
+  }
+
+  const handleScroll = (ev) => {
+    shrinkHeader = !!ev.target.scrollTop
   }
 </script>
 
@@ -28,8 +33,6 @@
 
     display: flex;
     flex-direction: column;
-    //grid-template-rows: 60px 625px 1fr;
-    //grid-template-rows: 60px 175px 1fr; no
     padding: 25px;
 
     overflow: hidden;
@@ -42,7 +45,6 @@
     }
 
     .song-list {
-      margin-top: 50px;
       height: 100%;
       overflow: scroll;
       overflow-x: hidden;
@@ -68,9 +70,9 @@
     <Utilities />
   </div>
 
-  <PlaylistHeader />
+  <PlaylistHeader bind:shrinkHeader />
 
-  <div class="song-list">
+  <div class="song-list" on:scroll={handleScroll}>
     {#each songsValue as song}
       <Song {song} />
     {/each}
