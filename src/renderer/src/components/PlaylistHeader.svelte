@@ -1,0 +1,52 @@
+<script lang="ts">
+  let titleArray: string[] = ['Hola', 'adios']
+  let canciones: number = 123
+
+  let title: string = titleArray.join(' + ')
+</script>
+
+<style lang="scss">
+  .header-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    .photo {
+      height: 150px;
+      width: 150px;
+      border-radius: var(--radius);
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .header {
+      display: flex;
+      flex-direction: column;
+
+      .title {
+        font-size: 75px;
+        font-weight: bolder;
+        color: #363636;
+
+        border: none;
+        outline: none;
+        background-color: transparent;
+      }
+    }
+  }
+</style>
+
+<div class="header-container">
+  <div class="photo">
+    <img src="https://upload.wikimedia.org/wikipedia/en/c/c4/Falling_in_Reverse_–_Popular_Monster.jpeg" alt="" />
+  </div>
+  <div class="header">
+    <input type="text" class="title" bind:value={title} />
+    <span class="song-number">{canciones} canciones</span>
+  </div>
+</div>

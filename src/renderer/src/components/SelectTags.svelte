@@ -51,6 +51,11 @@
 
 <style lang="scss">
   .select-tags {
+    .select:hover {
+      //color: #6d5dfc;
+      background: linear-gradient(330deg, #5b0eeb 0%, #6d5dfc 50%, #8abdff 100%);
+    }
+
     .upper {
       width: 100%;
       height: fit-content;
@@ -103,7 +108,7 @@
 
 <div class="select-tags">
   <div class="upper">
-    <button on:click={toggleAllTags}>
+    <button class="select" on:click={toggleAllTags}>
       {allActive ? 'Unselect all tags' : 'Select all tags'}
     </button>
     <button class="switch" class:active={tagsSwitchValue} on:click={toggleSwitch}>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import PlaylistHeader from './PlaylistHeader.svelte'
   import Utilities from './Utilities.svelte'
 
   import { panel, songsFiltered } from './../scripts/store'
@@ -45,33 +46,6 @@
       }
     }
 
-    /*.header {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 25px;
-
-      .color {
-        height: 150px;
-        width: 150px;
-        border-radius: var(--radius);
-        background: linear-gradient(330deg, #5b0eeb 0%, #6d5dfc 50%, #8abdff 100%);
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .icon {
-          width: 75%;
-        }
-      }
-
-      .title {
-        font-size: 75px;
-        font-weight: bolder;
-      }
-    }*/
-
     .song-list {
       //padding-top: 75px;
       height: 100%;
@@ -101,23 +75,10 @@
 
 <div class="viewer g-box">
   <div class="utilities">
-    <div class="fuck-go-back">
-      <button class="back">
-        <img src={backSVG} alt="" />
-      </button>
-      <button class="home">
-        <img src={homeSVG} alt="" />
-      </button>
-    </div>
     <Utilities />
   </div>
 
-  <!--<div class="header">
-    <div class="color">
-      <div class="icon"></div>
-    </div>
-    <div class="title">Te quiero guapa</div>
-  </div>-->
+  <PlaylistHeader />
 
   <div class="song-list">
     {#each songsValue as song}

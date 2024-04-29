@@ -2,6 +2,7 @@
   import { activeSong } from '../scripts/store'
   import heartSVG from './../assets/heart.svg'
   import plusSVG from './../assets/plus2.svg'
+  import PlaylistCard from './PlaylistCard.svelte'
 
   let playlistNumber: number = 1 //array.length de las playlists que hay
 
@@ -100,6 +101,8 @@
       <img src={heartSVG} alt="" class="icon" />
       <span>Pa ducharme</span>
     </button>
+
+    <PlaylistCard />
 
     <!-- playlistNumber = numero de playlists creadas = array con las canciones con
       el que se va a hacer un bucle donde se van a mostrar-->
