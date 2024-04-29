@@ -12,7 +12,7 @@
     height: fit-content;
     width: fit-content;
     padding: 6px 15px;
-    border-radius: 5px;
+    border-radius: var(--radius);
     transition: 0.3s ease;
   }
 

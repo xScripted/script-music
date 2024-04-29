@@ -111,7 +111,8 @@
 
     label {
       color: var(--colorText);
-      padding-bottom: 5px;
+      padding: 5px;
+      font-size: 18px;
     }
 
     input,

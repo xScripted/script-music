@@ -2,6 +2,7 @@
   import type { IPlaylist } from '@interfaces/IPlaylist'
   import { playlists } from '@/constants/godStore'
   import { get } from 'svelte/store'
+  import { player } from '@/scripts/player'
 
   export let image: string
   export let title: string
@@ -13,6 +14,8 @@
         if (playlist.title === title) {
           playlist.active = !active
         }
+
+        player.filter()
 
         return playlist
       })
