@@ -2,7 +2,7 @@
   import Utilities from '@/components/Utilities.svelte'
   import PlaylistHeader from '@/components/PlaylistHeader.svelte'
 
-  import { panel, songsFiltered } from '@/scripts/store'
+  import { panel, songsFiltered } from '@/constants/godStore'
   import type { ISong } from '@interfaces/ISong'
   import Song from '@/components/Song.svelte'
 

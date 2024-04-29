@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { songs, songsFiltered, tags, path, playlists } from './scripts/store'
+  import { songs, songsFiltered, tags, path, playlists } from '@/constants/godStore'
   import Player from '@/components/Player.svelte'
   import Viewer from '@/components/Viewer.svelte'
   import Panel from '@/components/Panel.svelte'

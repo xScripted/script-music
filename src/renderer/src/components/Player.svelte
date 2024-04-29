@@ -1,6 +1,6 @@
 <script lang="ts">
   import ProgressBar from '@/components/ProgressBar.svelte'
-  import { activeSong, isPaused, panel, newVolume, loop, shuffle, newRate, djMode } from '@/scripts/store'
+  import { activeSong, isPaused, panel, newVolume, loop, shuffle, newRate, djMode } from '@/constants/godStore'
   import { player } from '@/scripts/player'
 
   import Svg from '@/components/Svg.svelte'
@@ -71,19 +71,6 @@
       align-items: center;
 
       gap: 10px;
-
-      img {
-        width: 50px;
-      }
-
-      .secondary {
-        width: 35px;
-        opacity: 0.5;
-
-        &.active {
-          opacity: 1;
-        }
-      }
     }
 
     .panel {
@@ -94,10 +81,6 @@
       justify-self: end;
       align-items: center;
       gap: 10px;
-
-      img {
-        width: 25px;
-      }
 
       button {
         display: flex;
