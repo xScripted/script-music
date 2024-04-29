@@ -19,11 +19,7 @@
     })
   }
 
-  const addToPlaylist = () => {
-    playlists.update(() => {
-      return playlists
-    })
-  }
+  const addToPlaylist = () => {}
 </script>
 
 <style lang="scss">
