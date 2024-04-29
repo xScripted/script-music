@@ -7,6 +7,7 @@
   import Tag from '@/components/Tag.svelte'
   import InputTag from '@/components/InputTag.svelte'
   import { get } from 'svelte/store'
+  import Input from '@/components/Input.svelte'
 
   let selectedSongForUpdateValue
   let tagsCopy: ITag[] = []
@@ -135,17 +136,17 @@
 
     <div class="input-group">
       <h4>Title</h4>
-      <input class="input" type="text" bind:value={title} on:input={updateSong} placeholder="Title" />
+      <Input bind:value={title} on:input={updateSong} placeholder="Title" />
     </div>
 
     <div class="input-group">
       <h4>Artist</h4>
-      <input class="input" type="text" bind:value={artist} on:input={updateSong} placeholder="Artist" />
+      <Input bind:value={artist} on:input={updateSong} placeholder="Artist" />
     </div>
 
     <div class="input-group double">
       <h4>Cover</h4>
-      <input class="input" type="text" bind:value={cover} placeholder="Cover" />
+      <Input bind:value={cover} placeholder="Cover" />
     </div>
 
     <div class="tags-group double">

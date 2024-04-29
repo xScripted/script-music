@@ -18,6 +18,7 @@
       width: 150px;
       border-radius: var(--radius);
       overflow: hidden;
+      flex-shrink: 0;
 
       img {
         width: 100%;
@@ -33,6 +34,7 @@
         font-size: 75px;
         font-weight: bolder;
         color: #363636;
+        width: 100%;
 
         border: none;
         outline: none;

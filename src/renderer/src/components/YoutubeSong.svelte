@@ -136,14 +136,14 @@
   <div class="youtube-song">
     <div class="input-group">
       <label for="">Youtube URL</label>
-      <input class="input" type="text" bind:value={youtubeURL} placeholder="https://www.youtube.com/watch?v=ip10YUcH2BA" />
+      <Input bind:value={youtubeURL} placeholder="https://www.youtube.com/watch?v=ip10YUcH2BA" />
     </div>
 
     <div class="cover">
       <img src={cover} alt="" />
       <div class="input-group">
         <label for="">Cover</label>
-        <input class="input" type="text" bind:value={cover} placeholder="Image url" />
+        <Input bind:value={cover} placeholder="Image url" />
       </div>
     </div>
 
@@ -155,7 +155,7 @@
 
       <div class="input-group">
         <label for="">Artist</label>
-        <input class="input" type="text" bind:value={artist} placeholder="Artist" />
+        <Input bind:value={artist} placeholder="Artist" />
       </div>
     </div>
 

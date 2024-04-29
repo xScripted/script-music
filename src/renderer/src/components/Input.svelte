@@ -13,6 +13,9 @@
 
   import { svgList } from '@/constants/svgStore'
   import Svg from '@/components/Svg.svelte'
+  import { createEventDispatcher } from 'svelte'
+
+  const dispatch = createEventDispatcher()
 
   export let id: string = '1'
   export let autocomplete: string = ''
@@ -50,6 +53,10 @@
       if (max && parseFloat(event.target.value) > max) event.target.value = max
       if (min && parseFloat(event.target.value) < min) event.target.value = min
     }
+
+    dispatch('input', {
+      text: value,
+    })
   }
 
   $: externalValidate = (msg: string) => {
@@ -109,10 +116,23 @@
 
     input,
     textarea {
-      border-radius: var(--radius);
-      border: 1px solid var(--colorBorder);
-      background-color: var(--colorBase);
-      padding: 10px;
+      border: 2px solid transparent;
+      width: 15em;
+      height: 2.5em;
+      padding: 15px;
+      width: 100%;
+      outline: none;
+      overflow: hidden;
+      background-color: var(--colorBackground);
+      border-radius: 10px;
+      transition: all 0.5s;
+
+      &:hover,
+      &:focus {
+        border: 2px solid var(--colorBrand);
+        box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+        background-color: var(--colorBackground);
+      }
     }
 
     .input {
