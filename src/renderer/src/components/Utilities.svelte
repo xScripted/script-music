@@ -77,7 +77,7 @@
         button {
           border: 1px solid rgb(170, 170, 170);
           padding: 10px 20px;
-          border-radius: var(--radius);
+          border-radius: 10px;
           font-size: 14px;
 
           &:hover {

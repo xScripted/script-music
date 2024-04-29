@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { activeSong } from '@/constants/godStore'
+  import { activeSong, panel } from '@/constants/godStore'
   import Svg from '@/components/Svg.svelte'
   import PlaylistCard from '@/components/PlaylistCard.svelte'
   import { get } from 'svelte/store'
@@ -72,7 +72,7 @@
   <div class="playlists">
     <div class="new-playlist">
       <span class="p-title">Playlists</span>
-      <button class="add">
+      <button class="add" on:click={() => panel.update(() => 'Playlist')}>
         <Svg name="plus2" />
       </button>
     </div>

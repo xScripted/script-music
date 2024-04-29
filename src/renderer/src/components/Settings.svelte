@@ -82,6 +82,7 @@
       .title {
         display: flex;
         gap: 10px;
+        padding: 10px 0;
       }
 
       .dj {
@@ -103,20 +104,18 @@
 </style>
 
 <div class="settings">
-  <div class="input-group">
-    <h4>Background image</h4>
-    <Input bind:value={bgImage} on:input={updateBG} placeholder="URL" />
-  </div>
+  <Input label="Background image" bind:value={bgImage} on:input={updateBG} placeholder="URL" />
 
   <div class="input-group">
     <div class="title">
-      <h4>Nightcore:</h4>
+      <h4>Nightcore</h4>
       <div class="nightValue">{nightValue}</div>
     </div>
+
     <input class="input" type="range" on:input={updateNightcore} value={nightValue} min="1" max="2" step="0.1" />
 
     <div class="title">
-      <h4>Slowed:</h4>
+      <h4>Slowed</h4>
       <div class="slowValue">{slowValue}</div>
     </div>
     <input class="input" type="range" on:input={updateSlowed} value={slowValue} min="0.1" max="1" step="0.1" />
@@ -125,22 +124,11 @@
   <div class="input-group">
     <h3>DJ mode</h3>
     <div class="dj">
-      <div class="start">
-        <h4>Start:</h4>
-        <Input sufix="%" type="number" on:input={updateDjModeStart} value={djModeStartValue} min={0} max={50} />
-      </div>
+      <Input label="Start" sufix="%" type="number" on:input={updateDjModeStart} value={djModeStartValue} min={0} max={50} />
 
-      <div class="finish">
-        <h4>Finish:</h4>
-        <Input sufix="%" type="number" on:input={updateDjModeFinish} value={djModeFinishValue} min={51} max={100} />
-      </div>
+      <Input label="End" sufix="%" type="number" on:input={updateDjModeFinish} value={djModeFinishValue} min={51} max={100} />
     </div>
   </div>
 
-  <div class="input-group">
-    <h4>Song delay:</h4>
-    <div class="delay">
-      <Input type="number" sufix="s" />
-    </div>
-  </div>
+  <Input label="Song fade delay" type="number" sufix="s" />
 </div>

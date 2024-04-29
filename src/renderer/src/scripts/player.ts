@@ -64,7 +64,7 @@ export const player = {
 
         // Playlist
         let inPlaylistActive = true
-        console.log(activePlaylists)
+
         if (activePlaylists.length) {
           inPlaylistActive = activePlaylists.some((p: IPlaylist) => {
             if (!p.playlist.length) return true

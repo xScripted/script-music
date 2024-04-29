@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ISong } from '@interfaces/ISong'
   import { player } from '@/scripts/player'
-  import { panel, queue, selectedSongForUpdate } from '@/constants/godStore'
+  import { panel, queue, selectedSongForUpdate, playlists } from '@/constants/godStore'
   import Tag from '@/components/Tag.svelte'
   import Svg from '@/components/Svg.svelte'
 
@@ -18,6 +18,8 @@
       return value
     })
   }
+
+  const addToPlaylist = () => {}
 </script>
 
 <style lang="scss">
@@ -95,6 +97,6 @@
   <div class="more">
     <button on:click={openEditor}> <Svg name="brush" /> </button>
     <button on:click={addToQueue}> <Svg name="addQueue" /> </button>
-    <button on:click={openEditor}> <Svg name="add" /> </button>
+    <button on:click={addToPlaylist}> <Svg name="add" /> </button>
   </div>
 </div>
