@@ -7,7 +7,6 @@
   import Song from '@/components/Song.svelte'
 
   import Svg from '@/components/Svg.svelte'
-  import BubbleButton from '@/components/BubbleButton.svelte'
 
   let newSong: boolean = false
   let songsValue: ISong[] = []
