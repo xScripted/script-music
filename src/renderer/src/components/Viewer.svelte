@@ -48,6 +48,7 @@
       height: 100%;
       overflow: scroll;
       overflow-x: hidden;
+      margin-top: 25px;
     }
 
     .new-song {

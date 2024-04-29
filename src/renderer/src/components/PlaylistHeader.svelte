@@ -31,7 +31,7 @@
     display: flex;
     align-items: center;
     gap: 25px;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 
     .photo {
       transition: 0.3s ease;
@@ -70,7 +70,7 @@
     &.shrinkHeader {
       transition: 0.3s ease;
 
-      margin-bottom: 30px;
+      margin-bottom: 0;
 
       .title {
         transition: 0.3s ease;

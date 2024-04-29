@@ -62,7 +62,7 @@
     }
 
     .control {
-      height: fit-content;
+      height: 100%;
       width: fit-content;
 
       display: flex;

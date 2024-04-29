@@ -6,7 +6,6 @@
   import { playlists } from '@/constants/godStore'
   import type { IPlaylist } from '@interfaces/IPlaylist'
 
-  let playlistNumber: number = 1 //array.length de las playlists que hay
   let createPlaylist = () => {}
 
   let playlistsValue: IPlaylist[]
@@ -25,12 +24,14 @@
     justify-content: space-between;
 
     .playlists {
-      height: fit-content;
+      height: 100%;
       width: 100%;
 
       display: flex;
       flex-direction: column;
       gap: 10px;
+      margin-bottom: 10px;
+      overflow-y: scroll;
 
       .new-playlist {
         padding: 20px 0;
@@ -52,13 +53,11 @@
     }
 
     .cover {
-      width: 96%;
+      width: 100%;
+      height: 50%;
       overflow: hidden;
       border-radius: var(--radius);
       aspect-ratio: 1/1;
-
-      position: absolute;
-      bottom: 10px;
 
       img {
         object-fit: cover;
