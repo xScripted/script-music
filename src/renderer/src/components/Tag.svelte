@@ -7,11 +7,9 @@
   export let tagName: string = ''
   export let active: boolean = false
 
-  let tagsValue = get(tags)
-
-  tags.subscribe((value: ITag[]) => (tagsValue = value))
-
-  if (tagName) tag = tagsValue.find((storeTag: ITag) => storeTag.name === tagName)
+  tags.subscribe((value: ITag[]) => {
+    if (tagName) tag = value.find((storeTag: ITag) => storeTag.name === tagName)
+  })
 </script>
 
 <style lang="scss">

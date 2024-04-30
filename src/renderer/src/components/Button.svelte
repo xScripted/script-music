@@ -14,6 +14,7 @@
     padding: 6px 15px;
     border-radius: var(--radius);
     transition: 0.3s ease;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.3);
   }
 
   .btn-main {

@@ -5,6 +5,7 @@
   import UpdateSong from '@/components/UpdateSong.svelte'
   import Queue from '@/components/Queue.svelte'
   import PlaylistCreator from '@/components/PlaylistCreator.svelte'
+  import TagEditor from '@/components/TagEditor.svelte'
 
   import Svg from '@/components/Svg.svelte'
   import PlaylistEditor from '@/components/PlaylistEditor.svelte'
@@ -92,6 +93,10 @@
 
   {#if panelValue === 'Playlist editor'}
     <PlaylistEditor />
+  {/if}
+
+  {#if panelValue === 'Tags editor'}
+    <TagEditor />
   {/if}
 
   <button class="close" on:click={() => (active = false)}>
