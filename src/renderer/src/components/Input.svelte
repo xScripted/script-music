@@ -20,7 +20,7 @@
   export let id: string = '1'
   export let autocomplete: string = ''
   export let label: string = ''
-  export let maxlength: number = 50
+  export let maxlength: number = 500
   export let placeholder: string = ''
   export let errorMessage: string = 'Completa este campo'
   export let error: boolean = false

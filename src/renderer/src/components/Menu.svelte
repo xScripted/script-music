@@ -2,7 +2,6 @@
   import { activeSong, panel } from '@/constants/godStore'
   import Svg from '@/components/Svg.svelte'
   import PlaylistCard from '@/components/PlaylistCard.svelte'
-  import { get } from 'svelte/store'
   import { playlists } from '@/constants/godStore'
   import type { IPlaylist } from '@interfaces/IPlaylist'
 
@@ -72,7 +71,7 @@
   <div class="playlists">
     <div class="new-playlist">
       <span class="p-title">Playlists</span>
-      <button class="add" on:click={() => panel.update(() => 'Playlist')}>
+      <button class="add" on:click={() => panel.update(() => 'Playlist creator')}>
         <Svg name="plus2" />
       </button>
     </div>

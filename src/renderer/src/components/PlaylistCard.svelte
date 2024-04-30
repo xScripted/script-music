@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { IPlaylist } from '@interfaces/IPlaylist'
-  import { playlists } from '@/constants/godStore'
+  import { playlists, panel } from '@/constants/godStore'
   import { get } from 'svelte/store'
   import { player } from '@/scripts/player'
 
@@ -73,4 +73,5 @@
 <button class="card" class:active on:click={togglePlaylist}>
   <img class="photo" src={image} alt="" />
   <span>{title}</span>
+  <button on:click={() => panel.update(() => 'Playlist editor')}>...</button>
 </button>

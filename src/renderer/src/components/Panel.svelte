@@ -4,9 +4,10 @@
   import Settings from '@/components/Settings.svelte'
   import UpdateSong from '@/components/UpdateSong.svelte'
   import Queue from '@/components/Queue.svelte'
-  import PlaylistEditor from '@/components/PlaylistEditor.svelte'
+  import PlaylistCreator from '@/components/PlaylistCreator.svelte'
 
   import Svg from '@/components/Svg.svelte'
+  import PlaylistEditor from '@/components/PlaylistEditor.svelte'
 
   let active: boolean = false
   let panelValue: string = ''
@@ -85,7 +86,11 @@
     <Queue />
   {/if}
 
-  {#if panelValue === 'Playlist'}
+  {#if panelValue === 'Playlist creator'}
+    <PlaylistCreator />
+  {/if}
+
+  {#if panelValue === 'Playlist editor'}
     <PlaylistEditor />
   {/if}
 
