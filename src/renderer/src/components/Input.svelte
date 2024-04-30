@@ -118,14 +118,14 @@
     input,
     textarea {
       border: 2px solid transparent;
-      width: 15em;
-      height: 2.5em;
-      padding: 15px;
       width: 100%;
+      padding: 10px;
+      width: 100%;
+      font-size: 14px;
       outline: none;
       overflow: hidden;
       background-color: var(--colorBackground);
-      border-radius: 10px;
+      border-radius: var(--radius);
       transition: all 0.5s;
 
       &:hover,

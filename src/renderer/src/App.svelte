@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { songs, songsFiltered, tags, path, playlists } from '@/constants/godStore'
+  import { setAllSongs } from '@/scripts/generic'
+  import { tags, path, playlists } from '@/constants/godStore'
   import Player from '@/components/Player.svelte'
   import Viewer from '@/components/Viewer.svelte'
   import Panel from '@/components/Panel.svelte'
   import Menu from '@/components/Menu.svelte'
   import { onMount } from 'svelte'
-  import type { ISong } from '@interfaces/ISong'
   import type { ITag } from '@interfaces/ITag'
-  import { player } from '@/scripts/player'
   import type { IPlaylist } from '@interfaces/IPlaylist'
 
   let HTMLAppWrapper: HTMLElement
@@ -18,40 +17,6 @@
 
       return tagsFromDB
     })
-  }
-
-  const setAllSongs = async () => {
-    const fileNames: string[] = await window.electron.ipcRenderer.invoke('get-song-file-names')
-
-    let allSongs: ISong[] = []
-    let tagsFromSongs: any = new Set()
-
-    await Promise.all(
-      fileNames.map(async (fileName: string) => {
-        let metaSong = await window.electron.ipcRenderer.invoke('read-meta-data', fileName)
-
-        const song: ISong = {
-          fileName: fileName,
-          title: metaSong.title || fileName,
-          artist: metaSong.artist || '',
-          tags: JSON.parse(metaSong.genre || '[]'),
-          date: metaSong.date,
-          cover: metaSong.subtitle || '',
-          lyrics: '',
-        }
-
-        for (let tag of song.tags) tagsFromSongs.add(tag)
-
-        allSongs.push(song)
-      })
-    )
-
-    for (let tag of tagsFromSongs) {
-      player.createTag(tag, '#FFFFFF')
-    }
-
-    songs.set(allSongs)
-    songsFiltered.set(allSongs)
   }
 
   const getPlaylists = () => {

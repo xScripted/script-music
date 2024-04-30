@@ -6,6 +6,7 @@
   import Tag from '@/components/Tag.svelte'
   import Button from '@/components/Button.svelte'
   import { get } from 'svelte/store'
+  import { setAllSongs } from '@/scripts/generic'
 
   let tagsValue: ITag[] = []
 
@@ -42,6 +43,8 @@
       })
 
       window.localStorage.setItem('tags', JSON.stringify(tagsCopy))
+
+      setAllSongs()
 
       return tagsCopy
     })

@@ -14,11 +14,6 @@
 
   selectedSongForUpdate.subscribe((value: ISong) => (selectedSongForUpdateValue = value))
 
-  let cover: string = selectedSongForUpdateValue.cover
-  let title: string = selectedSongForUpdateValue.title
-  let artist: string = selectedSongForUpdateValue.artist
-  const fileName: string = selectedSongForUpdateValue.fileName
-
   const toggleTag = (tagName: string) => {
     const tagIndex: number = tagsCopy.findIndex((tag: ITag) => tag.name === tagName)
 
@@ -31,24 +26,24 @@
     const activeTags = tagsCopy.filter((tag: ITag) => tag.active).map((tag: ITag) => tag.name)
 
     const metaData: IMetaData = {
-      fileUrl: fileName,
-      title,
-      artist,
+      fileUrl: selectedSongForUpdateValue.fileName,
+      title: selectedSongForUpdateValue.title,
+      artist: selectedSongForUpdateValue.artist,
       date: new Date(),
-      subtitle: cover,
+      subtitle: selectedSongForUpdateValue.cover,
       genre: JSON.stringify(activeTags),
     }
 
-    window.electron.ipcRenderer.invoke('write-meta-data', { fileName, metaData })
+    window.electron.ipcRenderer.invoke('write-meta-data', { fileName: selectedSongForUpdateValue.fileName, metaData })
 
-    const songsI = get(songs).findIndex((song: ISong) => song.fileName === fileName)
+    const songsI = get(songs).findIndex((song: ISong) => song.fileName === selectedSongForUpdateValue.fileName)
     songs.update((p: ISong[]) => {
       p[songsI] = {
         fileName: p[songsI].fileName,
-        title,
-        artist,
+        title: selectedSongForUpdateValue.title,
+        artist: selectedSongForUpdateValue.artist,
         tags: activeTags,
-        cover,
+        cover: selectedSongForUpdateValue.cover,
         lyrics: p[songsI].lyrics,
         date: p[songsI].date,
       }
@@ -57,15 +52,15 @@
     })
 
     //songs Filtered Index
-    const songsFI = get(songsFiltered).findIndex((song: ISong) => song.fileName === fileName)
+    const songsFI = get(songsFiltered).findIndex((song: ISong) => song.fileName === selectedSongForUpdateValue.fileName)
 
     songsFiltered.update((p: ISong[]) => {
       p[songsFI] = {
         fileName: p[songsFI].fileName,
-        title,
-        artist,
+        title: selectedSongForUpdateValue.title,
+        artist: selectedSongForUpdateValue.artist,
         tags: activeTags,
-        cover,
+        cover: selectedSongForUpdateValue.cover,
         lyrics: p[songsFI].lyrics,
         date: p[songsFI].date,
       }
@@ -136,17 +131,17 @@
 
     <div class="input-group">
       <h4>Title</h4>
-      <Input bind:value={title} on:input={updateSong} placeholder="Title" />
+      <Input bind:value={selectedSongForUpdateValue.title} on:input={updateSong} placeholder="Title" />
     </div>
 
     <div class="input-group">
       <h4>Artist</h4>
-      <Input bind:value={artist} on:input={updateSong} placeholder="Artist" />
+      <Input bind:value={selectedSongForUpdateValue.artist} on:input={updateSong} placeholder="Artist" />
     </div>
 
     <div class="input-group double">
       <h4>Cover</h4>
-      <Input bind:value={cover} placeholder="Cover" />
+      <Input bind:value={selectedSongForUpdateValue.cover} placeholder="Cover" />
     </div>
 
     <div class="tags-group double">
