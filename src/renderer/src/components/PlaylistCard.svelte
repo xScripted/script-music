@@ -3,6 +3,7 @@
   import { playlists, panel } from '@/constants/godStore'
   import { get } from 'svelte/store'
   import { player } from '@/scripts/player'
+  import Svg from './Svg.svelte'
 
   export let image: string
   export let title: string
@@ -73,5 +74,7 @@
 <button class="card" class:active on:click={togglePlaylist}>
   <img class="photo" src={image} alt="" />
   <span>{title}</span>
-  <button on:click={() => panel.update(() => 'Playlist editor')}>...</button>
+  <button on:click={() => panel.update(() => 'Playlist editor')}>
+    <Svg name="options" height="15" width="15" />
+  </button>
 </button>
