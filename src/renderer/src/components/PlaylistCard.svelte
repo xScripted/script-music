@@ -1,13 +1,11 @@
 <script lang="ts">
   import type { IPlaylist } from '@interfaces/IPlaylist'
-  import { playlists, panel } from '@/constants/godStore'
+  import { panel, selectedPlaylistForUpdate } from '@/constants/godStore'
   import { get } from 'svelte/store'
   import { player } from '@/scripts/player'
   import Svg from './Svg.svelte'
 
-  export let image: string
-  export let title: string
-  export let active: boolean
+  export let playlist: IPlaylist
 
   const togglePlaylist = () => {
     playlists.update(() => {
@@ -21,6 +19,11 @@
         return playlist
       })
     })
+  }
+
+  const playlistEditor = () => {
+    panel.update(() => 'Playlist editor')
+    selectedPlaylistForUpdate.update(() => playlist)
   }
 </script>
 
@@ -71,10 +74,10 @@
   }
 </style>
 
-<button class="card" class:active on:click={togglePlaylist}>
-  <img class="photo" src={image} alt="" />
-  <span>{title}</span>
-  <button on:click={() => panel.update(() => 'Playlist editor')}>
+<button class="card" class:active={playlist.active} on:click={togglePlaylist}>
+  <img class="photo" src={playlist.image} alt="" />
+  <span>{playlist.title}</span>
+  <button on:click={playlistEditor}>
     <Svg name="options" height="15" width="15" />
   </button>
 </button>
