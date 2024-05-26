@@ -4,14 +4,14 @@
   import { player } from '@/scripts/player'
   import Tag from '@/components/Tag.svelte'
   import Svg from '@/components/Svg.svelte'
-  import MagicDropdown from '@/components/MagicDropdown.svelte'
   import { panel, queue, selectedSongForUpdate, tags } from '@/constants/godStore'
+  import { computePosition, autoUpdate } from '@floating-ui/dom'
 
   export let song: ISong
 
   const iconSize: string = '20'
   let HTMLAddPlaylist: HTMLElement
-  let openDropdown: boolean = false
+  let HTMLTooltip: HTMLElement
 
   const openEditor = () => {
     panel.update(() => 'Update song')
@@ -23,6 +23,23 @@
       value.push(song)
       return value
     })
+  }
+
+  const openTooltip = () => {
+    HTMLTooltip.classList.toggle('show')
+
+    if (HTMLTooltip.classList.contains('show')) {
+      autoUpdate(HTMLAddPlaylist, HTMLTooltip, () => {
+        computePosition(HTMLAddPlaylist, HTMLTooltip, {
+          placement: 'bottom',
+        }).then(({ x, y }) => {
+          Object.assign(HTMLTooltip.style, {
+            left: `${x}px`,
+            top: `${y}px`,
+          })
+        })
+      })
+    }
   }
 
   let tagsValue
@@ -73,7 +90,7 @@
     }
 
     .more {
-      display: none;
+      //display: none;
       gap: 10px;
     }
 
@@ -85,6 +102,19 @@
         display: flex;
       }
     }
+  }
+
+  #tooltip {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+
+  :global(.show) {
+    display: block !important;
   }
 </style>
 
@@ -102,15 +132,13 @@
   <div class="more">
     <button> <Svg name="brush" width={iconSize} height={iconSize} /> </button>
     <button> <Svg name="addQueue" width={iconSize} height={iconSize} /> </button>
-    <button on:click={() => (openDropdown = true)} bind:this={HTMLAddPlaylist}>
+    <button aria-describedby="tooltip" bind:this={HTMLAddPlaylist} on:mouseover={openTooltip}>
       <Svg name="add" width={iconSize} height={iconSize} />
     </button>
   </div>
+</div>
 
-  {#if openDropdown}
-    <MagicDropdown source={HTMLAddPlaylist}
-      >Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nisi vero iste quibusdam obcaecati ullam non fugiat, a similique
-      velit molestiae! Odit labore, ad nemo tenetur obcaecati harum officiis aperiam!</MagicDropdown
-    >
-  {/if}
+<div id="tooltip" role="tooltip" bind:this={HTMLTooltip}>
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis est eveniet necessitatibus. Maiores voluptatum aperiam, corporis libero
+  numquam, dolores provident optio eos amet illum labore inventore repellat sequi reprehenderit aliquam?
 </div>
