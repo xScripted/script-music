@@ -90,7 +90,7 @@
     }
 
     .more {
-      //display: none;
+      display: none;
       gap: 10px;
     }
 
@@ -132,7 +132,7 @@
   <div class="more">
     <button> <Svg name="brush" width={iconSize} height={iconSize} /> </button>
     <button> <Svg name="addQueue" width={iconSize} height={iconSize} /> </button>
-    <button aria-describedby="tooltip" bind:this={HTMLAddPlaylist} on:mouseover={openTooltip}>
+    <button aria-describedby="tooltip" bind:this={HTMLAddPlaylist} on:click={openTooltip}>
       <Svg name="add" width={iconSize} height={iconSize} />
     </button>
   </div>
