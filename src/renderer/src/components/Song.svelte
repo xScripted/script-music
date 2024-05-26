@@ -1,11 +1,17 @@
 <script lang="ts">
   import type { ISong } from '@interfaces/ISong'
+  import type { ITag } from '@interfaces/ITag'
   import { player } from '@/scripts/player'
-  import { panel, queue, selectedSongForUpdate } from '@/constants/godStore'
   import Tag from '@/components/Tag.svelte'
   import Svg from '@/components/Svg.svelte'
+  import MagicDropdown from '@/components/MagicDropdown.svelte'
+  import { panel, queue, selectedSongForUpdate, tags } from '@/constants/godStore'
 
   export let song: ISong
+
+  const iconSize: string = '20'
+  let HTMLAddPlaylist: HTMLElement
+  let openDropdown: boolean = false
 
   const openEditor = () => {
     panel.update(() => 'Update song')
@@ -19,7 +25,10 @@
     })
   }
 
-  const addToPlaylist = () => {}
+  let tagsValue
+  tags.subscribe((value) => (tagsValue = value))
+
+  $: activeTags = tagsValue.filter((tag: ITag) => song.tags.includes(tag.name))
 </script>
 
 <style lang="scss">
@@ -33,7 +42,7 @@
     grid-template-columns: 75px 1fr 1fr 100px;
     border-radius: var(--radius);
     transition: 0.3s ease;
-    gap: 10px;
+    gap: 15px;
     cursor: pointer;
 
     .cover {
@@ -51,7 +60,7 @@
         font-size: 22px;
       }
 
-      .singer {
+      .artist {
         font-weight: lighter;
         font-size: 18px;
       }
@@ -66,10 +75,6 @@
     .more {
       display: none;
       gap: 10px;
-
-      img {
-        height: 20px;
-      }
     }
 
     &:hover {
@@ -87,16 +92,25 @@
   <img src={song.cover} class="cover" alt="" />
   <button class="details" on:click={() => player.play(song.fileName)}>
     <span class="song-title">{song.title}</span>
-    <span class="singer">{song.artist}</span>
+    <span class="artist">{song.artist}</span>
   </button>
   <div class="tags">
-    {#each song.tags as tagName}
-      <Tag {tagName} active />
+    {#each activeTags as tag}
+      <Tag {tag} active />
     {/each}
   </div>
   <div class="more">
-    <button on:click={openEditor}> <Svg name="brush" /> </button>
-    <button on:click={addToQueue}> <Svg name="addQueue" /> </button>
-    <button on:click={addToPlaylist}> <Svg name="add" /> </button>
+    <button> <Svg name="brush" width={iconSize} height={iconSize} /> </button>
+    <button> <Svg name="addQueue" width={iconSize} height={iconSize} /> </button>
+    <button on:click={() => (openDropdown = true)} bind:this={HTMLAddPlaylist}>
+      <Svg name="add" width={iconSize} height={iconSize} />
+    </button>
   </div>
+
+  {#if openDropdown}
+    <MagicDropdown source={HTMLAddPlaylist}
+      >Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nisi vero iste quibusdam obcaecati ullam non fugiat, a similique
+      velit molestiae! Odit labore, ad nemo tenetur obcaecati harum officiis aperiam!</MagicDropdown
+    >
+  {/if}
 </div>

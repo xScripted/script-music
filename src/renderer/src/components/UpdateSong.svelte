@@ -53,7 +53,6 @@
 
     //songs Filtered Index
     const songsFI = get(songsFiltered).findIndex((song: ISong) => song.fileName === selectedSongForUpdateValue.fileName)
-
     songsFiltered.update((p: ISong[]) => {
       p[songsFI] = {
         fileName: p[songsFI].fileName,

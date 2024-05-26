@@ -1,15 +1,8 @@
 <script lang="ts">
-  import { tags } from '@/constants/godStore'
-  import { get } from 'svelte/store'
   import type { ITag } from '@interfaces/ITag'
 
   export let tag: ITag = {}
-  export let tagName: string = ''
   export let active: boolean = false
-
-  tags.subscribe((value: ITag[]) => {
-    if (tagName) tag = value.find((storeTag: ITag) => storeTag.name === tagName)
-  })
 </script>
 
 <style lang="scss">
@@ -29,7 +22,7 @@
       transition: 0.3s ease;
       transform: scale(1);
 
-      box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.3);
+      box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.2);
       opacity: 1;
     }
 

@@ -54,6 +54,7 @@
         font-weight: bolder;
         color: var(--colorText);
         width: 100%;
+        text-wrap: balance;
 
         border: none;
         outline: none;
