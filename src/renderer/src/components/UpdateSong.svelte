@@ -37,6 +37,7 @@
     window.electron.ipcRenderer.invoke('write-meta-data', { fileName: selectedSongForUpdateValue.fileName, metaData })
 
     const songsI = get(songs).findIndex((song: ISong) => song.fileName === selectedSongForUpdateValue.fileName)
+
     songs.update((p: ISong[]) => {
       p[songsI] = {
         fileName: p[songsI].fileName,

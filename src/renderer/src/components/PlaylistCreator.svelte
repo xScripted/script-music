@@ -9,10 +9,6 @@
   let image: string = ''
   let error: boolean = false
 
-  const deletePlaylist = () => {}
-
-  const updatePlaylist = () => {}
-
   const createPlaylist = () => {
     const isAlready = get(playlists).some((playlist: IPlaylist) => playlist.title === title)
 
@@ -25,6 +21,7 @@
       const newPlaylists = [
         ...get(playlists),
         {
+          id: new Date().getTime(),
           title,
           image,
           active: false,
@@ -40,8 +37,6 @@
 </script>
 
 <style lang="scss">
-  .playlist-editor {
-  }
 </style>
 
 <div class="playlist-editor">

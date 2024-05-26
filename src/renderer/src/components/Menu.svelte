@@ -77,7 +77,7 @@
     </div>
 
     {#each playlistsValue as playlist}
-      <PlaylistCard title={playlist.title} image={playlist.image} active={playlist.active} />
+      <PlaylistCard {playlist} />
     {/each}
   </div>
 
