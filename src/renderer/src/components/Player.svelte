@@ -23,6 +23,11 @@
 
   const storedVolume = JSON.parse(window.localStorage.getItem('volume') || '""')
 
+  const updateVolume = (ev) => {
+    const target = ev.target as HTMLInputElement
+    player.updateVolume(target.value)
+  }
+
   volumeValue = storedVolume
 </script>
 
@@ -170,15 +175,7 @@
           <Svg name="volumeUp" />
         {/if}
       </button>
-      <input
-        type="range"
-        class="volume-bar"
-        min="0"
-        max="0.5"
-        step="0.01"
-        value={volumeValue}
-        on:input={(ev) => player.updateVolume(ev.target.value)}
-      />
+      <input type="range" class="volume-bar" min="0" max="0.5" step="0.01" value={volumeValue} on:input={updateVolume} />
     </div>
   </div>
 </div>

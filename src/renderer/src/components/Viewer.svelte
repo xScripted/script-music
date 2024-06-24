@@ -23,6 +23,13 @@
   const handleScroll = (ev) => {
     shrinkHeader = !!ev.target.scrollTop
   }
+
+  document.addEventListener('click', (ev) => {
+    const allSongs = document.querySelectorAll('.song')
+    allSongs.forEach((song: HTMLElement) => {
+      song.classList.remove('song-active')
+    })
+  })
 </script>
 
 <style lang="scss">
@@ -34,8 +41,6 @@
     display: flex;
     flex-direction: column;
     padding: 25px;
-
-    overflow: hidden;
 
     .utilities {
       width: 100%;

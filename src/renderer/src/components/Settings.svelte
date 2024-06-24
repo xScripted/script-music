@@ -88,18 +88,8 @@
       .dj {
         display: flex;
         gap: 30px;
-
-        .start,
-        .finish {
-          width: 100%;
-        }
       }
     }
-  }
-
-  .input[type='number'] {
-    width: 50%;
-    padding: 10px;
   }
 </style>
 

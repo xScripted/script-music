@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { IPlaylist } from '@interfaces/IPlaylist'
-  import { panel, selectedPlaylistForUpdate } from '@/constants/godStore'
+  import { panel, selectedPlaylistForUpdate, playlists } from '@/constants/godStore'
   import { get } from 'svelte/store'
   import { player } from '@/scripts/player'
   import Svg from './Svg.svelte'
@@ -10,8 +10,8 @@
   const togglePlaylist = () => {
     playlists.update(() => {
       return get(playlists).map((playlist: IPlaylist) => {
-        if (playlist.title === title) {
-          playlist.active = !active
+        if (playlist.title === playlist.title) {
+          playlist.active = !playlist.active
         }
 
         player.filter()

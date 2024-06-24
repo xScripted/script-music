@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { selectedPlaylistForUpdate, playlists } from '@/constants/godStore'
+  import { selectedPlaylistForUpdate, playlists, songs } from '@/constants/godStore'
   import { get } from 'svelte/store'
   import Input from '@/components/Input.svelte'
   import type { IPlaylist } from '@interfaces/IPlaylist'
+  import type { ISong } from '@interfaces/ISong'
 
   let selectedPlaylistForUpdateValue
 
@@ -18,14 +19,25 @@
       return p
     })
   }
+
+  let completeSongsOfPlaylist = []
+
+  selectedPlaylistForUpdateValue.playlist.map((songId: string) => {
+    const foundSong = get(songs).find((song: ISong) => song.fileName === songId)
+    completeSongsOfPlaylist.push(foundSong)
+  })
 </script>
 
 <style lang="scss">
 </style>
 
 <div class="playlist-edit">
+  <!-- LAIA: La imagen se ve fea -->
   <img src={selectedPlaylistForUpdateValue.image} alt="" class="preview" />
   <Input placeholder="Playlist image" bind:value={selectedPlaylistForUpdateValue.image} on:input={updatePlaylist} />
   <Input placeholder="Playlist name" bind:value={selectedPlaylistForUpdateValue.title} on:input={updatePlaylist} />
   <button class="delete"></button>
+  <!-- LAIA: Lista de canciones de la playlist -->
+
+  {completeSongsOfPlaylist}
 </div>
