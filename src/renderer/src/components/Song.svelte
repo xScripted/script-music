@@ -86,7 +86,7 @@
     margin-bottom: 15px;
     position: relative;
 
-    grid-template-columns: 75px 1fr 1fr 100px;
+    grid-template-columns: 75px 1fr 0.5fr 100px;
     border-radius: var(--radius);
     transition: 0.3s ease;
     gap: 15px;
