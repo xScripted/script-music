@@ -9,14 +9,14 @@
 
   const togglePlaylist = () => {
     playlists.update(() => {
-      return get(playlists).map((playlist: IPlaylist) => {
-        if (playlist.title === playlist.title) {
-          playlist.active = !playlist.active
+      return get(playlists).map((p: IPlaylist) => {
+        if (playlist.title === p.title) {
+          p.active = !playlist.active
         }
 
         player.filter()
 
-        return playlist
+        return p
       })
     })
   }
@@ -28,13 +28,14 @@
 </script>
 
 <style lang="scss">
-  .card {
+  .playlist-card {
     height: 75px;
     width: 100%;
 
     border: none;
     border-radius: var(--radius);
     background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
     border: 2px solid transparent;
 
     display: flex;
@@ -74,7 +75,7 @@
   }
 </style>
 
-<button class="card" class:active={playlist.active} on:click={togglePlaylist}>
+<button class="playlist-card" class:active={playlist.active} on:click={togglePlaylist}>
   <img class="photo" src={playlist.image} alt="" />
   <span>{playlist.title}</span>
   <button on:click={playlistEditor}>

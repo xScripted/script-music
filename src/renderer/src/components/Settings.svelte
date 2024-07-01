@@ -52,20 +52,6 @@
     djModeFinish.update(() => event.target.value)
     window.localStorage.setItem('djModeFinish', djModeFinishValue)
   }
-
-  onMount(() => {
-    const savedBG = window.localStorage.getItem('bg')
-    bgImage = savedBG ? savedBG : ''
-
-    const savedNightValue: any = window.localStorage.getItem('nightValue') || get(nightRate)
-    nightRate.update(() => savedNightValue)
-
-    const savedSlowValue: any = window.localStorage.getItem('slowValue') || get(slowRate)
-    slowRate.update(() => savedSlowValue)
-
-    djModeStart.update(() => Number(window.localStorage.getItem('djModeStart') || get(djModeStart)))
-    djModeFinish.update(() => Number(window.localStorage.getItem('djModeFinish') || get(djModeFinish)))
-  })
 </script>
 
 <style lang="scss">

@@ -1,11 +1,12 @@
 <script lang="ts">
   import { setAllSongs } from '@/scripts/generic'
-  import { tags, path, playlists } from '@/constants/godStore'
+  import { tags, path, playlists, volume, nightRate, slowRate, djModeStart, djModeFinish } from '@/constants/godStore'
   import Player from '@/components/Player.svelte'
   import Viewer from '@/components/Viewer.svelte'
   import Panel from '@/components/Panel.svelte'
   import Menu from '@/components/Menu.svelte'
   import { onMount } from 'svelte'
+  import { get } from 'svelte/store'
   import type { ITag } from '@interfaces/ITag'
   import type { IPlaylist } from '@interfaces/IPlaylist'
 
@@ -27,6 +28,21 @@
     })
   }
 
+  const getSettings = () => {
+    volume.update(() => {
+      return JSON.parse(window.localStorage.getItem('volume') || '""')
+    })
+
+    const savedNightValue: any = window.localStorage.getItem('nightValue') || get(nightRate)
+    nightRate.update(() => savedNightValue)
+
+    const savedSlowValue: any = window.localStorage.getItem('slowValue') || get(slowRate)
+    slowRate.update(() => savedSlowValue)
+
+    djModeStart.update(() => Number(window.localStorage.getItem('djModeStart') || get(djModeStart)))
+    djModeFinish.update(() => Number(window.localStorage.getItem('djModeFinish') || get(djModeFinish)))
+  }
+
   onMount(async () => {
     const pathValue = await window.electron.ipcRenderer.invoke('get-path')
 
@@ -34,6 +50,7 @@
 
     getTags()
     getPlaylists()
+    getSettings()
     await setAllSongs()
 
     const savedBG = window.localStorage.getItem('bg')

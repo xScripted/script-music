@@ -1,13 +1,16 @@
 <script lang="ts">
-  import { playlists } from '@/constants/godStore'
+  import { playlists, songsFiltered } from '@/constants/godStore'
   import type { IPlaylist } from '@interfaces/IPlaylist'
+  import type { ISong } from '@interfaces/ISong'
 
   export let shrinkHeader: boolean = false
 
   let image: string = 'https://upload.wikimedia.org/wikipedia/en/c/c4/Falling_in_Reverse_–_Popular_Monster.jpeg'
   let titleArray: string[] = []
-  let nSongs: number = 123
+  let nSongs: number = 0
   let title: string = ''
+
+  songsFiltered.subscribe((value: ISong[]) => (nSongs = value.length))
 
   playlists.subscribe((value: IPlaylist[]) => {
     titleArray = []
