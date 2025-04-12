@@ -57,6 +57,9 @@
       .song-title {
         font-size: 25px;
         font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .artist {

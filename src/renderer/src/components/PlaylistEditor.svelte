@@ -59,7 +59,7 @@
         position: relative;
 
         &:hover {
-          background-color:;
+          background-color: red;
         }
 
         .details {

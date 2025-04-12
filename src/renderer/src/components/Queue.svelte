@@ -136,7 +136,7 @@
   }
 </style>
 
-<button class="container" on:dragover={dragOver} on:drop={drop} bind:this={HTMLContenedor}>
+<div class="container" on:dragover={dragOver} on:drop={drop} bind:this={HTMLContenedor}>
   {#each queueValue as song, i}
     <button
       class="songRow"
@@ -156,9 +156,9 @@
         <div class="artist">{song.artist}</div>
       </div>
       <div class="functions">
-        <button class="delete" on:click={() => player.removeSong(i)}>
+        <div class="delete" on:click={() => player.removeSong(i)}>
           <Svg name="delete" />
-        </button>
+        </div>
       </div>
     </button>
   {/each}
@@ -166,6 +166,6 @@
   {#if queueValue.length < 1}
     <span style="text-align: center;">No songs on queue 😪</span>
   {/if}
-</button>
+</div>
 
 <div class="before" />

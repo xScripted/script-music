@@ -37,10 +37,12 @@
     position: relative;
     height: 100%;
     width: 100%;
+    overflow: hidden;
 
     display: flex;
     flex-direction: column;
     padding: 25px;
+    padding-bottom: 0;
 
     .utilities {
       width: 100%;

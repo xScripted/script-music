@@ -44,6 +44,7 @@
   }
 
   onMount(async () => {
+    console.log(window)
     const pathValue = await window.electron.ipcRenderer.invoke('get-path')
 
     path.update(() => pathValue)

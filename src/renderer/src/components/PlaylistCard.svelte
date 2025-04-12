@@ -78,7 +78,7 @@
 <button class="playlist-card" class:active={playlist.active} on:click={togglePlaylist}>
   <img class="photo" src={playlist.image} alt="" />
   <span>{playlist.title}</span>
-  <button on:click={playlistEditor}>
+  <div on:click={playlistEditor}>
     <Svg name="options" height="15" width="15" />
-  </button>
+  </div>
 </button>

@@ -79,8 +79,8 @@ export const player = {
   },
   play(fileName: string, isHistory: boolean = false) {
     const howlsList = (Howler as any)._howls
-
     if (howlsList.length === 1) {
+      console.log(howlsList, get(fadeTime))
       timeoutID = setTimeout(() => howlsList[0].unload(), get(fadeTime) * 1000)
       howlsList[0].fade(get(volume), 0, get(fadeTime) * 1000)
     }
